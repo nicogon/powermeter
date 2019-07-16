@@ -1,8 +1,11 @@
-const express = require("express");
+const express = require('express');
 
-let homeController = require("./controllers/homeController");
+const homeController = require('./controllers/homeController');
+const dispositivosController = require('./controllers/dispositivosController');
+
 
 module.exports = express
   .Router()
-  .get("/", homeController.mainHome)
-
+  .get('/', homeController.mainHome)
+  .post('/dispositivos/:dispoId/report', dispositivosController.report)
+  .get('/dispositivos', dispositivosController.listar);

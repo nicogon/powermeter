@@ -5,16 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "lint": "eslint *.js --fix",
+    "lint": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.6.2",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "express": "^4.17.1",
+    "mongodb": "^3.2.7",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
     "pug": "^2.0.4"
   },
   "devDependencies": {
