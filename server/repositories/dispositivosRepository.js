@@ -1,20 +1,16 @@
-const mongoClientBuilder = require('./mongoClientFactory');
+module.exports = function dispositivosRepository(mongoClient) {
+  return { list, upsert };
 
+  async function list() {
+    return mongoClient
+      .collection('dispositivos')
+      .find({})
+      .toArray();
+  }
 
-async function listar() {
-  const mongo = await mongoClientBuilder();
-  return mongo.collection('dispositivos').find({}).toArray();
-}
-
-async function insertar(dispositivo) {
-  const mongo = await mongoClientBuilder();
-  return mongo.collection('dispositivos').updateOne(
-    { dispoId: dispositivo.dispoId },
-    { $set: { name: 'name' } },
-    { upsert: true },
-  );
-  //  return mongo.collection("dispositivos").insertOne(dispositivo);
-}
-
-
-module.exports = { listar, insertar };
+  async function upsert(dispoId, data) {
+    return mongoClient
+      .collection('dispositivos')
+      .updateOne({ dispoId }, { $set: data }, { upsert: true });
+  }
+};
