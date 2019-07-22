@@ -7,6 +7,8 @@ module.exports = function dispositivosService(
   //    { lastPush: Date.now(), sessionId }
 
   function adaptDispositivos(dispo) {
+    console.log(sessionId)
+    console.log(dispo)
     const { name, dispoId, sensibility } = dispo;
     return {
       name,
@@ -17,6 +19,7 @@ module.exports = function dispositivosService(
   }
 
   async function report(dispoId) {
+    console.log(dispoId)
     await dispositivosRepository.upsert(dispoId, {
       sessionId,
       lastPush: Date.now()

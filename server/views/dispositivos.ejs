@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <td>
+            <b>Nombre</b>
+        </td>
+        <td>
+            <b>esta conectado</b>
+        </td>
+    </tr>  
+    <%for (var dispositivo in dispositivos){%>
+    <tr>
+          <td>
+                <%=dispositivos[dispositivo].name%>
+          </td>
+          <td>
+                <%=dispositivos[dispositivo].isOnline%>
+          </td>
+    </tr>    
+    <%}%>
+</table>
