@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 function report() {
-  fetch('http://0.0.0.0:8080/dispositivos/putita/report', {
+  fetch('http://0.0.0.0:8081/dispositivos/medidor1/report', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -9,12 +9,12 @@ function report() {
     body: JSON.stringify({
       medicion: Math.floor(Math.random() * 6) + 1,      
       pinza: 35,
-      dispoId: 'putita'
+      dispoId: 'medidor1'
     })
   }).catch(console.log);
 }
 
-fetch('http://0.0.0.0:8080/dispositivos/unicavez/report', {
+fetch('http://0.0.0.0:8081/dispositivos/unicavez/report', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
