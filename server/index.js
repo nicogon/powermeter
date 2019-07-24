@@ -9,6 +9,8 @@ async function main() {
     const app = express();
     const port = 8080;
     app.set('view engine', 'ejs');
+    app.use(express.static('static'));
+    app.use(express.json());
     app.use(
       '*',
       (req, res, next) => {

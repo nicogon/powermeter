@@ -1,20 +1,97 @@
-<table>
-    <tr>
-        <td>
-            <b>Nombre</b>
-        </td>
-        <td>
-            <b>esta conectado</b>
-        </td>
-    </tr>  
-    <%for (var dispositivo in dispositivos){%>
-    <tr>
-          <td>
-                <%=dispositivos[dispositivo].name%>
-          </td>
-          <td>
-                <%=dispositivos[dispositivo].isOnline%>
-          </td>
-    </tr>    
-    <%}%>
-</table>
+<% include header.ejs %>
+
+
+
+    <script>
+        $(document).ready(function() {
+            console.log("ready!");
+            $('.editar').click(function() {
+                const id = $(this).attr('data-id');
+                const name = $(this).parent().find('input').val()
+                console.log(name)
+                $.ajax({
+                    url: '/dispositivos/' + id + '/',
+                    type: 'PUT',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        name
+                    }),
+                    success: function(response) {
+                        console.log("EDIT OK:" + id)
+                    }
+                });
+            });
+            $('.borrar').click(function() {
+                const id = $(this).attr('data-id');
+                console.log(id)
+                $.ajax({
+                    url: '/dispositivos/' + id + '/',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    type: 'DELETE',
+                    success: function(response) {
+                        console.log("DELETE OK:" + id)
+                    }
+                });
+            });
+
+        });
+    </script>
+
+
+        <%for (var dispositivo in dispositivos){%>
+            <br>
+            <div class="card card-small">
+                <div class="card-body pt-0 row" style='margin-top:10px'>
+                    <div class="col-lg-3">
+                        <div class="stats-small stats-small--1">
+                            <div class="card-body p-0 d-flex" style='transform: translate3d(0,0,0); height:135px;'>
+                                <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
+                                    <div class="stats-small__data text-center">
+                                        <span class="stats-small__label text-uppercase">CONSUMO</span>
+                                        <h6 class="stats-small__value count my-3">23W</h6>
+                                    </div>
+
+                                    <div style='color: #17c671;text-align: center'>
+                                        <%=dispositivos[dispositivo].medicion%>A
+                                    </div>
+                                </div>
+                                <canvas height="220" class="blog-overview-stats-small-1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div style="position:absolute;right:15px;top:3px">
+
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-white borrar" data-id="<%=dispositivos[dispositivo].dispoId%>"><i class="material-icons">delete</i> </button>
+                                <button type="button" class="btn btn-white"><i class="material-icons">edit</i></button>
+                            </div>
+
+                        </div>
+                        <h4>
+                            <%=dispositivos[dispositivo].name%>
+                        </h4>
+                        <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=dispositivos[dispositivo].isOnline? 'success' : 'danger'%>"><%=dispositivos[dispositivo].isOnline? 'Online' : 'Offline'%></strong></span>
+                        <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger">35A</strong> </span>
+                        <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=dispositivos[dispositivo].dispoId%></span>
+                        <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=dispositivos[dispositivo].isOnline?  Math.round((Date.now() -dispositivos[dispositivo].lastPush)/60000) + 'min': ''%></strong></span>
+                    </div>
+                </div>
+            </div>
+        <%}%>
+
+
+                    <!--
+
+       <input data-id=">" value=" <" type='text'>
+                    <button data-id=" class='editar'>Editar</button>
+                </td>
+
+                <td>
+                    <button data-id="" class='borrar'>Borrar</button>
+
+-->
+
+
+                    <% include footer.ejs %>

@@ -3,11 +3,30 @@ const fetch = require('node-fetch');
 function report() {
   fetch('http://0.0.0.0:8080/dispositivos/putita/report', {
     method: 'POST',
-    body: { medicion: 33 }
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      medicion: Math.floor(Math.random() * 6) + 1,      
+      pinza: 35,
+      dispoId: 'putita'
+    })
   }).catch(console.log);
 }
 
-setInterval(function() {
+fetch('http://0.0.0.0:8080/dispositivos/unicavez/report', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    medicion: 33,
+    pinza: 35,
+    dispoId: 'unicavez'
+  })
+}).catch(console.log);
+
+setInterval(function () {
   report();
 }, 3000);
 

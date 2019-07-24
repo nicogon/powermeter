@@ -1,9 +1,11 @@
 const express = require('express');
 
 module.exports = function routes(homeController, dispositivosController) {
-  return (express
+  return express
     .Router()
     .get('/', homeController.mainHome)
     .post('/dispositivos/:dispoId/report', dispositivosController.report)
-    .get('/dispositivos', dispositivosController.listar));
+    .delete('/dispositivos/:dispoId', dispositivosController.borrar)
+    .put('/dispositivos/:dispoId', dispositivosController.actualizar)
+    .get('/dispositivos', dispositivosController.listar);
 };

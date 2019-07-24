@@ -1,18 +1,28 @@
 module.exports = function dispositivosController(dispositivosService) {
-  return { report, listar };
+  return {
+    report, listar, actualizar, borrar
+  };
+
+  async function actualizar(req, res) {
+    console.log('ACTUALIZAR');
+    await dispositivosService.actualizar(req.params.dispoId, req.body.name);
+    res.status(200).send();
+  }
+
+  async function borrar(req, res) {
+    console.log('BORRAR');
+    await dispositivosService.borrar(req.params.dispoId);
+    res.status(200).send();
+  }
 
   async function report(req, res) {
     // mover al servuce
-    await dispositivosService.report(req.params.dispoId);
-    res.send(
-      {}
-      //
-    );
+    await dispositivosService.report(req.params.dispoId, req.body);
+    res.status(200).send();
   }
 
   async function listar(req, res) {
     const dispositivos = await dispositivosService.list();
-    console.log(dispositivos);
     res.render('dispositivos', { dispositivos });
 
     // res.send(await dispositivosService.list());
