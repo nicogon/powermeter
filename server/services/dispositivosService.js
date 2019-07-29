@@ -32,8 +32,8 @@ module.exports = function dispositivosService(
   }
 
   async function generarListaUltimosConsumos(dispoId, consumo) {
-    let { ultimosConsumos } = await dispositivosRepository.get(dispoId);
-    ultimosConsumos = [consumo, ...(ultimosConsumos || []).slice(0, 8)];
+    const dispo = await dispositivosRepository.get(dispoId);
+    const ultimosConsumos = [consumo, ...(dispo && dispo.ultimosConsumos || []).slice(0, 8)];
     return ultimosConsumos;
   }
 
