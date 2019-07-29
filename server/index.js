@@ -7,7 +7,7 @@ async function main() {
     routes
   ) {
     const app = express();
-    const port = 8080;
+    const port = 8081;
     app.set('view engine', 'ejs');
     app.use(express.static('static'));
     app.use(express.json());
