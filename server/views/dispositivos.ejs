@@ -1,13 +1,29 @@
 <% include header.ejs %>
 
-
+    <style>
+        .hidden {
+            width: 40%;
+            display: none;
+            margin-bottom: 5px!important;
+        }
+    </style>
 
     <script>
         $(document).ready(function() {
             console.log("ready!");
-            $('.editar').click(function() {
+            $('.showEdit').click(function() {
                 const id = $(this).attr('data-id');
-                const name = $(this).parent().find('input').val()
+                $("#" + id + "-titulo").hide();
+                $("#" + id + "-form").css('display', 'flex');
+            });
+            $('.guardar').click(function() {
+                const id = $(this).attr('data-id');
+                const name = $("#" + id + '-input').val();
+                $("#" + id + "-titulo").show();
+                $("#" + id + "-titulo").html(name);
+                $("#" + id + "-form").hide();
+
+
                 console.log(name)
                 $.ajax({
                     url: '/dispositivos/' + id + '/',
@@ -35,54 +51,161 @@
                 });
             });
 
+            function actualizarCharts() {
+                $.getJSON("dispositivos/?format=json", function(data) {
+
+                    data.forEach(item => {
+                        //console.log(item)
+                      //  console.log(myChart[item.dispoId]);
+                        myChart[item.dispoId].data.datasets[0].data = item.ultimosConsumos.reverse()
+                            console.log(myChart[item.dispoId].data)
+                        
+                        myChart[item.dispoId].update();
+                        console.log(item.ultimosConsumos)
+
+                    })
+                });
+            }
+
+
+            setInterval(function() {
+                actualizarCharts()
+            }, 1000);
+
+
+
         });
+
+        var myChart = [];
     </script>
 
 
-        <%for (var dispositivo in dispositivos){%>
-            <br>
-            <div class="card card-small">
-                <div class="card-body pt-0 row" style='margin-top:10px'>
-                    <div class="col-lg-3">
-                        <div class="stats-small stats-small--1">
-                            <div class="card-body p-0 d-flex" style='transform: translate3d(0,0,0); height:135px;'>
-                                <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
-                                    <div class="stats-small__data text-center">
-                                        <span class="stats-small__label text-uppercase">CONSUMO</span>
-                                        <h6 class="stats-small__value count my-3">23W</h6>
-                                    </div>
-
-                                    <div style='color: #17c671;text-align: center'>
-                                        <%=dispositivos[dispositivo].medicion%>A
-                                    </div>
+    <%for (var dispositivo in dispositivos){%>
+        <br>
+        <div class="card card-small">
+            <div class="card-body pt-0 row" style='margin-top:10px'>
+                <div class="col-lg-3">
+                    <div class="stats-small stats-small--1">
+                        <div class="card-body p-0 d-flex" style='transform: translate3d(0,0,0); height:135px;'>
+                            <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
+                                <div class="stats-small__data text-center">
+                                    <span class="stats-small__label text-uppercase">CONSUMO</span>
+                                    <h6 class="stats-small__value count my-3">23W</h6>
                                 </div>
-                                <canvas height="220" class="blog-overview-stats-small-1"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div style="position:absolute;right:15px;top:3px">
 
-                            <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-white borrar" data-id="<%=dispositivos[dispositivo].dispoId%>"><i class="material-icons">delete</i> </button>
-                                <button type="button" class="btn btn-white"><i class="material-icons">edit</i></button>
+                                <div style='color: #17c671;text-align: center'>
+                                    <%=dispositivos[dispositivo].medicion%>A
+                                </div>
                             </div>
-
+                            <canvas height="220" class="blog-overview-stats-small-1" id='chart-<%=dispositivos[dispositivo].dispoId%>'></canvas>
                         </div>
-                        <h4>
-                            <%=dispositivos[dispositivo].name%>
-                        </h4>
-                        <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=dispositivos[dispositivo].isOnline? 'success' : 'danger'%>"><%=dispositivos[dispositivo].isOnline? 'Online' : 'Offline'%></strong></span>
-                        <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger">35A</strong> </span>
-                        <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=dispositivos[dispositivo].dispoId%></span>
-                        <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=dispositivos[dispositivo].isOnline?  Math.round((Date.now() -dispositivos[dispositivo].lastPush)/60000) + 'min': ''%></strong></span>
                     </div>
                 </div>
+                <div class="col-lg-9">
+                    <div style="position:absolute;right:15px;top:3px">
+
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-white borrar" data-id="<%=dispositivos[dispositivo].dispoId%>"><i class="material-icons">delete</i> </button>
+                            <button type="button" class="btn btn-white showEdit" data-id="<%=dispositivos[dispositivo].dispoId%>"><i class="material-icons">edit</i></button>
+                        </div>
+
+                    </div>
+                    <h4 id="<%=dispositivos[dispositivo].dispoId%>-titulo">
+                        <%=dispositivos[dispositivo].name%>
+                    </h4>
+                    <div class="input-group mb-3 hidden" id="<%=dispositivos[dispositivo].dispoId%>-form">
+                        <input type="text" class="form-control" id="<%=dispositivos[dispositivo].dispoId%>-input" placeholder="Ingrese nombre del dispositivo">
+                        <div class="input-group-append">
+                            <button class="btn btn-white guardar" data-id="<%=dispositivos[dispositivo].dispoId%>" type="button">Guardar</button>
+                        </div>
+                    </div>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=dispositivos[dispositivo].isOnline? 'success' : 'danger'%>"><%=dispositivos[dispositivo].isOnline? 'Online' : 'Offline'%></strong></span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger">35A</strong> </span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=dispositivos[dispositivo].dispoId%></span>
+                    <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=dispositivos[dispositivo].isOnline?  Math.round((Date.now() -dispositivos[dispositivo].lastPush)/60000) + 'min': ''%></strong></span>
+                </div>
             </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+
+                // Options
+                function boSmallStatsOptions(max) {
+                    return {
+                        maintainAspectRatio: true,
+                        responsive: true,
+                        // Uncomment the following line in order to disable the animations.
+                        // animation: false,
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            enabled: false,
+                            custom: false
+                        },
+                        elements: {
+                            point: {
+                                radius: 0
+                            },
+                            line: {
+                                tension: 0.3
+                            }
+                        },
+                        scales: {
+                            xAxes: [{
+                                gridLines: false,
+                                scaleLabel: false,
+                                ticks: {
+                                    display: false
+                                }
+                            }],
+                            yAxes: [{
+                                gridLines: false,
+                                scaleLabel: false,
+                                ticks: {
+                                    beginAtZero: true,
+                                    display: false,
+                                    // Avoid getting the graph line cut of at the top of the canvas.
+                                    // Chart.js bug link: https://github.com/chartjs/Chart.js/issues/4790
+                                    suggestedMax: max
+                                }
+                            }],
+                        },
+                    };
+                }
+
+                var config = {
+                    backgroundColor: "rgba(255,180,0,0.1)",
+                    borderColor: "rgb(255,180,0)",
+                    data: <%=JSON.stringify(dispositivos[dispositivo].ultimosConsumos || [])%>
+                }
+                var chartOptions = boSmallStatsOptions(Math.max(...config.data) + 1);
+
+
+                var ctx = document.getElementById('chart-<%=dispositivos[dispositivo].dispoId%>').getContext('2d');
+                myChart['<%=dispositivos[dispositivo].dispoId%>'] = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7"],
+                        datasets: [{
+                            label: 'Today',
+                            fill: 'start',
+                            data: config.data,
+                            backgroundColor: config.backgroundColor,
+                            borderColor: config.borderColor,
+                            borderWidth: 1.5,
+                        }]
+                    },
+                    options: chartOptions
+                });
+            });
+        </script>
+
         <%}%>
 
 
-                    <!--
+            <!--
 
        <input data-id=">" value=" <" type='text'>
                     <button data-id=" class='editar'>Editar</button>
@@ -94,4 +217,4 @@
 -->
 
 
-                    <% include footer.ejs %>
+            <% include footer.ejs %>

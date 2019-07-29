@@ -7,7 +7,7 @@ function report() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      medicion: Math.floor(Math.random() * 6) + 1,      
+      medicion: Math.floor(Math.random() * 30) + 10,      
       pinza: 35,
       dispoId: 'putita'
     })

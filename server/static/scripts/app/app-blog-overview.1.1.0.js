@@ -48,6 +48,7 @@
     // Options
     function boSmallStatsOptions(max) {
       return {
+        animation: false,
         maintainAspectRatio: true,
         responsive: true,
         // Uncomment the following line in order to disable the animations.
@@ -82,7 +83,7 @@
               display: false,
               // Avoid getting the graph line cut of at the top of the canvas.
               // Chart.js bug link: https://github.com/chartjs/Chart.js/issues/4790
-              suggestedMax: max
+              suggestedMax: max*1.1
             }
           }],
         },
@@ -91,8 +92,9 @@
 
     // Generate the small charts
     boSmallStatsDatasets.map(function (el, index) {
+      console.log(el)
       var chartOptions = boSmallStatsOptions(Math.max.apply(Math, el.data) + 1);
-      var ctx = document.getElementsByClassName('blog-overview-stats-small-' + (index + 1));
+      var ctx = document.getElementsByClassName('blog-overview-stats-smallp-' + (index + 1));
       new Chart(ctx, {
         type: 'line',
         data: {

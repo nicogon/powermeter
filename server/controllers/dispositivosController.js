@@ -1,6 +1,9 @@
 module.exports = function dispositivosController(dispositivosService) {
   return {
-    report, listar, actualizar, borrar
+    report,
+    listar,
+    actualizar,
+    borrar
   };
 
   async function actualizar(req, res) {
@@ -23,11 +26,14 @@ module.exports = function dispositivosController(dispositivosService) {
 
   async function listar(req, res) {
     const dispositivos = await dispositivosService.list();
-    res.render('dispositivos', { dispositivos });
+    if (req.query.format == 'json') {
+      res.json(dispositivos);
+    } else {
+      res.render('dispositivos', { dispositivos });
+    }
 
     // res.send(await dispositivosService.list());
   }
 };
-
 
 // <%=result%>:<%=results[result]%>

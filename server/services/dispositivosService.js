@@ -18,9 +18,7 @@ module.exports = function dispositivosService(
   }
 
   function adaptDispositivos(dispo) {
-    const {
-      name, dispoId, medicion, pinza, lastPush
-    } = dispo;
+    const { name, dispoId, medicion, pinza, lastPush, ultimosConsumos } = dispo;
 
     return {
       name,
@@ -28,16 +26,28 @@ module.exports = function dispositivosService(
       dispoId,
       isOnline: isOnline(dispo),
       pinza,
-      medicion
+      medicion,
+      ultimosConsumos
     };
   }
 
+  async function generarListaUltimosConsumos(dispoId, consumo) {
+    let { ultimosConsumos } = await dispositivosRepository.get(dispoId);
+    ultimosConsumos = [consumo, ...(ultimosConsumos || []).slice(0, 8)];
+    return ultimosConsumos;
+  }
+
   async function report(dispoId, data) {
+    const ultimosConsumos = await generarListaUltimosConsumos(
+      dispoId,
+      data.medicion
+    );
     await dispositivosRepository.upsert(dispoId, {
       sessionId,
       pinza: data.pinza,
       medicion: data.medicion,
-      lastPush: Date.now()
+      lastPush: Date.now(),
+      ultimosConsumos
     });
   }
 
