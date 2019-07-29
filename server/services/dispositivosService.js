@@ -9,8 +9,6 @@ module.exports = function dispositivosService(
     borrar
   };
 
-  //    { lastPush: Date.now(), sessionId }
-
   function isOnline(dispo) {
     const isSameSession = sessionId === dispo.sessionId;
     const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 5000;
@@ -18,7 +16,9 @@ module.exports = function dispositivosService(
   }
 
   function adaptDispositivos(dispo) {
-    const { name, dispoId, medicion, pinza, lastPush, ultimosConsumos } = dispo;
+    const {
+      name, dispoId, medicion, pinza, lastPush, ultimosConsumos
+    } = dispo;
 
     return {
       name,
@@ -33,7 +33,10 @@ module.exports = function dispositivosService(
 
   async function generarListaUltimosConsumos(dispoId, consumo) {
     const dispo = await dispositivosRepository.get(dispoId);
-    const ultimosConsumos = [consumo, ...(dispo && dispo.ultimosConsumos || []).slice(0, 8)];
+    const ultimosConsumos = [
+      consumo,
+      ...((dispo && dispo.ultimosConsumos) || []).slice(0, 8)
+    ];
     return ultimosConsumos;
   }
 
