@@ -3,10 +3,8 @@ module.exports = function dispositivosRepository(mongoClient) {
     list, upsert, del, get
   };
 
- 
 
-
-  async function del(dispoId) {
+  function del(dispoId) {
     return mongoClient
       .collection('dispositivos')
       .deleteOne({ dispoId });
