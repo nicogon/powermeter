@@ -7,6 +7,7 @@ module.exports = function reportesController(dispositivosService, reportesServic
     // TODO
 
     const nombre = req.body.nombre;
+    // eslint-disable-next-line radix
     const duracion = parseInt(req.body.duracion);
     let mediciones;
     if (typeof (req.body.nombreMedicion) === 'string') {
@@ -17,13 +18,11 @@ module.exports = function reportesController(dispositivosService, reportesServic
     const inicio = Date.now();
     const fin = Date.now() + duracion;
 
-
-    reporteId = await reportesService.nuevo({
+    const reporteId = await reportesService.nuevo({
       nombre, duracion, mediciones, inicio, fin
     });
 
-    console.log(mediciones);
-    res.status(200).send(reporteId);
+    res.redirect(`/reportes/${reporteId}/`);
   }
 
 

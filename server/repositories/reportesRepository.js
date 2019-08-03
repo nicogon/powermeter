@@ -1,4 +1,4 @@
-module.exports = function reportesRepository(mongoClient) {
+module.exports = function reportesRepository(mongoClient, sessionId) {
   return {
     list, upsert, del, get, getByDispoId, pushMedicion
   };
@@ -12,10 +12,11 @@ module.exports = function reportesRepository(mongoClient) {
       );
   }
 
+  // HACER QUE SEA EL ACTIVO FILTRAR
   async function getByDispoId(dispoId) {
     return (mongoClient
       .collection('reportes')
-      .findOne({ mediciones: { $elemMatch: { dispoId } } }, { projection: { reporteId: 1 } }));
+      .findOne({ sessionId, mediciones: { $elemMatch: { dispoId } } }, { projection: { reporteId: 1 } }));
   }
 
   async function del(reporteId) {
