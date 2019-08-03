@@ -1,6 +1,11 @@
 <% include header.ejs %>
 
-    <br>
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Reportes</span>
+            <h3 class="page-title">Nuevo Reporte</h3>
+        </div>
+    </div>
 
     <div class="col-lg-12">
         <div class="card card-small mb-4">
@@ -8,7 +13,7 @@
                 <h6 class="m-0">Crear nuevo reporte</h6>
             </div>
 
-            <form>
+            <form action="/reportes/" method="post">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item p-3">
 
@@ -21,19 +26,33 @@
                             <label for="feInputState">Duracion del reporte</label>
                             <select name="duracion" id="feInputState" class="form-control">
                               <option selected="">Duracion...</option>
-                              <option>1 minuto</option>
-                              <option>5 minutos</option>
-                              <option>15 minutos</option>
-                              <option>1 hora</option>
-                              <option>4 horas</option>
-                              <option>24 horas</option>
+                              <option value='60000'>1 minuto</option>
+                              <option value='300000'>5 minutos</option>
+                              <option value='900000'>15 minutos</option>
+                              <option value='3600000'>1 hora</option>
+                              <option value='14400000'>4 horas</option>
+                              <option value='86400000'>24 horas</option>
                             </select>
                         </div>
 
                     </li>
-                    <li class="list-group-item p-3">
-                            <label for="feInputState">Dispositivos</label>
+                    <li class="list-group-item p-3" id="dispoMenu">
+                        <label for="feInputState">Dispositivos</label>
+
+                        <div class="form-group">
+                            <label for="feInputState">Agregar dispositivos</label>
+                            <select id='dispositivos' class="form-control">
+                              <option selected="">Seleccione  al menos un dispositivo...</option>
+                        <%for (var dispositivo in dispositivos){%>
+                            <option value="<%=dispositivos[dispositivo].dispoId%>"><%=dispositivos[dispositivo].name%></option>
+                        <%}%>         
+                            </select>
+                        </div>
+
+
                     </li>
+
+
 
                     <li class="list-group-item p-3">
                         <button type="submit" class="btn btn-accent">Crear reporte</button>
@@ -41,5 +60,57 @@
                 </ul>
             </form>
         </div>
+
     </div>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#dispositivos").change(() => {
+                const dispoId = $("#dispositivos").val();
+                const dispoName = $("#dispositivos option:selected").html();
+
+                if ($("#dispositivos option:selected").index() == 0) return;
+
+                if ($("#card-" + dispoId).length > 0) return;
+
+                const dispoElement = `              
+                    <li class="list-group-item p-3" id="card-${dispoId}">
+                        <div class='d-flex'>
+                            <label for="feInputState">Dispositivo</label>
+                            <a class="ml-auto" href="#" id="borrar-${dispoId}" dispo-id="${dispoId}">Borrar</a>
+                        </div>
+                        <h5>${dispoName}</h5>
+                        <div class="form-group ">
+                            <label for="feFirstName">Nombre de la medicion</label>
+                            <input type="hidden" name="dispoId" value="${dispoId}">
+                            <input type="text" class="form-control" placeholder="Nombre del reporte" name="nombreMedicion">
+                        </div>
+                        <div class="form-group ">
+                            <label for="feFirstName">Factor de potencia</label>
+                            <div id="slider-${dispoId}" class="slider-success my-4" style="margin: 0 20px">
+                                <input type="hidden" class="custom-slider-input">
+                            </div>
+                        </div>
+                    </li>`;
+
+                $("#dispoMenu").after(dispoElement);
+
+                $("#borrar-"+dispoId).click(()=>{
+                    $("#card-"+dispoId).remove();
+                });
+
+                $('#slider-' + dispoId).customSlider({
+                    start: 100,
+                    connect: [true, false],
+                    tooltips: true,
+                    range: {
+                        'min': 0,
+                        'max': 100
+                    }
+                });
+            });
+        });
+
+    </script>
     <% include footer.ejs %>

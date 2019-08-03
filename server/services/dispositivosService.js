@@ -1,5 +1,6 @@
 module.exports = function dispositivosService(
   dispositivosRepository,
+  reportesService,
   sessionId
 ) {
   return {
@@ -52,6 +53,8 @@ module.exports = function dispositivosService(
       lastPush: Date.now(),
       ultimosConsumos
     });
+
+    await reportesService.notificar(dispoId, data.medicion);
   }
 
   async function borrar(dispoId) {

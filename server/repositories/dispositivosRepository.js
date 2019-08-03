@@ -1,5 +1,10 @@
 module.exports = function dispositivosRepository(mongoClient) {
-  return { list, upsert, del, get };
+  return {
+    list, upsert, del, get
+  };
+
+ 
+
 
   async function del(dispoId) {
     return mongoClient

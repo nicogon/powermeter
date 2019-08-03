@@ -1,6 +1,17 @@
 const fetch = require('node-fetch');
 
 function report() {
+  fetch('http://0.0.0.0:8081/dispositivos/medidor2/report', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      medicion: Math.floor(Math.random() * 30) + 10,      
+      pinza: 35,
+      dispoId: 'medidor2'
+    })
+  }).catch(console.log);
   fetch('http://0.0.0.0:8081/dispositivos/medidor1/report', {
     method: 'POST',
     headers: {

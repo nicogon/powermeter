@@ -12,8 +12,9 @@ module.exports = function routes(homeController, dispositivosController, reporte
     .get('/dispositivos', dispositivosController.listar)
 
   // Reportes
+    .post('/reportes', reportesController.nuevoReporte)
     .get('/reportes', reportesController.listar)
-    .get('/reportes/new', reportesController.nuevo)
+    .get('/reportes/new', reportesController.crearNuevoReporte)
     .get('/reportes/:reporteId', reportesController.detalleReporte);
     // TODO: Borrar? editar?
 };

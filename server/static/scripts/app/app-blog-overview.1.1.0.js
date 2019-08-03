@@ -92,7 +92,6 @@
 
     // Generate the small charts
     boSmallStatsDatasets.map(function (el, index) {
-      console.log(el)
       var chartOptions = boSmallStatsOptions(Math.max.apply(Math, el.data) + 1);
       var ctx = document.getElementsByClassName('blog-overview-stats-smallp-' + (index + 1));
       new Chart(ctx, {
@@ -204,7 +203,7 @@
         intersect: false
       }
     };
-
+/*
     // Generate the Analytics Overview chart.
     window.BlogOverviewUsers = new Chart(bouCtx, {
       type: 'LineWithLine',
@@ -220,7 +219,7 @@
 
     // Render the chart.
     window.BlogOverviewUsers.render();
-
+*/
     //
     // Users by device pie chart
     //
