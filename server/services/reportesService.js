@@ -11,7 +11,9 @@ module.exports = function dispositivosService(
   async function notificar(dispoId, medicion) {
     const response = await reportesRepository.getByDispoId(dispoId);
     if (response) {
-      reportesRepository.pushMedicion({ reporteId: response.reporteId, dispoId, medicion });
+      reportesRepository.pushMedicion({
+        reporteId: response.reporteId, dispoId, medicion, timeStamp: Date.now()
+      });
     }
   }
   function randomId() {
