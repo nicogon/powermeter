@@ -28,7 +28,7 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
       .collection('reportes')
       .findOne(
         { sessionId, [`mediciones.${dispoId}`]: { $exists: true } },
-        { projection: { reporteId: 1, inicio: 1, [`mediciones.${dispoId}.lastPush`]:1 } }
+        { projection: { reporteId: 1, inicio: 1, fin:1,  [`mediciones.${dispoId}.lastPush`]:1 } }
       );
   }
 

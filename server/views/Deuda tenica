@@ -3,3 +3,6 @@ Deuda tecnica:
 Que en la pagina de dispositivos, si se agrega un nuevo dispositivo, lo cargue en la lista sin tener que refrescar
 
 creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte. 
+
+ no pushear data cada 1 segudo, en casos de largo reporte, pushear cada menos tiempo.
+ 

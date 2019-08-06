@@ -15,9 +15,9 @@ module.exports = function dispositivosService(
 
   async function notificar(dispoId, medicion) {
     const response = await reportesRepository.getByDispoId(dispoId);
-    console.log("ss")
-    console.log(response)
-    if (response) {
+    console.log('ss');
+    console.log(response);
+    if (response && response.fin > Date.now()) {
       reportesRepository.pushMedicion({
         reporteId: response.reporteId, dispoId, medicion, inicio: response.inicio
       });

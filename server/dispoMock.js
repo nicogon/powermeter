@@ -19,7 +19,7 @@ function report() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      medicion: contador % 4  + 10,
+      medicion: contador % 3  + 10,
       pinza: 35,
       dispoId: 'medidor1'
     })
