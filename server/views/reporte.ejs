@@ -1,0 +1,161 @@
+<% include header.ejs %>
+
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Reporte</span>
+            <h3 class="page-title">
+                <%=reporte.nombre%>
+            </h3>
+        </div>
+    </div>
+
+    <div class="card card-small">
+        <div class="card-body pt-0 row" style="margin-top:10px">
+
+            <canvas id="canvas" style="width:100%"></canvas>
+
+        </div>
+    </div>
+
+
+    <script>
+        let graphData = <%-JSON.stringify(Object.values(reporte.mediciones))%>
+
+        function getLast(data) {
+            console.log(data)
+            last = 0;
+            data.forEach(medicion => {
+                if (medicion.data.length==0) {last=0;return;}
+                if (medicion.data[medicion.data.length - 1].offset > last) last = medicion.data[medicion.data.length - 1].offset;
+            })
+            return last;
+        }
+
+        function getFirst(data) {
+            first = 90000000;
+            data.forEach(medicion => {
+                if (medicion.data.length==0) {first=0;return;}
+                if (medicion.data[0].offset < first) first = medicion.data[0].offset;
+            })
+            console.log(first)
+            return first;
+        }
+
+        function adaptMedicion(data) {
+            return data.map(({
+                medicion,
+                offset
+            }) => ({
+                x: offset,
+                y: medicion
+            }));
+        }
+
+        function randomHSL(i) {
+            return "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,";
+            }
+
+            function adaptDatasets(dataSets) {
+                return dataSets.map((dataSet,index) => {
+                    const color = randomHSL(index);
+                    return {
+                        label: dataSet.nombreMedicion,
+                        backgroundColor: color + "0.1)",
+                        borderColor: color + "1)",
+                        data: adaptMedicion(dataSet.data)
+                    }
+
+                })
+
+            }
+
+
+
+            var config = {
+                type: 'line',
+                data: {
+                    datasets: adaptDatasets(graphData)
+                },
+                options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                     animation: false,
+                    legend: {
+                        display: true
+                    },
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                            bottom: 20
+                        }
+                    },
+                    tooltips: {
+
+                        enabled: true,
+                        custom: false
+                    },
+                    elements: {
+                        point: {
+                            radius: 2
+                        },
+                        line: {
+                            tension: 0.3
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'linear',
+                            position: 'bottom',
+                            gridLines: false,
+                            scaleLabel: false,
+                            ticks: {
+                                max: getLast(graphData),
+                                min: getFirst(graphData),
+                                display: false
+                            }
+                        }],
+                        yAxes: [{
+
+                            ticks: {
+                                beginAtZero: true,
+                                // Include a dollar sign in the ticks
+                                callback: function(value, index, values) {
+                                    return value + "W";
+                                }
+                            }
+
+
+                        }],
+                    },
+                }
+            };
+
+            $(document).ready(function() {
+
+                function actualizarCharts() {
+                    $.getJSON("/reportes/<%=reporte.reporteId%>/?format=json", function(data) {
+                        powerChart.data.datasets = adaptDatasets(data.mediciones);
+                        powerChart.options.scales.xAxes[0].ticks.min = getFirst(data.mediciones)
+                        powerChart.options.scales.xAxes[0].ticks.max = getLast(data.mediciones)
+                        powerChart.update();
+                    });
+                }
+
+                setInterval(function() {
+                    actualizarCharts()
+                }, 1000);
+
+            });
+
+            let powerChart;
+            window.onload = function() {
+                var ctx = document.getElementById('canvas').getContext('2d');
+                powerChart = new Chart(ctx, config);
+ 
+            };
+    </script>
+
+
+    <% include footer.ejs %>

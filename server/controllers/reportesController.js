@@ -19,13 +19,15 @@ module.exports = function reportesController(
     if (typeof req.body.nombreMedicion === 'string') {
       mediciones[req.body.dispoId] = {
         dispoId: req.body.dispoId,
-        nombreMedicion: req.body.nombreMedicion
+        nombreMedicion: req.body.nombreMedicion,
+        data: []
       };
     } else {
       req.body.dispoId.forEach((dispoId, index) => {
         mediciones[dispoId] = {
           nombreMedicion: req.body.nombreMedicion[index],
-          dispoId
+          dispoId,
+          data: []
         };
       });
     }
@@ -66,7 +68,7 @@ module.exports = function reportesController(
 */
 
     const dispositivos = (await dispositivosService.list()).filter(
-      dispositivo => dispositivo.isOnline
+      (dispositivo) => dispositivo.isOnline
     );
 
     res.render('nuevoReporte', { dispositivos });
