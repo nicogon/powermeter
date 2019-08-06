@@ -9,11 +9,13 @@ module.exports = function reportesController(dispositivosService, reportesServic
     const nombre = req.body.nombre;
     // eslint-disable-next-line radix
     const duracion = parseInt(req.body.duracion);
-    let mediciones;
+    const mediciones = {};
     if (typeof (req.body.nombreMedicion) === 'string') {
-      mediciones = [{ dispoId: req.body.dispoId, nombreMedicion: req.body.nombreMedicion }];
+      mediciones[req.body.dispoId] = { dispoId: req.body.dispoId, nombreMedicion: req.body.nombreMedicion };
     } else {
-      mediciones = (req.body.nombreMedicion).map((nombreMedicion, index) => ({ nombreMedicion, dispoId: req.body.dispoId[index] }));
+      req.body.dispoId.forEach((dispoId, index) => {
+        mediciones[dispoId] = { nombreMedicion: req.body.nombreMedicion[index], dispoId };
+      });
     }
     const inicio = Date.now();
     const fin = Date.now() + duracion;
@@ -28,7 +30,10 @@ module.exports = function reportesController(dispositivosService, reportesServic
 
   async function detalleReporte(req, res) {
     // TODO
-    res.status(200).send();
+    const reporteId = req.params.reporteId;
+    const reporte = await reportesService.getReporte(reporteId);
+
+    res.render('reporte', { reporte });
   }
 
 

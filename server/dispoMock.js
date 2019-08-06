@@ -1,13 +1,14 @@
 const fetch = require('node-fetch');
-
+let contador = 0
 function report() {
+  contador ++;
   fetch('http://0.0.0.0:8081/dispositivos/medidor2/report', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      medicion: Math.floor(Math.random() * 30) + 10,
+      medicion: contador % 4 + 10,
       pinza: 35,
       dispoId: 'medidor2'
     })
@@ -18,7 +19,7 @@ function report() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      medicion: Math.floor(Math.random() * 30) + 10,
+      medicion: contador % 4  + 10,
       pinza: 35,
       dispoId: 'medidor1'
     })
