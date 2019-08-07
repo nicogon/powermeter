@@ -13,25 +13,26 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
     dispoId,
     medicion,
     inicio,
-    sumatoriaMediciones,
+    promedioMediciones,
     medicionMaxima,
     contadorMediciones,
     index,
-    sumatoriaMedicionesTotal,
+    promedioMedicionesTotal,
     contadorMedicionesTotal,
     medicionMaximaTotal
   }) {
+    console.log(promedioMedicionesTotal)
     return mongoClient.collection('reportes').updateOne(
       { reporteId },
       {
         $set: {
-          sumatoriaMediciones: sumatoriaMedicionesTotal,
+          promedioMediciones: promedioMedicionesTotal,
           medicionMaxima: medicionMaximaTotal,
           contadorMediciones: contadorMedicionesTotal,
           [`ultimasMediciones.${index}`]: medicion,
           [`mediciones.${dispoId}.medicion`]: medicion,
           [`mediciones.${dispoId}.lastPush`]: parseInt(Date.now() - inicio),
-          [`mediciones.${dispoId}.sumatoriaMediciones`]: sumatoriaMediciones,
+          [`mediciones.${dispoId}.promedioMediciones`]: promedioMediciones,
           [`mediciones.${dispoId}.medicionMaxima`]: medicionMaxima,
           [`mediciones.${dispoId}.contadorMediciones`]: contadorMediciones
         },
@@ -54,13 +55,13 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
           reporteId: 1,
           inicio: 1,
           fin: 1,
-          sumatoriaMediciones: 1,
+          promedioMediciones: 1,
           medicionMaxima: 1,
           contadorMediciones: 1,
           ultimasMediciones: 1,
           [`mediciones.${dispoId}.lastPush`]: 1,
           [`mediciones.${dispoId}.index`]: 1,
-          [`mediciones.${dispoId}.sumatoriaMediciones`]: 1,
+          [`mediciones.${dispoId}.promedioMediciones`]: 1,
           [`mediciones.${dispoId}.medicionMaxima`]: 1,
           [`mediciones.${dispoId}.contadorMediciones`]: 1
         }

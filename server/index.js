@@ -16,11 +16,11 @@ async function main() {
     app.use(
       '*',
       (req, res, next) => {
-        console.log('Request URL:', req.originalUrl);
+     //   console.log('Request URL:', req.originalUrl);
         next();
       },
       (req, res, next) => {
-        console.log('Request Type:', req.method);
+       // console.log('Request Type:', req.method);
         next();
       },
     );

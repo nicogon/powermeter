@@ -1,7 +1,9 @@
+const _ = require('lodash');
+
 module.exports = function dispositivosService(
   dispositivosRepository,
   reportesRepository,
-  sessionId
+  sessionId, lock
 ) {
   return {
     nuevo,
@@ -14,33 +16,44 @@ module.exports = function dispositivosService(
   }
 
   async function notificar(dispoId, medicion) {
+    await lock.acquire();
     const response = await reportesRepository.getByDispoId(dispoId);
     console.log('ss');
     console.log(response);
 
 
-    // SUMATORIA DE MEDICONES MAXIMAS NO FUNCIONA  
+    // SUMATORIA DE MEDICONES MAXIMAS NO FUNCIONA
     if (response && response.fin > Date.now()) {
-      const medicionMaximaVieja = (response.mediciones[dispoId].medicionMaxima) || 0;
+      const medicionMaximaVieja = _.get(response, `mediciones.${dispoId}.medicionMaxima`, 0);
       const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
-     
-      const maxActual = Math.max(...(response.ultimasMediciones));
+      response.ultimasMediciones[response.mediciones[dispoId].index] = medicion;
+      const maxActual = _.sum(response.ultimasMediciones);
       const medicionMaximaTotal = Math.max((response.medicionMaxima || 0), maxActual);
 
-      reportesRepository.pushMedicion({
+      const contadorMedicionesTotal = _.get(response, 'contadorMediciones', 0) + 1;
+      const contadorMediciones = _.get(response, `mediciones.${dispoId}.contadorMediciones`, 0) + 1;
+      console.log(contadorMediciones);
+
+      const promedioMedicionesTotal = ((_.get(response, 'promedioMediciones', 0) * (contadorMedicionesTotal - 1)) + medicion) / contadorMedicionesTotal;
+      const promedioMediciones = ((_.get(response, `mediciones.${dispoId}.promedioMediciones`, 0) * (contadorMediciones - 1)) + medicion) / contadorMediciones;
+
+      await reportesRepository.pushMedicion({
         index: response.mediciones[dispoId].index,
         reporteId: response.reporteId,
         dispoId,
         medicion,
         inicio: response.inicio,
         medicionMaximaTotal,
-        contadorMedicionesTotal: ((response.contadorMediciones || 0) + 1),
-        sumatoriaMedicionesTotal: ((response.sumatoriaMediciones || 0) + medicion),
+        contadorMedicionesTotal,
+        promedioMedicionesTotal,
         medicionMaxima,
-        sumatoriaMediciones: ((response.sumatoriaMediciones || 0) + medicion),
-        contadorMediciones: ((response.contadorMediciones || 0) + 1)
+        promedioMediciones,
+        contadorMediciones
       });
+
     }
+    await lock.release();
+
   }
   function randomId() {
     return Math.random()

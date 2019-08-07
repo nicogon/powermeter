@@ -14,7 +14,7 @@ function report() {
     })
   }).catch(console.log);
  
- /*
+ 
   fetch('http://0.0.0.0:8081/dispositivos/medidor1/report', {
     method: 'POST',
     headers: {
@@ -27,7 +27,7 @@ function report() {
     })
   }).catch(console.log);
 
-  */
+  
 }
 
 fetch('http://0.0.0.0:8081/dispositivos/unicavez/report', {
