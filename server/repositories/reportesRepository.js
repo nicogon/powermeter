@@ -9,14 +9,37 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
   };
 
   async function pushMedicion({
-    reporteId, dispoId, medicion, inicio
+    reporteId,
+    dispoId,
+    medicion,
+    inicio,
+    sumatoriaMediciones,
+    medicionMaxima,
+    contadorMediciones,
+    index,
+    sumatoriaMedicionesTotal,
+    contadorMedicionesTotal,
+    medicionMaximaTotal
   }) {
     return mongoClient.collection('reportes').updateOne(
       { reporteId },
       {
-        $set: { [`mediciones.${dispoId}.lastPush`]: parseInt(Date.now() - inicio) },
+        $set: {
+          sumatoriaMediciones: sumatoriaMedicionesTotal,
+          medicionMaxima: medicionMaximaTotal,
+          contadorMediciones: contadorMedicionesTotal,
+          [`ultimasMediciones.${index}`]: medicion,
+          'mediciones.medicion': medicion,
+          [`mediciones.${dispoId}.lastPush`]: parseInt(Date.now() - inicio),
+          [`mediciones.${dispoId}.sumatoriaMediciones`]: sumatoriaMediciones,
+          [`mediciones.${dispoId}.medicionMaxima`]: medicionMaxima,
+          [`mediciones.${dispoId}.contadorMediciones`]: contadorMediciones
+        },
         $push: {
-          [`mediciones.${dispoId}.data`]: {medicion, offset: parseInt(Date.now() - inicio) }
+          [`mediciones.${dispoId}.data`]: {
+            medicion,
+            offset: parseInt(Date.now() - inicio)
+          }
         }
       }
     );
@@ -24,12 +47,24 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
 
   // HACER QUE SEA EL ACTIVO FILTRAR
   async function getByDispoId(dispoId) {
-    return mongoClient
-      .collection('reportes')
-      .findOne(
-        { sessionId, [`mediciones.${dispoId}`]: { $exists: true } },
-        { projection: { reporteId: 1, inicio: 1, fin:1,  [`mediciones.${dispoId}.lastPush`]:1 } }
-      );
+    return mongoClient.collection('reportes').findOne(
+      { sessionId, [`mediciones.${dispoId}`]: { $exists: true } },
+      {
+        projection: {
+          reporteId: 1,
+          inicio: 1,
+          fin: 1,
+          sumatoriaMediciones: 1,
+          medicionMaxima: 1,
+          contadorMediciones: 1,
+          ultimasMediciones: 1,
+          [`mediciones.${dispoId}.lastPush`]: 1,
+          [`mediciones.${dispoId}.sumatoriaMediciones`]: 1,
+          [`mediciones.${dispoId}.medicionMaxima`]: 1,
+          [`mediciones.${dispoId}.contadorMediciones`]: 1
+        }
+      }
+    );
   }
 
   async function del(reporteId) {

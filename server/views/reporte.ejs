@@ -1,67 +1,155 @@
 <% include header.ejs %>
 
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Reporte</span>
-            <h3 class="page-title">
-                <%=reporte.nombre%>
-            </h3>
+
+    <div class="main-content-container container-fluid">
+
+
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Reporte</span>
+                <h3 class="page-title">
+                    <%=reporte.nombre%>
+                </h3>
+            </div>
         </div>
-    </div>
 
-    <div class="card card-small">
-        <div class="card-body pt-0 row" style="margin-top:10px">
 
-            <canvas id="canvas" style="width:100%"></canvas>
+        <div class='row'>
+
+            <div class='col-md-12 mb-4'>
+                <div class="card card-small">
+                    <div class="card-body pt-0 row" style="margin-top:10px">
+
+                        <canvas id="canvas" style="width:100%"></canvas>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
-    </div>
+        <div class='row'>
+
+            <div class="col-lg col-md-12  mb-4">
+                <div class="stats-small stats-small--1 card card-small">
+                    <div class="card-body p-0 d-flex">
+                        <div class="d-flex flex-column m-auto">
+                            <div class="stats-small__data text-center">
+                                <span class="stats-small__label text-uppercase">Consumo actual</span>
+                                <h6 class="stats-small__value count my-3">2,413w</h6>
+                            </div>
+                            <div class="stats-small__data">
+                                <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg col-md-12  mb-4">
+                <div class="stats-small stats-small--1 card card-small">
+                    <div class="card-body p-0 d-flex">
+                        <div class="d-flex flex-column m-auto">
+                            <div class="stats-small__data text-center">
+                                <span class="stats-small__label text-uppercase">Consumo promedio</span>
+                                <h6 class="stats-small__value count my-3">2,413w</h6>
+                            </div>
+                            <div class="stats-small__data">
+                                <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg col-md-12mb-4">
+                <div class="stats-small stats-small--1 card card-small">
+                    <div class="card-body p-0 d-flex">
+                        <div class="d-flex flex-column m-auto">
+                            <div class="stats-small__data text-center">
+                                <span class="stats-small__label text-uppercase">Consumo maximo</span>
+                                <h6 class="stats-small__value count my-3">2,413w</h6>
+                            </div>
+                            <div class="stats-small__data">
+                                <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-    <script>
-        let graphData = <%-JSON.stringify(Object.values(reporte.mediciones))%>
 
-        function getLast(data) {
-            console.log(data)
-            last = 0;
-            data.forEach(medicion => {
-                if (medicion.data.length==0) {last=0;return;}
-                if (medicion.data[medicion.data.length - 1].offset > last) last = medicion.data[medicion.data.length - 1].offset;
-            })
-            return last;
-        }
+        </div>
 
-        function getFirst(data) {
-            first = 90000000;
-            data.forEach(medicion => {
-                if (medicion.data.length==0) {first=0;return;}
-                if (medicion.data[0].offset < first) first = medicion.data[0].offset;
-            })
-            console.log(first)
-            return first;
-        }
 
-        function adaptMedicion(data) {
-            return data.map(({
-                medicion,
-                offset
-            }) => ({
-                x: offset,
-                y: medicion
-            }));
-        }
+        <div class='row'>
 
-        function randomHSL(i) {
-            return "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,";
+            <div class='col-md-12 mb-4'>
+                <div class="card card-small">
+                    <div class="card-body pt-0 row" style="margin-top:10px">
+
+                        <canvas id="canvas2" style="width:100%"></canvas>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <script>
+            let graphData = <%-JSON.stringify(Object.values(reporte.mediciones))%>
+
+            function getLast(data) {
+                console.log(data)
+                last = 0;
+                data.forEach(medicion => {
+                    if (medicion.data.length == 0) {
+                        last = 0;
+                        return;
+                    }
+                    if (medicion.data[medicion.data.length - 1].offset > last) last = medicion.data[medicion.data.length - 1].offset;
+                })
+                return last;
+            }
+
+            function getFirst(data) {
+                first = 90000000;
+                data.forEach(medicion => {
+                    if (medicion.data.length == 0) {
+                        first = 0;
+                        return;
+                    }
+                    if (medicion.data[0].offset < first) first = medicion.data[0].offset;
+                })
+                console.log(first)
+                return first;
+            }
+
+            function adaptMedicion(data) {
+                return data.map(({
+                    medicion,
+                    offset
+                }) => ({
+                    x: offset,
+                    y: medicion
+                }));
+            }
+
+            function randomHSL(i, transparent = false) {
+                return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
             }
 
             function adaptDatasets(dataSets) {
-                return dataSets.map((dataSet,index) => {
+                return dataSets.map((dataSet, index) => {
                     const color = randomHSL(index);
+                    const color2 = randomHSL(index, true);
                     return {
                         label: dataSet.nombreMedicion,
-                        backgroundColor: color + "0.1)",
-                        borderColor: color + "1)",
+                        backgroundColor: color2,
+                        borderColor: color,
                         data: adaptMedicion(dataSet.data)
                     }
 
@@ -79,7 +167,7 @@
                 options: {
                     maintainAspectRatio: true,
                     responsive: true,
-                     animation: false,
+                    animation: false,
                     legend: {
                         display: true
                     },
@@ -150,12 +238,60 @@
             });
 
             let powerChart;
+            let pieChart;
+
+
+            function calcularNombres(data){
+                return data.map((medicion)=> (medicion.nombreMedicion));
+            }
+
+            
+
+            function calcularColores(data){
+                return data.map((valor,index)=>(index)).map((a)=>randomHSL(a));
+            }
+
+
+            function calcularPorcentajes(data){
+                let maximo=0;
+                for(const medicion of data){
+                    maximo+=medicion.medicionPromedio;
+                }
+                return data.map((medicion)=>((100*medicion.medicionPromedio/maximo).toFixed(2)))
+            }
+
+            console.log(calcularPorcentajes(graphData))
+
+
             window.onload = function() {
                 var ctx = document.getElementById('canvas').getContext('2d');
                 powerChart = new Chart(ctx, config);
- 
-            };
-    </script>
 
+                var ctx2 = document.getElementById('canvas2').getContext('2d');
+
+                data = {
+                    datasets: [{
+                        data: calcularPorcentajes(graphData),
+                        backgroundColor: calcularColores(graphData),
+                        backgroundColor: calcularColores(graphData)
+                    }],
+
+                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                    labels: calcularNombres(graphData)
+                };
+
+                var myDoughnutChart = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: data
+
+
+
+                });
+
+            };
+        </script>
+
+
+    </div>
 
     <% include footer.ejs %>
