@@ -29,7 +29,7 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
           medicionMaxima: medicionMaximaTotal,
           contadorMediciones: contadorMedicionesTotal,
           [`ultimasMediciones.${index}`]: medicion,
-          'mediciones.medicion': medicion,
+          [`mediciones.${dispoId}.medicion`]: medicion,
           [`mediciones.${dispoId}.lastPush`]: parseInt(Date.now() - inicio),
           [`mediciones.${dispoId}.sumatoriaMediciones`]: sumatoriaMediciones,
           [`mediciones.${dispoId}.medicionMaxima`]: medicionMaxima,
@@ -59,6 +59,7 @@ module.exports = function reportesRepository(mongoClient, sessionId) {
           contadorMediciones: 1,
           ultimasMediciones: 1,
           [`mediciones.${dispoId}.lastPush`]: 1,
+          [`mediciones.${dispoId}.index`]: 1,
           [`mediciones.${dispoId}.sumatoriaMediciones`]: 1,
           [`mediciones.${dispoId}.medicionMaxima`]: 1,
           [`mediciones.${dispoId}.contadorMediciones`]: 1

@@ -17,24 +17,28 @@ module.exports = function dispositivosService(
     const response = await reportesRepository.getByDispoId(dispoId);
     console.log('ss');
     console.log(response);
+
+
+    // SUMATORIA DE MEDICONES MAXIMAS NO FUNCIONA  
     if (response && response.fin > Date.now()) {
-      const medicionMaximaVieja = (response[dispoId] && response[dispoId].medicionMaxima) || 0;
+      const medicionMaximaVieja = (response.mediciones[dispoId].medicionMaxima) || 0;
       const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
+     
       const maxActual = Math.max(...(response.ultimasMediciones));
-      const medicionMaximaTotal = Math.max(response.medicionMaxima, maxActual);
+      const medicionMaximaTotal = Math.max((response.medicionMaxima || 0), maxActual);
 
       reportesRepository.pushMedicion({
-        index: Object.keys(response.mediciones).indexOf(dispoId),
+        index: response.mediciones[dispoId].index,
         reporteId: response.reporteId,
         dispoId,
         medicion,
         inicio: response.inicio,
         medicionMaximaTotal,
-        contadorMedicionesTotal: (response.contadorMediciones || 0 + 1),
-        sumatoriaMedicionesTotal: (response.sumatoriaMediciones || 0 + medicion),
+        contadorMedicionesTotal: ((response.contadorMediciones || 0) + 1),
+        sumatoriaMedicionesTotal: ((response.sumatoriaMediciones || 0) + medicion),
         medicionMaxima,
-        sumatoriaMediciones: (response.sumatoriaMediciones || 0 + medicion),
-        contadorMediciones: (response.contadorMediciones || 0 + 1)
+        sumatoriaMediciones: ((response.sumatoriaMediciones || 0) + medicion),
+        contadorMediciones: ((response.contadorMediciones || 0) + 1)
       });
     }
   }

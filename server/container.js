@@ -20,7 +20,7 @@ async function createContainer() {
   });
 
   container.register('sessionId', function sessionIdFn() {
-    return sessionId;
+    return '4oy0xej';//sessionId;
   });
 
   return container;

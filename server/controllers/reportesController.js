@@ -20,11 +20,13 @@ module.exports = function reportesController(
       mediciones[req.body.dispoId] = {
         dispoId: req.body.dispoId,
         nombreMedicion: req.body.nombreMedicion,
-        data: []
+        data: [],
+        index: 0
       };
     } else {
       req.body.dispoId.forEach((dispoId, index) => {
         mediciones[dispoId] = {
+          index,
           nombreMedicion: req.body.nombreMedicion[index],
           dispoId,
           data: []
@@ -68,7 +70,7 @@ module.exports = function reportesController(
 */
 
     const dispositivos = (await dispositivosService.list()).filter(
-      (dispositivo) => dispositivo.isOnline
+      dispositivo => dispositivo.isOnline
     );
 
     res.render('nuevoReporte', { dispositivos });

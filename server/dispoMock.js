@@ -13,6 +13,8 @@ function report() {
       dispoId: 'medidor2'
     })
   }).catch(console.log);
+ 
+ /*
   fetch('http://0.0.0.0:8081/dispositivos/medidor1/report', {
     method: 'POST',
     headers: {
@@ -24,6 +26,8 @@ function report() {
       dispoId: 'medidor1'
     })
   }).catch(console.log);
+
+  */
 }
 
 fetch('http://0.0.0.0:8081/dispositivos/unicavez/report', {
@@ -40,7 +44,7 @@ fetch('http://0.0.0.0:8081/dispositivos/unicavez/report', {
 
 setInterval(function () {
   report();
-}, 3000);
+}, 5000);
 
 /*
 const repo = require('./repositories/dispositivosRepository');
