@@ -4,6 +4,20 @@ const MongoClient = require('mongodb').MongoClient;
 
 const { EventEmitter } = require('events');
 
+
+const medicionEnCurso = {
+  nombre: 'oooo',
+  duracion: 900000,
+  mediciones: {
+    medidor1: { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
+    medidor2: { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] }
+  },
+  inicio: 1565223068401,
+  fin: 1565223968401,
+  sessionId: '4oy0xej'
+};
+
+
 class Lock {
   constructor() {
     this._locked = false;
@@ -56,7 +70,11 @@ async function createContainer() {
     return mongo;
   });
 
-  container.register('lock', function mongoClient() {
+  container.register('medicionEnCurso', function medicionEnCursofn() {
+    return medicionEnCurso;
+  });
+
+  container.register('lock', function lock() {
     return new Lock();
   });
   container.register('sessionId', function sessionIdFn() {
