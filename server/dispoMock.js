@@ -8,7 +8,7 @@ function report() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      medicion: contador % 4 + 10,
+      medicion: contador % 5 + 10,
       pinza: 35,
       dispoId: 'medidor2'
     })
@@ -44,7 +44,7 @@ fetch('http://0.0.0.0:8081/dispositivos/unicavez/report', {
 
 setInterval(function () {
   report();
-}, 5000);
+}, 2000);
 
 /*
 const repo = require('./repositories/dispositivosRepository');

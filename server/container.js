@@ -13,7 +13,7 @@ const medicionEnCurso = {
     medidor2: { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] }
   },
   inicio: 1565223068401,
-  fin: 1565223968401,
+  fin: 1595223968401,
   sessionId: '4oy0xej'
 };
 

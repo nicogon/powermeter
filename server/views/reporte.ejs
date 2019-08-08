@@ -35,7 +35,7 @@
                         <div class="d-flex flex-column m-auto">
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo actual</span>
-                                <h6 class="stats-small__value count my-3">2,413w</h6>
+                                <h6 class="stats-small__value count my-3"><%=reporte.sumatoriaMedicion%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -51,7 +51,7 @@
                         <div class="d-flex flex-column m-auto">
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo promedio</span>
-                                <h6 class="stats-small__value count my-3">2,413w</h6>
+                                <h6 class="stats-small__value count my-3"><%=reporte.medicionPromedio%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -67,7 +67,7 @@
                         <div class="d-flex flex-column m-auto">
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo maximo</span>
-                                <h6 class="stats-small__value count my-3">2,413w</h6>
+                                <h6 class="stats-small__value count my-3"><%=reporte.medicionMaxima%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -293,7 +293,8 @@
 
                 var myDoughnutChart = new Chart(ctx2, {
                     type: 'doughnut',
-                    data: data
+                    data: data,
+                    
 
 
 

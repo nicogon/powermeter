@@ -19,41 +19,37 @@ module.exports = function dispositivosService(
   async function notificar(dispoId, medicion) {
     await lock.acquire();
     // const response = await reportesRepository.getByDispoId(dispoId);
-    // console.log('ss');
-
 
     console.log(medicionEnCurso);
+    const perteneceAlReporte = _.get(medicionEnCurso, `mediciones.${dispoId}`);
 
-
-    // SUMATORIA DE MEDICONES MAXIMAS NO FUNCIONA
-    if (medicionEnCurso && medicionEnCurso.fin > Date.now()) {
+    if (perteneceAlReporte && medicionEnCurso && medicionEnCurso.fin > Date.now()) {
       const medicionMaximaVieja = _.get(medicionEnCurso, `mediciones.${dispoId}.medicionMaxima`, 0);
       const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
       medicionEnCurso.mediciones[dispoId].medicion = medicion;
-      const maxActual = _.sum(Object.keys(medicionEnCurso.mediciones).map(medicionInt => (medicionInt.medicion || 0)));
-      const medicionMaximaTotal = Math.max((medicionEnCurso.medicionMaxima || 0), maxActual);
+      // console.log(Object.values(medicionEnCurso.mediciones))
+      const sumatoriaMedicion = _.sum((Object.values(medicionEnCurso.mediciones)).map(medicionInt => (medicionInt.medicion || 0)));
+      const medicionMaximaTotal = Math.max((medicionEnCurso.medicionMaxima || 0), sumatoriaMedicion);
+
 
       const contadorMedicionesTotal = _.get(medicionEnCurso, 'contadorMediciones', 0) + 1;
       const contadorMediciones = _.get(medicionEnCurso, `mediciones.${dispoId}.contadorMediciones`, 0) + 1;
-      console.log(contadorMediciones);
-
-      const promedioMedicionesTotal = ((_.get(medicionEnCurso, 'promedioMediciones', 0) * (contadorMedicionesTotal - 1)) + medicion) / contadorMedicionesTotal;
-      const promedioMediciones = ((_.get(medicionEnCurso, `mediciones.${dispoId}.promedioMediciones`, 0) * (contadorMediciones - 1)) + medicion) / contadorMediciones;
+      const medicionPromedioTotal = _.round((((_.get(medicionEnCurso, 'medicionPromedio', 0) * (contadorMedicionesTotal - 1)) + sumatoriaMedicion) / contadorMedicionesTotal), 1);
+      const medicionPromedio = _.round((((_.get(medicionEnCurso, `mediciones.${dispoId}.medicionPromedio`, 0) * (contadorMediciones - 1)) + medicion) / contadorMediciones), 1);
 
       medicionEnCurso = {
         ...medicionEnCurso,
+        sumatoriaMedicion,
         medicionMaxima: medicionMaximaTotal,
         contadorMediciones: contadorMedicionesTotal,
-        promedioMediciones: promedioMedicionesTotal
+        medicionPromedio: medicionPromedioTotal
       };
-
-      console.log(dispoId);
 
       medicionEnCurso.mediciones[dispoId] = {
         ...medicionEnCurso.mediciones[dispoId],
         medicion,
         medicionMaxima,
-        promedioMediciones,
+        medicionPromedio,
         contadorMediciones
       };
 
@@ -69,6 +65,10 @@ module.exports = function dispositivosService(
       await reportesRepository.pushMedicion();
 
       */
+    } else if (medicionEnCurso.fin < Date.now()) {
+
+      // aca hacer que el reporte termino, persistirlo?
+
     }
     await lock.release();
   }
