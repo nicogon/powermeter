@@ -29,13 +29,29 @@
         </div>
         <div class='row'>
 
+            <div class='col-md-12 mb-4'>
+                <div class="card card-small">
+                    <div class="card-body px-4 row">
+
+                        <div class="progress position-relative">
+                            <div id="porcentaje" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                            <small class="bar-text" id="porcentaje-txt">60% complete</small>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
             <div class="col-lg col-md-12  mb-4">
                 <div class="stats-small stats-small--1 card card-small">
                     <div class="card-body p-0 d-flex">
                         <div class="d-flex flex-column m-auto">
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo actual</span>
-                                <h6 class="stats-small__value count my-3"><%=reporte.sumatoriaMedicion%>w</h6>
+                                <h6 class="stats-small__value count my-3">
+                                    <%=reporte.sumatoriaMedicion%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -51,7 +67,8 @@
                         <div class="d-flex flex-column m-auto">
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo promedio</span>
-                                <h6 class="stats-small__value count my-3"><%=reporte.medicionPromedio%>w</h6>
+                                <h6 class="stats-small__value count my-3">
+                                    <%=reporte.medicionPromedio%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -61,13 +78,14 @@
                 </div>
             </div>
 
-            <div class="col-lg col-md-12mb-4">
+            <div class="col-lg col-md-12 mb-4">
                 <div class="stats-small stats-small--1 card card-small">
                     <div class="card-body p-0 d-flex">
                         <div class="d-flex flex-column m-auto">
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo maximo</span>
-                                <h6 class="stats-small__value count my-3"><%=reporte.medicionMaxima%>w</h6>
+                                <h6 class="stats-small__value count my-3">
+                                    <%=reporte.medicionMaxima%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -94,214 +112,317 @@
                 </div>
             </div>
 
+
         </div>
 
 
 
+        <div class='row'>
 
-        <script>
-            let graphData = <%-JSON.stringify(Object.values(reporte.mediciones))%>
+            <div class='col-md-12'>
+                <div class="card card-small">
+                    <div class="card-body pt-0 row" style="margin-top:10px">
 
-            function getLast(data) {
-                last = 0;
-                data.forEach(medicion => {
-                    if (medicion.data.length == 0) {
-                        last = 0;
-                        return;
-                    }
-                    if (medicion.data[medicion.data.length - 1].offset > last) last = medicion.data[medicion.data.length - 1].offset;
-                })
-                return last;
+
+                        <table class="table mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col" class="border-0">Dispositivo</th>
+                                    <th scope="col" class="border-0">Consumo Actual</th>
+                                    <th scope="col" class="border-0">Consumo Promedio</th>
+                                    <th scope="col" class="border-0">Consumo Maximo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(medicion of Object.values(reporte.mediciones)){ %>
+                                    <tr>
+                                        <td>
+                                            <%=medicion.nombreMedicion%>
+                                        </td>
+                                        <td>
+                                            <%=medicion.medicion%>
+                                        </td>
+                                        <td>
+                                            <%=medicion.medicionPromedio%>
+                                        </td>
+                                        <td>
+                                            <%=medicion.medicionMaxima%>
+                                        </td>
+
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+
+        <style>
+            .progress {
+                width: 100%;
+                height: 30px
             }
-
-            function getFirst(data) {
-                first = 90000000;
-                data.forEach(medicion => {
-                    if (medicion.data.length == 0) {
-                        first = 0;
-                        return;
-                    }
-                    if (medicion.data[0].offset < first) first = medicion.data[0].offset;
-                })
-                return first;
+            
+            .bar-text {
+                left: 50%;
+                text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+                transform: translate(-50%, 0);
+                position: absolute;
+                line-height: 30px;
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+                text-align: center
             }
-
-            function adaptMedicion(data) {
-                return data.map(({
-                    medicion,
-                    offset
-                }) => ({
-                    x: offset,
-                    y: medicion
-                }));
+            
+            .progress-bar {
+                height: 30px;
             }
-
-            function randomHSL(i, transparent = false) {
-                return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
-            }
-
-            function adaptDatasets(dataSets) {
-                return dataSets.map((dataSet, index) => {
-
-                   
-                    const color = randomHSL(index);
-                    const color2 = randomHSL(index, true);
-                    return {
-                        label: dataSet.nombreMedicion,
-                        backgroundColor: color2,
-                        borderColor: color,
-                        data: adaptMedicion(dataSet.data)
-                    }
-
-                })
-
-            }
-
-      
+        </style>
 
 
-            var config = {
-                type: 'line',
-                data: {
-                    datasets: adaptDatasets(graphData)
-                },
-                options: {
-                    maintainAspectRatio: true,
-                    responsive: true,
-                    animation: false,
-                    legend: {
-                        display: true
-                    },
-                    layout: {
-                        padding: {
-                            left: 20,
-                            right: 20,
-                            top: 20,
-                            bottom: 20
-                        }
-                    },
-                    tooltips: {
-
-                        enabled: true,
-                        custom: false
-                    },
-                    elements: {
-                        point: {
-                            radius: 2
-                        },
-                        line: {
-                            tension: 0.3
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            type: 'linear',
-                            position: 'bottom',
-                            gridLines: false,
-                            scaleLabel: false,
-                            ticks: {
-                                max: getLast(graphData),
-                                min: getFirst(graphData),
-                                display: false
-                            }
-                        }],
-                        yAxes: [{
-
-                            ticks: {
-                                beginAtZero: true,
-                                // Include a dollar sign in the ticks
-                                callback: function(value, index, values) {
-                                    return value + "W";
-                                }
-                            }
 
 
-                        }],
-                    },
+
+    </div>
+
+
+
+
+    <script>
+        let graphData = <%-JSON.stringify(Object.values(reporte.mediciones))%>
+        let reporte = <%-JSON.stringify({...reporte, mediciones:undefined})%>
+
+
+
+
+
+
+
+
+
+
+        function getLast(data) {
+            last = 0;
+            data.forEach(medicion => {
+                if (medicion.data.length == 0) {
+                    last = 0;
+                    return;
                 }
+                if (medicion.data[medicion.data.length - 1].offset > last) last = medicion.data[medicion.data.length - 1].offset;
+            })
+            return last;
+        }
+
+        function getFirst(data) {
+            first = 90000000000;
+            data.forEach(medicion => {
+                if (medicion.data.length == 0) {
+                    first = 0;
+                    return;
+                }
+                if (medicion.data[0].offset < first) first = medicion.data[0].offset;
+            })
+            return first;
+        }
+
+        function adaptMedicion(data) {
+            return data.map(({
+                medicion,
+                offset
+            }) => ({
+                x: offset,
+                y: medicion
+            }));
+        }
+
+        function randomHSL(i, transparent = false) {
+            return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
+        }
+
+        function adaptDatasets(dataSets) {
+            return dataSets.map((dataSet, index) => {
+
+
+                const color = randomHSL(index);
+                const color2 = randomHSL(index, true);
+                return {
+                    label: dataSet.nombreMedicion,
+                    backgroundColor: color2,
+                    borderColor: color,
+                    data: adaptMedicion(dataSet.data)
+                }
+
+            })
+
+        }
+
+
+
+
+        var config = {
+            type: 'line',
+            data: {
+                datasets: adaptDatasets(graphData)
+            },
+            options: {
+                maintainAspectRatio: true,
+                responsive: true,
+                animation: false,
+                legend: {
+                    display: true
+                },
+                layout: {
+                    padding: {
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                        bottom: 20
+                    }
+                },
+                tooltips: {
+
+                    enabled: true,
+                    custom: false
+                },
+                elements: {
+                    point: {
+                        radius: 2
+                    },
+                    line: {
+                        tension: 0.3
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom',
+                        gridLines: false,
+                        scaleLabel: false,
+                        ticks: {
+                            max: getLast(graphData),
+                            min: getFirst(graphData),
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+
+                        ticks: {
+                            beginAtZero: true,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return value + "W";
+                            }
+                        }
+
+
+                    }],
+                },
+            }
+        };
+
+        $(document).ready(function() {
+
+
+
+
+
+            function calcularPorcentaje(data) {
+
+                if (data.fin < data.now) {
+                    return 100;
+                } else {
+
+                    return 100 - (100 * (data.fin - data.now) / data.duracion).toFixed(0);
+                }
+
+
+            }
+
+
+            function actualizarPorcentaje(data) {
+                porcentaje = calcularPorcentaje(data);
+                $("#porcentaje").width(porcentaje + "%");
+                $("#porcentaje-txt").html(porcentaje == 100 ? "Reporte Finalizado" : porcentaje + "% reporte en progreso");
+            }
+
+            actualizarPorcentaje(reporte)
+
+
+
+
+            function actualizarCharts() {
+                $.getJSON("/reportes/<%=reporte.reporteId%>/?format=json", function(data) {
+                    powerChart.data.datasets = adaptDatasets(data.mediciones);
+                    powerChart.options.scales.xAxes[0].ticks.min = getFirst(data.mediciones)
+                    powerChart.options.scales.xAxes[0].ticks.max = getLast(data.mediciones)
+                    powerChart.update();
+                });
+            }
+
+            setInterval(function() {
+                //      actualizarCharts()
+            }, 1000);
+
+        });
+
+        let powerChart;
+        let pieChart;
+
+
+        function calcularNombres(data) {
+            return data.map((medicion) => (medicion.nombreMedicion));
+        }
+
+
+
+        function calcularColores(data) {
+            return data.map((valor, index) => (index)).map((a) => randomHSL(a));
+        }
+
+
+        function calcularPorcentajes(data) {
+            let maximo = 0;
+            for (const medicion of data) {
+                maximo += medicion.medicionPromedio;
+            }
+            return data.map((medicion) => ((100 * medicion.medicionPromedio / maximo).toFixed(2)))
+        }
+
+
+
+        window.onload = function() {
+
+
+
+            var ctx = document.getElementById('canvas').getContext('2d');
+            powerChart = new Chart(ctx, config);
+
+            var ctx2 = document.getElementById('canvas2').getContext('2d');
+
+            data = {
+                datasets: [{
+                    data: calcularPorcentajes(graphData),
+                    backgroundColor: calcularColores(graphData),
+                    backgroundColor: calcularColores(graphData)
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: calcularNombres(graphData)
             };
 
-            $(document).ready(function() {
-
-
-
-
-
-                function updateMaxLabel(data){
-
-                }
-
-
-
-
-                function actualizarCharts() {
-                    $.getJSON("/reportes/<%=reporte.reporteId%>/?format=json", function(data) {
-                        powerChart.data.datasets = adaptDatasets(data.mediciones);
-                        powerChart.options.scales.xAxes[0].ticks.min = getFirst(data.mediciones)
-                        powerChart.options.scales.xAxes[0].ticks.max = getLast(data.mediciones)
-                        powerChart.update();
-                    });
-                }
-
-                setInterval(function() {
-              //      actualizarCharts()
-                }, 1000);
-
+            var myDoughnutChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: data,
             });
 
-            let powerChart;
-            let pieChart;
-
-
-            function calcularNombres(data){
-                return data.map((medicion)=> (medicion.nombreMedicion));
-            }
-
-            
-
-            function calcularColores(data){
-                return data.map((valor,index)=>(index)).map((a)=>randomHSL(a));
-            }
-
-
-            function calcularPorcentajes(data){
-                let maximo=0;
-                for(const medicion of data){
-                    maximo+=medicion.medicionPromedio;
-                }
-                return data.map((medicion)=>((100*medicion.medicionPromedio/maximo).toFixed(2)))
-            }
-
-
-
-            window.onload = function() {
-                var ctx = document.getElementById('canvas').getContext('2d');
-                powerChart = new Chart(ctx, config);
-
-                var ctx2 = document.getElementById('canvas2').getContext('2d');
-
-                data = {
-                    datasets: [{
-                        data: calcularPorcentajes(graphData),
-                        backgroundColor: calcularColores(graphData),
-                        backgroundColor: calcularColores(graphData)
-                    }],
-
-                    // These labels appear in the legend and in the tooltips when hovering different arcs
-                    labels: calcularNombres(graphData)
-                };
-
-                var myDoughnutChart = new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: data,
-                    
-
-
-
-                });
-
-            };
-        </script>
+        };
+    </script>
 
 
     </div>

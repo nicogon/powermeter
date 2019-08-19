@@ -13,21 +13,30 @@ module.exports = function dispositivosService(
   };
 
   function getReporte(reporteId) {
-    return medicionEnCurso;// reportesRepository.getReporte(reporteId);
+    return { now: Date.now(), ...medicionEnCurso };// reportesRepository.getReporte(reporteId);
   }
 
   async function notificar(dispoId, medicion) {
     await lock.acquire();
-    // const response = await reportesRepository.getByDispoId(dispoId);
 
-    console.log(medicionEnCurso);
     const perteneceAlReporte = _.get(medicionEnCurso, `mediciones.${dispoId}`);
+
+
+    // Finalizo
+    if (perteneceAlReporte && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
+
+      /*
+      guardarMedicion(medicionEnCurso);
+      medicionEnCurso = null;
+      await lock.release();
+      return;
+      */
+
+    }
 
     if (perteneceAlReporte && medicionEnCurso && medicionEnCurso.fin > Date.now()) {
       const medicionMaximaVieja = _.get(medicionEnCurso, `mediciones.${dispoId}.medicionMaxima`, 0);
       const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
-      medicionEnCurso.mediciones[dispoId].medicion = medicion;
-      // console.log(Object.values(medicionEnCurso.mediciones))
       const sumatoriaMedicion = _.sum((Object.values(medicionEnCurso.mediciones)).map(medicionInt => (medicionInt.medicion || 0)));
       const medicionMaximaTotal = Math.max((medicionEnCurso.medicionMaxima || 0), sumatoriaMedicion);
 
@@ -59,19 +68,10 @@ module.exports = function dispositivosService(
           medicion
         }
       );
-
-
-    /*
-      await reportesRepository.pushMedicion();
-
-      */
-    } else if (medicionEnCurso.fin < Date.now()) {
-
-      // aca hacer que el reporte termino, persistirlo?
-
     }
     await lock.release();
   }
+
   function randomId() {
     return Math.random()
       .toString(36)
@@ -83,7 +83,6 @@ module.exports = function dispositivosService(
     nombre, duracion, mediciones, inicio, fin
   }) {
     const reporteId = randomId();
-    // const ultimasMediciones = Array(Object.keys(mediciones).length).fill(0);
 
     medicionEnCurso = {
       nombre,
@@ -92,21 +91,9 @@ module.exports = function dispositivosService(
       inicio,
       fin,
       sessionId
-      // ,ultimasMediciones
     };
 
-    /*
-    await reportesRepository.upsert(reporteId, {
-      nombre,
-      duracion,
-      mediciones,
-      inicio,
-      fin,
-      sessionId,
-      ultimasMediciones
-    });
 
-  */
     return reporteId;
   }
 };
