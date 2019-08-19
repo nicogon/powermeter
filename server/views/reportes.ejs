@@ -1,5 +1,24 @@
-<% include header.ejs %>
+<%- include("header",{mode:'reportes'}) %>
 
-contenido
+    <div class="main-content-container container-fluid">
 
-<% include footer.ejs %>
+            <div class="d-flex justify-content-between">
+
+            <div class="page-header row no-gutters py-4">
+                <div class="">
+                    <span class="text-uppercase page-subtitle">Listado de reportes</span>
+                    <h3 class="page-title">
+                        Reportes
+                    </h3>
+                </div>
+            </div>
+
+            <button class="bg-primary rounded text-white text-center p-3 justify-content-end" >Primary</button>
+
+        </div>
+
+
+
+    </div>
+
+    <% include footer.ejs %>

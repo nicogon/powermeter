@@ -35,27 +35,21 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="index.html">
-                  <i class="material-icons">edit</i>
-                  <span>Configuracion</span>
-                </a>
-              </li>
+                  <a class="nav-link <% if(mode=='reportes'){ %>active<%}%>" href="/reportes/">
+                    <i class="material-icons">table_chart</i>
+                    <span>Reportes</span>
+                  </a>
+                </li>
               <li class="nav-item">
-                <a class="nav-link " href="components-blog-posts.html">
+                <a class="nav-link <% if(mode=='simulaciones'){ %>active<%}%>" href="/simulaciones/">
                   <i class="material-icons">vertical_split</i>
                   <span>Simulaciones</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="form-components.html">
+                <a class="nav-link <%if(mode=='dispositivos'){ %>active<%}%>" href="/dispositivos/">
                   <i class="material-icons">view_module</i>
                   <span>Dispositivos</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="tables.html">
-                  <i class="material-icons">table_chart</i>
-                  <span>Reportes</span>
                 </a>
               </li>
             </ul>
