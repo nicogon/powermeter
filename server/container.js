@@ -54,12 +54,11 @@ class Lock {
 }
 
 async function createContainer() {
-  const sessionId = Math.random()
-    .toString(36)
-    .substring(7);
-  const mongo = (await MongoClient.connect('mongodb://localhost:27017').catch(
-    console.log
-  )).db('powerMeterDb');
+  const sessionId = Math.random().toString(36).substring(7);
+  let mongo_url = `mongodb://${process.env.DB_URL}:${process.env.DB_PORT}`
+  const mongo = (await MongoClient.connect(mongo_url, { useNewUrlParser: true })
+    .catch(console.log))
+    .db('powerMeterDb');
 
   const container = dependable.container();
   const entries = ['services', 'controllers', 'repositories', 'routes.js'];
