@@ -22,9 +22,12 @@ module.exports = function dispositivosService(
     const perteneceAlReporte = _.get(medicionEnCurso, `mediciones.${dispoId}`);
 
 
+
     // Finalizo
     if (perteneceAlReporte && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
 
+
+      console.log(medicionEnCurso)
       /*
       guardarMedicion(medicionEnCurso);
       medicionEnCurso = null;
