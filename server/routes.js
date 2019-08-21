@@ -1,9 +1,9 @@
 const express = require('express');
 
-module.exports = function routes(homeController, dispositivosController, reportesController) {
+module.exports = function routes(dispositivosController, reportesController) {
   return express
     .Router()
-    .get('/', homeController.mainHome)
+    .get('/', dispositivosController.listar)
 
     // Dispositivos
     .post('/dispositivos/:dispoId/report', dispositivosController.report)

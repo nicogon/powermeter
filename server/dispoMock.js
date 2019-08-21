@@ -1,8 +1,21 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
+
+const apiHostUrl = process.env.API_HOST_URL || `localhost`;
+const port = process.env.PORT || 8081;
+const url = `http://${apiHostUrl}:${port}`;
+
+var id_devise_1 = 'medidor1';
+var id_devise_2 = 'medidor2';
+var id_devise_3 = 'medidor3';
+
+function report_url(dispo_id) { return `${ url }/dispositivos/${ dispo_id }/report`; }
+
 let contador = 0
+
 function report() {
   contador ++;
-  fetch('http://0.0.0.0:8081/dispositivos/medidor2/report', {
+  fetch(report_url(id_devise_1), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -13,9 +26,9 @@ function report() {
       dispoId: 'medidor2'
     })
   }).catch(console.log);
- 
- 
-  fetch('http://0.0.0.0:8081/dispositivos/medidor1/report', {
+
+
+  fetch(report_url(id_devise_2), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -27,10 +40,10 @@ function report() {
     })
   }).catch(console.log);
 
-  
+
 }
 
-fetch('http://0.0.0.0:8081/dispositivos/unicavez/report', {
+fetch(report_url(id_devise_1), {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
