@@ -141,7 +141,7 @@
                                 <% for(medicion of Object.values(reporte.mediciones)){ %>
                                     <tr>
                                         <td id="medicionNombre-<%-medicion.dispoId%>">
-                                            <%=(parseFloat(medicion.nombreMedicion).toFixed(0))%> w
+                                            <%=medicion.nombreMedicion%>
                                         </td>
                                         <td id="medicion-<%-medicion.dispoId%>">
                                             <%=(medicion.medicion).toFixed(0)%> w
