@@ -88,6 +88,7 @@ module.exports = function dispositivosService(
     const reporteId = randomId();
 
     medicionEnCurso = {
+      reporteId,
       nombre,
       duracion,
       mediciones,
