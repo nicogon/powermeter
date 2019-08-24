@@ -9,7 +9,8 @@ module.exports = function dispositivosService(
   return {
     nuevo,
     notificar,
-    getReporte
+    getReporte,
+    list
   };
 
   function getReporte(reporteId) {
@@ -99,5 +100,22 @@ module.exports = function dispositivosService(
 
 
     return reporteId;
+  }
+
+  async function list() {
+    mock = [
+      {
+        reporteId:"123",
+        nombre: 'Cocina',
+        duracion: 900000,
+        mediciones: {
+        medidor1: { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
+        medidor2: { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] }
+      },
+      inicio: 1565223068401,
+      fin: 1595223968401,
+      sessionId: '4oy0xej'
+    }];
+    return mock;
   }
 };

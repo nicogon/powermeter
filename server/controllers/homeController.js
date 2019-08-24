@@ -1,7 +1,7 @@
 const homeService = require('../services/homeService');
 
-async function mainHome(req, res) {
-  res.render('home', { titulo: await homeService.ponele() });
+async function home(req, res) {
+  res.render('home', { });
 }
 
-module.exports = { mainHome };
+module.exports = { home };
