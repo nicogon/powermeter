@@ -1,0 +1,115 @@
+<%- include("header",{mode:'simulations'}) %>
+
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Simulaciones</span>
+            <h3 class="page-title">Nueva Simulación</h3>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card card-small mb-4">
+            <div class="card-header border-bottom">
+                <h6 class="m-0">Crear nueva simulación</h6>
+            </div>
+
+            <form action="/simulations/" method="post">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-3">
+
+                        <div class="form-group ">
+                            <label for="feFirstName">Nombre de la simulación</label>
+                            <input type="text" class="form-control" placeholder="Nombre del reporte" name="nombre">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feInputState">Duracion</label>
+                            <select name="duracion" id="feInputState" class="form-control">
+                              <option selected="">Duracion...</option>
+                              <option value='604800000'>1 semana</option>
+                              <option value='1209600000 '>2 semana</option>
+                              <option value='0'>3 semanas</option>
+                              <option value='2419200000'>4 semanas</option>
+                              <option value='1'>1 mes</option>
+                            </select>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item p-3" id="dispoMenu">
+                        <label for="feInputState">Reportes</label>
+
+                        <div class="form-group">
+                            <label for="feInputState">Agregar Reporte</label>
+                            <select id='reports' class="form-control">
+                              <option selected="">Seleccione  al menos un reporte...</option>
+                        <%for (var report of reports){%>
+                            <option value="<%=report.reporteId%>"><%=report.nombre%></option>
+                        <%}%>         
+                            </select>
+                        </div>
+
+
+                    </li>
+
+
+
+                    <li class="list-group-item p-3">
+                        <button type="submit" class="btn btn-accent">Crear Simulación</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#reports").change(() => {
+                const reporteId = $("#reports").val();
+                const reportName = $("#reports option:selected").html();
+
+                if ($("#reports option:selected").index() == 0) return;
+
+                if ($("#card-" + reporteId).length > 0) return;
+
+                const reportElement = `              
+                    <li class="list-group-item p-3" id="card-${reporteId}">
+                        <div class='d-flex'>
+                            <label for="feInputState">Reporte</label>
+                            <a class="ml-auto" href="#" id="borrar-${reporteId}" report-id="${reporteId}">Borrar</a>
+                        </div>
+                        <h5>${reportName}</h5>
+                        <div class="form-group ">
+                            <label for="feFirstName">Nombre de la medicion</label>
+                            <input type="hidden" name="reporteId" value="${reporteId}">
+                            <input type="text" class="form-control" placeholder="Nombre del reporte" name="nombreMedicion">
+                        </div>
+                        <div class="form-group ">
+                            <label for="feFirstName">Factor de potencia</label>
+                            <div id="slider-${reporteId}" class="slider-success my-4" style="margin: 0 20px">
+                                <input type="hidden" class="custom-slider-input">
+                            </div>
+                        </div>
+                    </li>`;
+
+                $("#reportMenu").after(reportElement);
+
+                $("#borrar-"+reporteId).click(()=>{
+                    $("#card-"+reporteId).remove();
+                });
+
+                $('#slider-' + reporteId).customSlider({
+                    start: 100,
+                    connect: [true, false],
+                    tooltips: true,
+                    range: {
+                        'min': 0,
+                        'max': 100
+                    }
+                });
+            });
+        });
+
+    </script>
+    <% include footer.ejs %>

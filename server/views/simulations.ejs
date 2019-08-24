@@ -1,0 +1,91 @@
+<%- include("header",{mode:'reportes'}) %>
+
+    <div class="main-content-container container-fluid">
+
+        <div class="d-flex justify-content-between">
+
+            <div class="page-header no-gutters py-4">
+                <div class="">
+                    <span class="text-uppercase page-subtitle">Listado de Simulaciones</span>
+                    <h3 class="page-title">
+                        Simulaciones
+                    </h3>
+                </div>
+            </div>
+            <div class="page-header py-4"><a  href='/simulations/new' class="btn btn-sm btn-primary" style='color:white'>+ Nueva Simulación</a></div>
+        </div>
+
+
+        <div class='row'>
+                <div class='col-md-12'>
+                    <div class="card card-small">
+                            <div class="card-header border-bottom">
+                                    <h6 class="m-0">Listado de Simulaciones</h6>
+                                  </div>
+                        <div class="card-body pt-0 row" >
+                            <table class="table mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col" class="border-0">Nombre</th>
+                                        <th scope="col" class="border-0">Duración</th>
+                                        <th scope="col" class="border-0">Costo Kw/h</th>
+                                        <th scope="col" class="border-0">Costo Fijo</th>
+                                        <th scope="col" class="border-0">Costo total</th>
+                                        <th scope="col" class="border-0"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                               Simulación Casa Hector
+                                            </td>
+                                            <td>
+                                              1 mes
+                                            </td>
+                                            <td>
+                                              $40
+                                            </td>
+                                            <td>
+                                              $10000
+                                            </td>
+                                            <td>
+                                              $4000
+                                            </td>
+                                            <td>
+                                                    <button type="button" class=""><i class="material-icons">delete</i></button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                          <td>
+                                            Casa Nico
+                                          </td>
+                                          <td>
+                                            1 semana
+                                          </td>
+                                          <td>
+                                            $40
+                                          </td>
+                                          <td>
+                                            $800
+                                          </td>
+                                          <td>
+                                            $3000
+                                          </td>
+                                          <td>
+                                                  <button type="button" class=""><i class="material-icons">delete</i></button>
+                                          </td>
+                                      </tr>
+                                </tbody>
+                            </table>
+    
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+
+    </div>
+
+    <% include footer.ejs %>
