@@ -54,8 +54,16 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # next.js build output
 .next
+
+# Android default git_ignore
+android-emulator/*.iml
+android-emulator/.gradle
+android-emulator/local.properties
+android-emulator/.idea/workspace.xml
+android-emulator/.idea/libraries
+android-emulator/.DS_Store
+android-emulator/build
+android-emulator/captures
+android-emulator/.externalNativeBuild

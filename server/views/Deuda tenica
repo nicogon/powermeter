@@ -1,0 +1,15 @@
+Deuda tecnica:
+
+Que en la pagina de dispositivos, si se agrega un nuevo dispositivo, lo cargue en la lista sin tener que refrescar
+
+creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte. 
+
+ no pushear data cada 1 segudo, en casos de largo reporte, pushear cada menos tiempo.
+ 
+
+ meter en dispositivos un toque de padding con px-4
+
+ que la primera vez q reporta medidor, que el dispoid sea el nombre
+
+
+ que el reporte deje de hacer el llamado al back cuando esta completo
