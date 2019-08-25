@@ -35,7 +35,7 @@
                         </div>
 
                     </li>
-                    <li class="list-group-item p-3" id="dispoMenu">
+                    <li class="list-group-item p-3" id="reportMenu">
                         <label for="feInputState">Reportes</label>
 
                         <div class="form-group">
@@ -50,12 +50,42 @@
 
 
                     </li>
-
-
-
                     <li class="list-group-item p-3">
                         <button type="submit" class="btn btn-accent">Crear Simulación</button>
                     </li>
+
+                    <div class="col-sm-12 col-md-4 mb-3">
+                        <!-- Checkboxes -->
+                        <strong class="text-muted d-block mb-2">Reportes</strong>
+                        <fieldset>
+                                <%for (var report of reports){%>
+                                    <!-- <option value="<%=report.reporteId%>"><%=report.nombre%></option> -->
+                                    <div class="custom-control custom-checkbox mb-1">
+                                            <input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
+                                            <label class="custom-control-label" for="formsCheckboxDefault"><%=report.nombre%></label>
+                                          </div>
+                                <%}%>    
+<!-- 
+                          <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
+                            <label class="custom-control-label" for="formsCheckboxDefault">Default</label>
+                          </div>
+                          <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" id="formsCheckboxChecked" checked="">
+                            <label class="custom-control-label" for="formsCheckboxChecked">Checked</label>
+                          </div>
+                          <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" id="formsCheckboxDisabled" disabled="">
+                            <label class="custom-control-label" for="formsCheckboxDisabled">Disabled</label>
+                          </div>
+                          <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" id="formsCheckboxDisabledChecked" disabled="" checked="">
+                            <label class="custom-control-label" for="formsCheckboxDisabledChecked">Disabled Checked</label>
+                          </div> -->
+                        </fieldset>
+                        <!-- / Checkboxes -->
+                      </div>
+
                 </ul>
             </form>
         </div>
@@ -80,11 +110,6 @@
                             <a class="ml-auto" href="#" id="borrar-${reporteId}" report-id="${reporteId}">Borrar</a>
                         </div>
                         <h5>${reportName}</h5>
-                        <div class="form-group ">
-                            <label for="feFirstName">Nombre de la medicion</label>
-                            <input type="hidden" name="reporteId" value="${reporteId}">
-                            <input type="text" class="form-control" placeholder="Nombre del reporte" name="nombreMedicion">
-                        </div>
                         <div class="form-group ">
                             <label for="feFirstName">Factor de potencia</label>
                             <div id="slider-${reporteId}" class="slider-success my-4" style="margin: 0 20px">
