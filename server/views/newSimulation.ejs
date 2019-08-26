@@ -19,7 +19,7 @@
 
                         <div class="form-group ">
                             <label for="feFirstName">Nombre de la simulación</label>
-                            <input type="text" class="form-control" placeholder="Nombre del reporte" name="nombre">
+                            <input type="text" class="form-control" placeholder="Nombre de la simulación" name="nombre">
                         </div>
 
                         <div class="form-group">
@@ -57,8 +57,8 @@
                                         <%for (var report of reports){%>
                                             <!-- <option value="<%=report.reporteId%>"><%=report.nombre%></option> -->
                                             <div class="custom-control custom-checkbox mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="formsCheckboxChecked" value="<%=report.reporteId%>">
-                                                    <label class="custom-control-label" for="formsCheckboxChecked"><%=report.nombre%></label>
+                                                    <input type="checkbox" class="custom-control-input" id="<%=report.reporteId%>" data-name="<%=report.nombre%>" value="<%=report.reporteId%>">
+                                                    <label class="custom-control-label" for=<%=report.reporteId%>><%=report.nombre%></label>
                                             </div>
                                         <%}%>  
                                     </div>
@@ -78,15 +78,46 @@
 
 
     <script>
-        //todo: No entiendo bien como es el tema de los reportes y los nombres, para agarrarlos desde el checkbox.. help
+
+
+// $( "input" ).change(function() {
+//   var $input = $( this );
+//   console.log($input)
+// //   $( "p" ).html(
+// //     ".attr( \"checked\" ): <b>" + $input.attr( "checked" ) + "</b><br>" +
+// //     ".prop( \"checked\" ): <b>" + $input.prop( "checked" ) + "</b><br>" +
+// //     ".is( \":checked\" ): <b>" + $input.is( ":checked" ) + "</b>" );
+// // }).change();
+
             $(document).ready(function() {
-                $(":checkbox").change(() => {
-                    const reporteId = $("#reports").val();
-                    const reportName = $("#reports option:selected").html();
+                $( "input" ).change(function() {
+                // $(":checkbox").change(() => {
+                    // const checkboxes = $(".custom-control-input");
+                    // console.log(this)
+                    // console.log("checkboxes")
+                    // console.log(checkboxes)
+                    
+                    // let selectedCheckboxes = []
+                    // for (let index = 0; index < checkboxes.length; index++) {
+                    //     if (checkboxes[index].checked) {
+                    //         selectedCheckboxes.push(checkboxes[index])
+                    //         const checkbox = checkboxes[index]
+                    //         console.log("name")
+                    //         const name = $(checkbox).data('name');
+                    //         console.log(name)
+                    //     }
+                    // }
+                    // console.log("selectedCheckboxes")
+                    // console.log(selectedCheckboxes)
+                    var $input = $( this );
+                const reporteId = $input.val();
+                const reportName = $input.data('name');
+                        console.log(reporteId)
+                        console.log(reportName)
+
+                    // if ($("#reports option:selected").index() == 0) return;
     
-                    if ($("#reports option:selected").index() == 0) return;
-    
-                    if ($("#card-" + reporteId).length > 0) return;
+                    // if ($("#card-" + reporteId).length > 0) return;
     
                     const reportElement = `              
                         <li class="list-group-item p-3" id="card-${reporteId}">
