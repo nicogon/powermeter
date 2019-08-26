@@ -48,20 +48,22 @@
                             </select>
                         </div> -->
 
-                        <div class="col-sm-12 col-md-4 mb-3">
+                        <!-- <div class="col-sm-12 col-md-4 mb-3"> -->
                                 <!-- Checkboxes -->
                                 <!-- <strong class="text-muted d-block mb-2">Reportes</strong> -->
-                                <fieldset>
+                                <div class="form-group">
+                                <!-- <fieldset id='reports' class="form-control"> -->
                                         <section class="section-preview">
                                         <%for (var report of reports){%>
                                             <!-- <option value="<%=report.reporteId%>"><%=report.nombre%></option> -->
                                             <div class="custom-control custom-checkbox mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="formsCheckboxChecked">
+                                                    <input type="checkbox" class="custom-control-input" id="formsCheckboxChecked" value="<%=report.reporteId%>">
                                                     <label class="custom-control-label" for="formsCheckboxChecked"><%=report.nombre%></label>
                                             </div>
                                         <%}%>  
-                                </fieldset>
-                              </div>
+                                    </div>
+                                <!-- </fieldset> -->
+                              <!-- </div> -->
         
 
                     </li>
@@ -74,10 +76,57 @@
 
     </div>
 
+
+    <script>
+        //todo: No entiendo bien como es el tema de los reportes y los nombres, para agarrarlos desde el checkbox.. help
+            $(document).ready(function() {
+                $(":checkbox").change(() => {
+                    const reporteId = $("#reports").val();
+                    const reportName = $("#reports option:selected").html();
+    
+                    if ($("#reports option:selected").index() == 0) return;
+    
+                    if ($("#card-" + reporteId).length > 0) return;
+    
+                    const reportElement = `              
+                        <li class="list-group-item p-3" id="card-${reporteId}">
+                            <div class='d-flex'>
+                                <label for="feInputState">Reporte</label>
+                                <a class="ml-auto" href="#" id="borrar-${reporteId}" report-id="${reporteId}">Borrar</a>
+                            </div>
+                            <h5>${reportName}</h5>
+                            <div class="form-group ">
+                                <label for="feFirstName">Factor de potencia</label>
+                                <div id="slider-${reporteId}" class="slider-success my-4" style="margin: 0 20px">
+                                    <input type="hidden" class="custom-slider-input">
+                                </div>
+                            </div>
+                        </li>`;
+    
+                    $("#reportMenu").after(reportElement);
+    
+                    $("#borrar-"+reporteId).click(()=>{
+                        $("#card-"+reporteId).remove();
+                    });
+    
+                    $('#slider-' + reporteId).customSlider({
+                        start: 100,
+                        connect: [true, false],
+                        tooltips: true,
+                        range: {
+                            'min': 0,
+                            'max': 100
+                        }
+                    });
+                });
+            });
+    
+        </script>
+
     <script>
         $(document).ready(function() {
 
-            $("#reports").change(() => {
+            $("#reportssss").change(() => {
                 const reporteId = $("#reports").val();
                 const reportName = $("#reports option:selected").html();
 

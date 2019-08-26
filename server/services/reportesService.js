@@ -109,13 +109,37 @@ module.exports = function dispositivosService(
         nombre: 'Cocina',
         duracion: 900000,
         mediciones: {
-        medidor1: { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
-        medidor2: { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] }
+        medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
+        medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
       },
       inicio: 1565223068401,
       fin: 1595223968401,
       sessionId: '4oy0xej'
-    }];
+    }, 
+    {
+      reporteId:"1234",
+      nombre: 'Comedor',
+      duracion: 1800000,
+      mediciones: {
+      medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
+      medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
+    },
+    inicio: 1565223068401,
+    fin: 1595223968401,
+    sessionId: '4oy0xek'
+  }, 
+  {
+    reporteId:"12345",
+    nombre: 'Pieza',
+    duracion: 1800000,
+    mediciones: {
+    medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
+    medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
+  },
+  inicio: 1565223068401,
+  fin: 1595223968401,
+  sessionId: '4oy0xel'
+}];
     return mock;
   }
 };
