@@ -110,8 +110,14 @@
                     // console.log("selectedCheckboxes")
                     // console.log(selectedCheckboxes)
                     var $input = $( this );
+                    
                 const reporteId = $input.val();
                 const reportName = $input.data('name');
+                const isChecked = $input.is( ":checked" )
+                if (isChecked) {
+
+                console.log(isChecked)
+
                         console.log(reporteId)
                         console.log(reportName)
 
@@ -149,12 +155,16 @@
                             'max': 100
                         }
                     });
+                }
+                else {
+                    $("#card-"+reporteId).remove();
+                }
                 });
             });
     
         </script>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
 
             $("#reportssss").change(() => {
@@ -198,5 +208,5 @@
             });
         });
 
-    </script>
+    </script> -->
     <% include footer.ejs %>
