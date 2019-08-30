@@ -1,4 +1,4 @@
-<%- include("header",{mode:'reportes'}) %>
+<%- include("header",{mode:'simulations'}) %>
 
     <div class="main-content-container container-fluid">
 
@@ -35,6 +35,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <%for (var simulation of simulations){%>
+                                      <tr>
+                                        <td>
+                                          <%=simulation.nombre%>
+                                        </td>
+                                        <td>
+                                            <%=simulation.nombre%>
+                                        </td>
+                                        <td>
+                                          $40
+                                        </td>
+                                        <td>
+                                          $800
+                                        </td>
+                                        <td>
+                                          $3000
+                                        </td>
+                                        <td>
+                                                <button type="button" class=""><i class="material-icons">delete</i></button>
+                                        </td>
+                                    </tr>
+                                    <%}%> 
+
+
+
+
+
                                         <tr>
                                             <td>
                                                Simulación Casa Hector
