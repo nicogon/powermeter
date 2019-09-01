@@ -8,26 +8,26 @@ module.exports = function simulationsService() {
       mock = [
         {
           simulationId:"123",
-          name: 'Cocina',
-          duracion: 900000,
+          name: 'Casa Hector',
+          duration: 900000,
           fixedCost: 1000,
           kwCost: 40,
-          totalCost: 10000
+          totalCost: 14000
       }, 
       {
-        simulationId:"123",
-        name: 'Cocina',
-        duracion: 900000,
-        fixedCost: 1000,
-        kwCost: 40,
-        totalCost: 10000
+        simulationId:"1234",
+        name: 'Casa Nico',
+        duration: 1800000,
+        fixedCost: 500,
+        kwCost: 30,
+        totalCost: 12000
     },  
     {
-        simulationId:"123",
-        name: 'Cocina',
-        duracion: 900000,
-        fixedCost: 1000,
-        kwCost: 40,
+        simulationId:"1235",
+        name: 'Casa Lucas',
+        duration: 450000,
+        fixedCost: 200,
+        kwCost: 20,
         totalCost: 10000
     }];
       return mock;

@@ -1,71 +1,52 @@
 <%- include("header",{mode:'simulations'}) %>
 
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Simulaciones</span>
-            <h3 class="page-title">Nueva Simulación</h3>
-        </div>
+<div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <span class="text-uppercase page-subtitle">Simulaciones</span>
+        <h3 class="page-title">Nueva Simulación</h3>
     </div>
+</div>
 
-    <div class="col-lg-12">
-        <div class="card card-small mb-4">
-            <div class="card-header border-bottom">
-                <h6 class="m-0">Crear nueva simulación</h6>
-            </div>
+<div class="col-lg-12">
+    <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+            <h6 class="m-0">Crear nueva simulación</h6>
+        </div>
 
-            <form action="/simulations/" method="post">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item p-3">
+        <form action="/simulations/" method="post">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-3">
 
-                        <div class="form-group ">
-                            <label for="feFirstName">Nombre de la simulación</label>
-                            <input type="text" class="form-control" placeholder="Nombre de la simulación" name="nombre">
-                        </div>
+                    <div class="form-group ">
+                        <label for="feFirstName">Nombre de la simulación</label>
+                        <input type="text" class="form-control" placeholder="Nombre de la simulación" name="nombre">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="feInputState">Duracion</label>
-                            <select name="duracion" id="feInputState" class="form-control">
-                              <option selected="">Duracion...</option>
-                              <option value='604800000'>1 semana</option>
-                              <option value='1209600000 '>2 semana</option>
-                              <option value='0'>3 semanas</option>
-                              <option value='2419200000'>4 semanas</option>
-                              <option value='1'>1 mes</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="feInputState">Duracion</label>
+                        <select name="duracion" id="feInputState" class="form-control">
+                            <option selected="">Duracion...</option>
+                            <option value='604800000'>1 semana</option>
+                            <option value='1209600000 '>2 semana</option>
+                            <option value='0'>3 semanas</option>
+                            <option value='2419200000'>4 semanas</option>
+                            <option value='1'>1 mes</option>
+                        </select>
+                    </div>
 
-                    </li>
-                    <li class="list-group-item p-3" id="reportMenu">
-                        <label for="feInputState">Reportes</label>
-<!-- 
-                        <div class="form-group">
-                            <label for="feInputState">Agregar Reporte</label>
-                            <select id='reports' class="form-control">
-                              <option selected="">Seleccione  al menos un reporte...</option>
-                        <%for (var report of reports){%>
-                            <option value="<%=report.reporteId%>"><%=report.nombre%></option>
-                        <%}%>         
-                            </select>
-                        </div> -->
-
-                        <!-- <div class="col-sm-12 col-md-4 mb-3"> -->
-                                <!-- Checkboxes -->
-                                <!-- <strong class="text-muted d-block mb-2">Reportes</strong> -->
-                                <div class="form-group">
-                                <!-- <fieldset id='reports' class="form-control"> -->
-                                        <section class="section-preview">
-                                        <%for (var report of reports){%>
-                                            <!-- <option value="<%=report.reporteId%>"><%=report.nombre%></option> -->
-                                            <div class="custom-control custom-checkbox mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="<%=report.reporteId%>" data-name="<%=report.nombre%>" value="<%=report.reporteId%>">
-                                                    <label class="custom-control-label" for=<%=report.reporteId%>><%=report.nombre%></label>
-                                            </div>
-                                        <%}%>  
+                </li>
+                <li class="list-group-item p-3" id="reportMenu">
+                    <label for="feInputState">Reportes</label>
+                    <div class="form-group">
+                        <section class="section-preview">
+                            <%for (var report of reports){%>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input type="checkbox" class="custom-control-input" id="<%=report.reporteId%>"
+                                    data-name="<%=report.nombre%>" value="<%=report.reporteId%>">
+                                <label class="custom-control-label" for=<%=report.reporteId%>><%=report.nombre%></label>
+                            </div>
+                            <%}%>  
                                     </div>
-                                <!-- </fieldset> -->
-                              <!-- </div> -->
-        
-
                     </li>
                     <li class="list-group-item p-3">
                         <button type="submit" class="btn btn-accent">Crear Simulación</button>
@@ -78,53 +59,20 @@
 
 
     <script>
+        $(document).ready(function () {
+            $("input").change(function () {
+                var $input = $(this);
 
-
-// $( "input" ).change(function() {
-//   var $input = $( this );
-//   console.log($input)
-// //   $( "p" ).html(
-// //     ".attr( \"checked\" ): <b>" + $input.attr( "checked" ) + "</b><br>" +
-// //     ".prop( \"checked\" ): <b>" + $input.prop( "checked" ) + "</b><br>" +
-// //     ".is( \":checked\" ): <b>" + $input.is( ":checked" ) + "</b>" );
-// // }).change();
-
-            $(document).ready(function() {
-                $( "input" ).change(function() {
-                // $(":checkbox").change(() => {
-                    // const checkboxes = $(".custom-control-input");
-                    // console.log(this)
-                    // console.log("checkboxes")
-                    // console.log(checkboxes)
-                    
-                    // let selectedCheckboxes = []
-                    // for (let index = 0; index < checkboxes.length; index++) {
-                    //     if (checkboxes[index].checked) {
-                    //         selectedCheckboxes.push(checkboxes[index])
-                    //         const checkbox = checkboxes[index]
-                    //         console.log("name")
-                    //         const name = $(checkbox).data('name');
-                    //         console.log(name)
-                    //     }
-                    // }
-                    // console.log("selectedCheckboxes")
-                    // console.log(selectedCheckboxes)
-                    var $input = $( this );
-                    
                 const reporteId = $input.val();
                 const reportName = $input.data('name');
-                const isChecked = $input.is( ":checked" )
+                const isChecked = $input.is(":checked")
                 if (isChecked) {
 
-                console.log(isChecked)
+                    console.log(isChecked)
 
-                        console.log(reporteId)
-                        console.log(reportName)
+                    console.log(reporteId)
+                    console.log(reportName)
 
-                    // if ($("#reports option:selected").index() == 0) return;
-    
-                    // if ($("#card-" + reporteId).length > 0) return;
-    
                     const reportElement = `              
                         <li class="list-group-item p-3" id="card-${reporteId}">
                             <div class='d-flex'>
@@ -139,13 +87,13 @@
                                 </div>
                             </div>
                         </li>`;
-    
+
                     $("#reportMenu").after(reportElement);
-    
-                    $("#borrar-"+reporteId).click(()=>{
-                        $("#card-"+reporteId).remove();
+
+                    $("#borrar-" + reporteId).click(() => {
+                        $("#card-" + reporteId).remove();
                     });
-    
+
                     $('#slider-' + reporteId).customSlider({
                         start: 100,
                         connect: [true, false],
@@ -157,56 +105,11 @@
                     });
                 }
                 else {
-                    $("#card-"+reporteId).remove();
+                    $("#card-" + reporteId).remove();
                 }
-                });
-            });
-    
-        </script>
-
-    <!-- <script>
-        $(document).ready(function() {
-
-            $("#reportssss").change(() => {
-                const reporteId = $("#reports").val();
-                const reportName = $("#reports option:selected").html();
-
-                if ($("#reports option:selected").index() == 0) return;
-
-                if ($("#card-" + reporteId).length > 0) return;
-
-                const reportElement = `              
-                    <li class="list-group-item p-3" id="card-${reporteId}">
-                        <div class='d-flex'>
-                            <label for="feInputState">Reporte</label>
-                            <a class="ml-auto" href="#" id="borrar-${reporteId}" report-id="${reporteId}">Borrar</a>
-                        </div>
-                        <h5>${reportName}</h5>
-                        <div class="form-group ">
-                            <label for="feFirstName">Factor de potencia</label>
-                            <div id="slider-${reporteId}" class="slider-success my-4" style="margin: 0 20px">
-                                <input type="hidden" class="custom-slider-input">
-                            </div>
-                        </div>
-                    </li>`;
-
-                $("#reportMenu").after(reportElement);
-
-                $("#borrar-"+reporteId).click(()=>{
-                    $("#card-"+reporteId).remove();
-                });
-
-                $('#slider-' + reporteId).customSlider({
-                    start: 100,
-                    connect: [true, false],
-                    tooltips: true,
-                    range: {
-                        'min': 0,
-                        'max': 100
-                    }
-                });
             });
         });
 
-    </script> -->
+    </script>
+
     <% include footer.ejs %>
