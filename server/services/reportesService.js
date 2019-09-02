@@ -130,9 +130,9 @@ module.exports = function dispositivosService(
     inicio: 1565223068401,
     fin: 1595223968401,
     sessionId: '4oy0xek',
-    currentConsumption: 100,
-    averageConsumption: 80,
-    maximumConsumption: 140
+    currentConsumption: 80,
+    averageConsumption: 40,
+    maximumConsumption: 120
   }, 
   {
     reporteId:"12345",
@@ -145,9 +145,9 @@ module.exports = function dispositivosService(
   inicio: 1565223068401,
   fin: 1595223968401,
   sessionId: '4oy0xel',
-  currentConsumption: 100,
-  averageConsumption: 80,
-  maximumConsumption: 140
+  currentConsumption: 120,
+  averageConsumption: 100,
+  maximumConsumption: 180
 }];
     return mock;
   }

@@ -78,6 +78,6 @@ module.exports = function reportesController(
 
   async function listar(req, res) {
     const reports = (await reportesService.list());
-    res.render('reportes', reports);
+    res.render('reportes', { reports });
   }
 };
