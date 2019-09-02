@@ -1,0 +1,217 @@
+<%- include("header",{mode:''}) %>
+
+<div class="main-navbar sticky-top bg-white">
+        <!-- Main Navbar -->
+        <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+          <form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+            <div class="input-group input-group-seamless ml-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+              <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search">
+            </div>
+          </form>
+          <ul class="navbar-nav border-left flex-row ">
+            <li class="nav-item border-right dropdown notifications">
+              <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="nav-link-icon__wrapper">
+                  <i class="material-icons"></i>
+                  <span class="badge badge-pill badge-danger">2</span>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">
+                  <div class="notification__icon-wrapper">
+                    <div class="notification__icon">
+                        <i class="material-icons"></i>
+                      </div>
+                  </div>
+                  <div class="notification__content">
+                    <span class="notification__category">Reportes</span>
+                    <p>Ha finalizado tu reporte</p>
+                  </div>
+                </a>
+                <a class="dropdown-item" href="#">
+                  <div class="notification__icon-wrapper">
+                    <div class="notification__icon">
+                        <i class="material-icons"></i>
+                    </div>
+                  </div>
+                  <div class="notification__content">
+                    <span class="notification__category">Simulaciones</span>
+                    <p>Ha finalizado tu simulación</p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <img class="user-avatar rounded-circle mr-2" src="images/avatars/4.jpg" alt="User Avatar"> <span class="d-none d-md-inline-block">Ivan Bober</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-small" style="display: none;">
+                  <a class="dropdown-item" href="/"><i class="material-icons">home</i> Página Principal</a>
+                <a class="dropdown-item" href="/"><i class="material-icons"></i> Perfil</a>
+                <a class="dropdown-item" href="reportes/new"><i class="material-icons">vertical_split</i> Crear Reporte</a>
+                <a class="dropdown-item" href="simulations/new"><i class="material-icons">note_add</i>Crear simulación</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" href="#">
+                  <i class="material-icons text-danger"></i> Cerrar Sesión </a>
+              </div>
+            </li>
+          </ul>
+          <nav class="nav">
+            <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">
+              <i class="material-icons"></i>
+            </a>
+          </nav>
+        </nav>
+      </div>
+
+<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Tablero Principal</span>
+            <h3 class="page-title">Últimos Reportes</h3>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Small Stats Blocks -->
+    <div class="row">
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                    <div class="chartjs-size-monitor"
+                        style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">Cocina</span>
+                            <h6 class="stats-small__value count my-3">$1250</h6>
+                        </div>
+                        <div class="stats-small__data">
+                            <span class="stats-small__percentage stats-small__percentage--increase">4.7%</span>
+                        </div>
+                    </div>
+                    <canvas height="150" class="blog-overview-stats-small-1 chartjs-render-monitor" width="378"
+                        style="display: block; height: 75px; width: 189px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                    <div class="chartjs-size-monitor"
+                        style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">Comedor</span>
+                            <h6 class="stats-small__value count my-3">$100</h6>
+                        </div>
+                        <div class="stats-small__data">
+                            <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                        </div>
+                    </div>
+                    <canvas height="150" class="blog-overview-stats-small-2 chartjs-render-monitor" width="378"
+                        style="display: block; height: 75px; width: 189px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-4 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                    <div class="chartjs-size-monitor"
+                        style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">Pieza Principal</span>
+                            <h6 class="stats-small__value count my-3">$500</h6>
+                        </div>
+                        <div class="stats-small__data">
+                            <span class="stats-small__percentage stats-small__percentage--decrease">3.8%</span>
+                        </div>
+                    </div>
+                    <canvas height="150" class="blog-overview-stats-small-3 chartjs-render-monitor" width="378"
+                        style="display: block; height: 75px; width: 189px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-4 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                    <div class="chartjs-size-monitor"
+                        style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink"
+                            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">Pieza Secundaria</span>
+                            <h6 class="stats-small__value count my-3">$250</h6>
+                        </div>
+                        <div class="stats-small__data">
+                            <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                        </div>
+                    </div>
+                    <canvas height="150" class="blog-overview-stats-small-4 chartjs-render-monitor" width="378"
+                        style="display: block; height: 75px; width: 189px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-lg col-md-4 col-sm-12 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+          <div class="card-body p-0 d-flex"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <div class="d-flex flex-column m-auto">
+              <div class="stats-small__data text-center">
+                <span class="stats-small__label text-uppercase">Living</span>
+                <h6 class="stats-small__value count my-3">17,281</h6>
+              </div>
+              <div class="stats-small__data">
+                <span class="stats-small__percentage stats-small__percentage--decrease">2.4%</span>
+              </div>
+            </div>
+            <canvas height="150" class="blog-overview-stats-small-5 chartjs-render-monitor" width="378" style="display: block; height: 75px; width: 189px;"></canvas>
+          </div>
+        </div>
+      </div> -->
+        <!-- </div> -->
+        <!-- End Small Stats Blocks -->
+
+        <!-- End Top Referrals Component -->
+    </div>
+</div>
+<% include footer.ejs %>

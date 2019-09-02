@@ -77,7 +77,7 @@ module.exports = function reportesController(
   }
 
   async function listar(req, res) {
-    // const dispositivos = await dispositivosService.list();
-    res.render('reportes', {});
+    const reports = (await reportesService.list());
+    res.render('reportes', reports);
   }
 };

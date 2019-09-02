@@ -1,7 +1,7 @@
-dispositivoGateway = require('../gateways/dispositivoGateway.js');
+// dispositivoGateway = require('../gateways/dispositivoGateway.js');
 
-async function ponele() {
-  return await dispositivoGateway.dameHora();
-}
+// async function ponele() {
+//   return await dispositivoGateway.dameHora();
+// }
 
-module.exports = { ponele };
+// module.exports = { ponele };

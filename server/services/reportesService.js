@@ -114,7 +114,10 @@ module.exports = function dispositivosService(
       },
       inicio: 1565223068401,
       fin: 1595223968401,
-      sessionId: '4oy0xej'
+      sessionId: '4oy0xej',
+      currentConsumption: 100,
+      averageConsumption: 80,
+      maximumConsumption: 140
     }, 
     {
       reporteId:"1234",
@@ -126,7 +129,10 @@ module.exports = function dispositivosService(
     },
     inicio: 1565223068401,
     fin: 1595223968401,
-    sessionId: '4oy0xek'
+    sessionId: '4oy0xek',
+    currentConsumption: 100,
+    averageConsumption: 80,
+    maximumConsumption: 140
   }, 
   {
     reporteId:"12345",
@@ -138,7 +144,10 @@ module.exports = function dispositivosService(
   },
   inicio: 1565223068401,
   fin: 1595223968401,
-  sessionId: '4oy0xel'
+  sessionId: '4oy0xel',
+  currentConsumption: 100,
+  averageConsumption: 80,
+  maximumConsumption: 140
 }];
     return mock;
   }
