@@ -42,7 +42,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                                <%for (var report of reports){%>
+                                    <tr>
+                                      <td>
+                                        <%=report.name%>
+                                      </td>
+                                      <td>
+                                        <%=report.currentConsumption%>
+                                      </td>
+                                      <td>
+                                        <%=report.averageConsumption%>
+                                      </td>
+                                      <td>
+                                        <%=report.maximumConsumption%>
+                                      </td>
+                                      <td>
+                                        <button type="button" class=""><i class="material-icons">delete</i></button>
+                                      </td>
+                                    </tr>
+                                    <%}%>
+                            <!-- <tr>
                                 <td>
                                 </td>
                                 <td>
@@ -56,7 +75,7 @@
                                 <td>
                                     <button type="button" class=""><i class="material-icons">delete</i></button>
                                 </td>
-                            </tr>
+                            </tr> -->
                                 </tbody>
                             </table>
                         </div>
