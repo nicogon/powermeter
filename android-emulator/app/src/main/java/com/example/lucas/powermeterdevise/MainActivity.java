@@ -1,18 +1,12 @@
 package com.example.lucas.powermeterdevise;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -42,10 +36,10 @@ public class  MainActivity extends AppCompatActivity {
         });
     }
 
-    private float mensuration() {
+    private String mensuration() {
         // if(no_lleno_EditText)
-        if(mensuration.getText().toString().trim().length() == 0){ return 1; }
-        else{ return Integer.parseInt(mensuration.getText().toString()); }
+        if(mensuration.getText().toString().trim().length() == 0){ return "Empty mensuration"; }
+        else{ return mensuration.getText().toString(); }
     }
 
     private String url(){
@@ -80,6 +74,9 @@ public class  MainActivity extends AppCompatActivity {
     }
 
     private void send_mensurations_to_url(){
-
+        new Handler().postDelayed(
+                new Runnable() { public void run() { CallAPI.requestHttp(url(), mensuration()); } },
+                1000
+        );
     }
 }
