@@ -107,7 +107,7 @@ module.exports = function dispositivosService(
       {
         reporteId:"123",
         nombre: 'Cocina',
-        duracion: 900000,
+        duracion: 90,
         mediciones: {
         medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
         medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
@@ -122,7 +122,7 @@ module.exports = function dispositivosService(
     {
       reporteId:"1234",
       nombre: 'Comedor',
-      duracion: 1800000,
+      duracion: 180,
       mediciones: {
       medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
       medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
@@ -137,7 +137,7 @@ module.exports = function dispositivosService(
   {
     reporteId:"12345",
     nombre: 'Pieza',
-    duracion: 1800000,
+    duracion: 360,
     mediciones: {
     medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
     medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }

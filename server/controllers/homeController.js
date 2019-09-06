@@ -8,15 +8,16 @@
 
 
 
-module.exports = function simulationsController(reportesService,homeService) {
+module.exports = function simulationsController(reportesService, homeService, simulationsService) {
   return {
     home
   };
 
   async function home(req, res) {
       const reports = (await reportesService.list());
-  
-      res.render('home', { reports });
+      const simulations = (await simulationsService.list());
+
+      res.render('home', { reports, simulations });
     }
 };
 
