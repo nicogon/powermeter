@@ -4,12 +4,12 @@ module.exports = function reportesController(
 ) {
   return {
     toList,
-    crearNuevoReporte,
+    createNewReport,
     reportDetails,
-    nuevoReporte
+    newReport
   };
 
-  async function nuevoReporte(req, res) {
+  async function newReport(req, res) {
     // TODO
 
     const nombre = req.body.nombre;
@@ -60,7 +60,7 @@ module.exports = function reportesController(
   }
 
   // refactolizar, cambiar nombre es confuso
-  async function crearNuevoReporte(req, res) {
+  async function createNewReport(req, res) {
     // TODO
     /*
     const name = req.body.name;
@@ -73,7 +73,7 @@ module.exports = function reportesController(
       dispositivo => dispositivo.isOnline
     );
 
-    res.render('nuevoReporte', { dispositivos });
+    res.render('newReport', { dispositivos });
   }
 
   async function toList(req, res) {

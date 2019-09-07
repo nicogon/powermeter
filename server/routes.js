@@ -12,9 +12,9 @@ module.exports = function routes(dispositivosController, reportesController, hom
     .get('/dispositivos', dispositivosController.toList)
 
   // Reportes
-    .post('/reportes', reportesController.nuevoReporte)
+    .post('/reportes', reportesController.newReport)
     .get('/reportes', reportesController.toList)
-    .get('/reportes/new', reportesController.crearNuevoReporte)
+    .get('/reportes/new', reportesController.createNewReport)
     .get('/reportes/:reporteId', reportesController.reportDetails)
   // TODO: Borrar? editar?
 
