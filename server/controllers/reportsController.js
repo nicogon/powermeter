@@ -1,6 +1,6 @@
-module.exports = function reportesController(
+module.exports = function reportsController(
   devicesService,
-  reportesService
+  reportsService
 ) {
   return {
     toList,
@@ -36,7 +36,7 @@ module.exports = function reportesController(
     const inicio = Date.now();
     const fin = Date.now() + duracion;
 
-    const reporteId = await reportesService.nuevo({
+    const reportId = await reportsService.nuevo({
       nombre,
       duracion,
       mediciones,
@@ -44,18 +44,18 @@ module.exports = function reportesController(
       fin
     });
 
-    res.redirect(`/reportes/${reporteId}/`);
+    res.redirect(`/reportes/${reportId}/`);
   }
 
   async function reportDetails(req, res) {
     // TODO
-    const reporteId = req.params.reporteId;
-    const reporte = await reportesService.getReport(reporteId);
+    const reportId = req.params.reportId;
+    const report = await reportsService.getReport(reportId);
 
     if (req.query.format === 'json') {
-      res.json({ ...reporte, mediciones: Object.values(reporte.mediciones) });
+      res.json({ ...report, mediciones: Object.values(report.mediciones) });
     } else {
-      res.render('reporte', { reporte });
+      res.render('report', { report });
     }
   }
 
@@ -77,7 +77,7 @@ module.exports = function reportesController(
   }
 
   async function toList(req, res) {
-    const reports = (await reportesService.list());
-    res.render('reportes', { reports });
+    const reports = (await reportsService.list());
+    res.render('reports', { reports });
   }
 };

@@ -41,9 +41,9 @@
                         <section class="section-preview">
                             <%for (var report of reports){%>
                             <div class="custom-control custom-checkbox mb-1">
-                                <input type="checkbox" class="custom-control-input" id="<%=report.reporteId%>"
-                                    data-name="<%=report.nombre%>" value="<%=report.reporteId%>">
-                                <label class="custom-control-label" for=<%=report.reporteId%>><%=report.nombre%></label>
+                                <input type="checkbox" class="custom-control-input" id="<%=report.reportId%>"
+                                    data-name="<%=report.nombre%>" value="<%=report.reportId%>">
+                                <label class="custom-control-label" for=<%=report.reportId%>><%=report.nombre%></label>
                             </div>
                             <%}%>  
                                     </div>
@@ -63,26 +63,26 @@
             $("input").change(function () {
                 var $input = $(this);
 
-                const reporteId = $input.val();
+                const reportId = $input.val();
                 const reportName = $input.data('name');
                 const isChecked = $input.is(":checked")
                 if (isChecked) {
 
                     console.log(isChecked)
 
-                    console.log(reporteId)
+                    console.log(reportId)
                     console.log(reportName)
 
                     const reportElement = `              
-                        <li class="list-group-item p-3" id="card-${reporteId}">
+                        <li class="list-group-item p-3" id="card-${reportId}">
                             <div class='d-flex'>
                                 <label for="feInputState">Reporte</label>
-                                <a class="ml-auto" href="#" id="borrar-${reporteId}" report-id="${reporteId}">Borrar</a>
+                                <a class="ml-auto" href="#" id="borrar-${reportId}" report-id="${reportId}">Borrar</a>
                             </div>
                             <h5>${reportName}</h5>
                             <div class="form-group ">
                                 <label for="feFirstName">Factor de potencia</label>
-                                <div id="slider-${reporteId}" class="slider-success my-4" style="margin: 0 20px">
+                                <div id="slider-${reportId}" class="slider-success my-4" style="margin: 0 20px">
                                     <input type="hidden" class="custom-slider-input">
                                 </div>
                             </div>
@@ -90,11 +90,11 @@
 
                     $("#reportMenu").after(reportElement);
 
-                    $("#borrar-" + reporteId).click(() => {
-                        $("#card-" + reporteId).remove();
+                    $("#borrar-" + reportId).click(() => {
+                        $("#card-" + reportId).remove();
                     });
 
-                    $('#slider-' + reporteId).customSlider({
+                    $('#slider-' + reportId).customSlider({
                         start: 100,
                         connect: [true, false],
                         tooltips: true,
@@ -105,7 +105,7 @@
                     });
                 }
                 else {
-                    $("#card-" + reporteId).remove();
+                    $("#card-" + reportId).remove();
                 }
             });
         });

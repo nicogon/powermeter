@@ -1,4 +1,4 @@
-<%- include("header",{mode:'reportes'}) %>
+<%- include("header",{mode:'reports'}) %>
 
 
     <div class="main-content-container container-fluid">
@@ -8,7 +8,7 @@
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle">Reporte</span>
                 <h3 class="page-title">
-                    <%=reporte.nombre%>
+                    <%=report.nombre%>
                 </h3>
             </div>
         </div>
@@ -51,7 +51,7 @@
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo actual</span>
                                 <h6 class="stats-small__value count my-3" id="medicion">
-                                    <%=reporte.sumatoriaMedicion%>w</h6>
+                                    <%=report.sumatoriaMedicion%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -68,7 +68,7 @@
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo promedio</span>
                                 <h6 class="stats-small__value count my-3" id="promedio">
-                                    <%=reporte.medicionPromedio%>w</h6>
+                                    <%=report.medicionPromedio%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -85,7 +85,7 @@
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo maximo</span>
                                 <h6 class="stats-small__value count my-3" id="maxima">
-                                    <%=reporte.medicionMaxima%>w</h6>
+                                    <%=report.medicionMaxima%>w</h6>
                             </div>
                             <div class="stats-small__data">
                                 <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -138,7 +138,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for(medicion of Object.values(reporte.mediciones)){ %>
+                                <% for(medicion of Object.values(report.mediciones)){ %>
                                     <tr>
                                         <td id="medicionNombre-<%-medicion.dispoId%>">
                                             <%=medicion.nombreMedicion%>
@@ -199,8 +199,8 @@
 
 
     <script>
-        let graphData = <%-JSON.stringify(Object.values(reporte.mediciones))%>
-        let reporte = <%-JSON.stringify({...reporte, mediciones:undefined})%>
+        let graphData = <%-JSON.stringify(Object.values(report.mediciones))%>
+        let report = <%-JSON.stringify({...report, mediciones:undefined})%>
 
 
 
@@ -357,11 +357,11 @@
                 $("#porcentaje-txt").html(porcentaje == 100 ? "Reporte Finalizado" : porcentaje + "% reporte en progreso");
             }
 
-            updatePorcentaje(reporte)
+            updatePorcentaje(report)
 
 
             function updateCharts() {
-                $.getJSON("/reportes/<%=reporte.reporteId%>/?format=json", function(data) {
+                $.getJSON("/reportes/<%=report.reportId%>/?format=json", function(data) {
                     updatePorcentaje(data);
 
                     for(medicion of data.mediciones){

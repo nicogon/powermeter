@@ -1,6 +1,6 @@
 const express = require('express');
 
-module.exports = function routes(devicesController, reportesController, homeController, simulationsController) {
+module.exports = function routes(devicesController, reportsController, homeController, simulationsController) {
   return express
     .Router()
     .get('/', homeController.home)
@@ -12,10 +12,10 @@ module.exports = function routes(devicesController, reportesController, homeCont
     .get('/dispositivos', devicesController.toList)
 
   // Reportes
-    .post('/reportes', reportesController.newReport)
-    .get('/reportes', reportesController.toList)
-    .get('/reportes/new', reportesController.createNewReport)
-    .get('/reportes/:reporteId', reportesController.reportDetails)
+    .post('/reportes', reportsController.newReport)
+    .get('/reportes', reportsController.toList)
+    .get('/reportes/new', reportsController.createNewReport)
+    .get('/reportes/:reportId', reportsController.reportDetails)
   // TODO: Borrar? editar?
 
   //Simulaciones

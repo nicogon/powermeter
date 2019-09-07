@@ -1,4 +1,4 @@
-module.exports = function simulationsController(reportesService,simulationsService) {
+module.exports = function simulationsController(reportsService,simulationsService) {
     return {
       simulations,
       createNewSimulation
@@ -12,7 +12,7 @@ module.exports = function simulationsController(reportesService,simulationsServi
     }
 
     async function createNewSimulation(req, res) {
-        const reports = (await reportesService.list());
+        const reports = (await reportsService.list());
     
         res.render('newSimulation', { reports });
       }

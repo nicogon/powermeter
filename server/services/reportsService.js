@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 module.exports = function devicesService(
   devicesRepository,
-  reportesRepository,
+  reportsRepository,
   sessionId, lock,
   medicionEnCurso
 ) {
@@ -13,19 +13,19 @@ module.exports = function devicesService(
     list
   };
 
-  function getReport(reporteId) {
-    return { now: Date.now(), ...medicionEnCurso };// reportesRepository.getReport(reporteId);
+  function getReport(reportId) {
+    return { now: Date.now(), ...medicionEnCurso };// reportsRepository.getReport(reportId);
   }
 
   async function notify(dispoId, medicion) {
     await lock.acquire();
 
-    const perteneceAlReporte = _.get(medicionEnCurso, `mediciones.${dispoId}`);
+    const perteneceAlReport = _.get(medicionEnCurso, `mediciones.${dispoId}`);
 
 
 
     // Finalizo
-    if (perteneceAlReporte && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
+    if (perteneceAlReport && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
 
 
       console.log(medicionEnCurso)
@@ -38,7 +38,7 @@ module.exports = function devicesService(
 
     }
 
-    if (perteneceAlReporte && medicionEnCurso && medicionEnCurso.fin > Date.now()) {
+    if (perteneceAlReport && medicionEnCurso && medicionEnCurso.fin > Date.now()) {
       const medicionMaximaVieja = _.get(medicionEnCurso, `mediciones.${dispoId}.medicionMaxima`, 0);
       const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
       const sumatoriaMedicion = _.sum((Object.values(medicionEnCurso.mediciones)).map(medicionInt => (medicionInt.medicion || 0)));
@@ -86,10 +86,10 @@ module.exports = function devicesService(
   async function nuevo({
     nombre, duracion, mediciones, inicio, fin
   }) {
-    const reporteId = randomId();
+    const reportId = randomId();
 
     medicionEnCurso = {
-      reporteId,
+      reportId,
       nombre,
       duracion,
       mediciones,
@@ -99,13 +99,13 @@ module.exports = function devicesService(
     };
 
 
-    return reporteId;
+    return reportId;
   }
 
   async function list() {
     mock = [
       {
-        reporteId:"123",
+        reportId:"123",
         nombre: 'Cocina',
         duracion: 90,
         mediciones: {
@@ -120,7 +120,7 @@ module.exports = function devicesService(
       maximumConsumption: 140
     }, 
     {
-      reporteId:"1234",
+      reportId:"1234",
       nombre: 'Comedor',
       duracion: 180,
       mediciones: {
@@ -135,7 +135,7 @@ module.exports = function devicesService(
     maximumConsumption: 120
   }, 
   {
-    reporteId:"12345",
+    reportId:"12345",
     nombre: 'Pieza',
     duracion: 360,
     mediciones: {
