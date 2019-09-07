@@ -1,5 +1,5 @@
 module.exports = function reportesController(
-  dispositivosService,
+  devicesService,
   reportesService
 ) {
   return {
@@ -66,14 +66,14 @@ module.exports = function reportesController(
     const name = req.body.name;
     const duracion = req.body.duracion;
 
-    const dispositivos = req.body.dispositivo((dispositivo) => {});
+    const devices = req.body.device((device) => {});
 */
 
-    const dispositivos = (await dispositivosService.list()).filter(
-      dispositivo => dispositivo.isOnline
+    const devices = (await devicesService.list()).filter(
+      device => device.isOnline
     );
 
-    res.render('newReport', { dispositivos });
+    res.render('newReport', { devices });
   }
 
   async function toList(req, res) {

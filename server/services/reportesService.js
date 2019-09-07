@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
-module.exports = function dispositivosService(
-  dispositivosRepository,
+module.exports = function devicesService(
+  devicesRepository,
   reportesRepository,
   sessionId, lock,
   medicionEnCurso

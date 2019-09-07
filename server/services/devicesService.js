@@ -1,5 +1,5 @@
-module.exports = function dispositivosService(
-  dispositivosRepository,
+module.exports = function devicesService(
+  devicesRepository,
   reportesService,
   sessionId
 ) {
@@ -16,7 +16,7 @@ module.exports = function dispositivosService(
     return isSameSession && timeDistance;
   }
 
-  function adaptDispositivos(dispo) {
+  function adaptDevices(dispo) {
     const {
       name, dispoId, medicion, pinza, lastPush, lastConsumptions
     } = dispo;
@@ -33,7 +33,7 @@ module.exports = function dispositivosService(
   }
 
   async function generateListLastConsumptions(dispoId, consumo) {
-    const dispo = await dispositivosRepository.get(dispoId);
+    const dispo = await devicesRepository.get(dispoId);
     const lastConsumptions = [
       consumo,
       ...((dispo && dispo.lastConsumptions) || []).slice(0, 8)
@@ -46,7 +46,7 @@ module.exports = function dispositivosService(
       dispoId,
       data.medicion
     );
-    await dispositivosRepository.upsert(dispoId, {
+    await devicesRepository.upsert(dispoId, {
       sessionId,
       pinza: data.pinza,
       medicion: data.medicion,
@@ -58,17 +58,17 @@ module.exports = function dispositivosService(
   }
 
   async function borrar(dispoId) {
-    await dispositivosRepository.del(dispoId);
+    await devicesRepository.del(dispoId);
   }
 
   async function update(dispoId, name) {
-    await dispositivosRepository.upsert(dispoId, {
+    await devicesRepository.upsert(dispoId, {
       name
     });
   }
 
   async function list() {
-    const listado = await dispositivosRepository.list();
-    return listado.map(adaptDispositivos);
+    const listado = await devicesRepository.list();
+    return listado.map(adaptDevices);
   }
 };

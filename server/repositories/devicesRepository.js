@@ -1,4 +1,4 @@
-module.exports = function dispositivosRepository(mongoClient) {
+module.exports = function devicesRepository(mongoClient) {
   return {
     list, upsert, del, get
   };
@@ -6,26 +6,26 @@ module.exports = function dispositivosRepository(mongoClient) {
 
   function del(dispoId) {
     return mongoClient
-      .collection('dispositivos')
+      .collection('devices')
       .deleteOne({ dispoId });
   }
 
   async function get(dispoId) {
     return mongoClient
-      .collection('dispositivos')
+      .collection('devices')
       .findOne({ dispoId });
   }
 
   async function list() {
     return mongoClient
-      .collection('dispositivos')
+      .collection('devices')
       .find({})
       .toArray();
   }
 
   async function upsert(dispoId, data) {
     return mongoClient
-      .collection('dispositivos')
+      .collection('devices')
       .updateOne({ dispoId }, { $set: data }, { upsert: true });
   }
 };
