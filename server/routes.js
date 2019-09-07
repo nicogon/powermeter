@@ -15,7 +15,7 @@ module.exports = function routes(dispositivosController, reportesController, hom
     .post('/reportes', reportesController.nuevoReporte)
     .get('/reportes', reportesController.listar)
     .get('/reportes/new', reportesController.crearNuevoReporte)
-    .get('/reportes/:reporteId', reportesController.detalleReporte)
+    .get('/reportes/:reporteId', reportesController.reportDetails)
   // TODO: Borrar? editar?
 
   //Simulaciones

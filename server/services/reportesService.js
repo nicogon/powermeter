@@ -9,12 +9,12 @@ module.exports = function dispositivosService(
   return {
     nuevo,
     notificar,
-    getReporte,
+    getReport,
     list
   };
 
-  function getReporte(reporteId) {
-    return { now: Date.now(), ...medicionEnCurso };// reportesRepository.getReporte(reporteId);
+  function getReport(reporteId) {
+    return { now: Date.now(), ...medicionEnCurso };// reportesRepository.getReport(reporteId);
   }
 
   async function notificar(dispoId, medicion) {

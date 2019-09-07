@@ -3,14 +3,14 @@ module.exports = function reportesRepository() {
     list,
     del,
     saveReporte,
-    getReporte
+    getReport
   };
 
   async function saveReporte(reporte) {}
 
   async function del(reporteId) {}
 
-  async function getReporte(reporteId) {}
+  async function getReport(reporteId) {}
 
   async function list() {}
 };

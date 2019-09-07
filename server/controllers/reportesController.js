@@ -5,7 +5,7 @@ module.exports = function reportesController(
   return {
     listar,
     crearNuevoReporte,
-    detalleReporte,
+    reportDetails,
     nuevoReporte
   };
 
@@ -47,10 +47,10 @@ module.exports = function reportesController(
     res.redirect(`/reportes/${reporteId}/`);
   }
 
-  async function detalleReporte(req, res) {
+  async function reportDetails(req, res) {
     // TODO
     const reporteId = req.params.reporteId;
-    const reporte = await reportesService.getReporte(reporteId);
+    const reporte = await reportesService.getReport(reporteId);
 
     if (req.query.format === 'json') {
       res.json({ ...reporte, mediciones: Object.values(reporte.mediciones) });
