@@ -9,7 +9,7 @@ var id_devise_1 = 'medidor1';
 var id_devise_2 = 'medidor2';
 var id_devise_3 = 'medidor3';
 
-function report_url(dispo_id) { return `${ url }/dispositivos/${ dispo_id }/report`; }
+function report_url(dispo_id) { return `${ url }/devices/${ dispo_id }/report`; }
 
 let contador = 0
 
@@ -60,13 +60,13 @@ setInterval(function () {
 }, 2000);
 
 /*
-const repo = require('./repositories/dispositivosRepository');
+const repo = require('./repositories/devicesRepository');
 
 
 async function ejecutar() {
-  // result = await repo.insertarDispositivo({pe:'re'});
+  // result = await repo.insertardevice({pe:'re'});
 
-  result = await repo.listarDispositivos();
+  result = await repo.listardevices();
   console.log(result);
 }
 
