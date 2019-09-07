@@ -1,7 +1,7 @@
 module.exports = function dispositivosController(dispositivosService) {
   return {
     report,
-    listar,
+    toList,
     actualizar,
     borrar
   };
@@ -21,7 +21,7 @@ module.exports = function dispositivosController(dispositivosService) {
     res.status(200).send();
   }
 
-  async function listar(req, res) {
+  async function toList(req, res) {
     const dispositivos = await dispositivosService.list();
     if (req.query.format === 'json') {
       res.json(dispositivos);

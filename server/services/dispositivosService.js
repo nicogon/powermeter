@@ -54,7 +54,7 @@ module.exports = function dispositivosService(
       ultimosConsumos
     });
 
-    await reportesService.notificar(dispoId, data.medicion);
+    await reportesService.notify(dispoId, data.medicion);
   }
 
   async function borrar(dispoId) {

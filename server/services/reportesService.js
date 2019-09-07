@@ -8,7 +8,7 @@ module.exports = function dispositivosService(
 ) {
   return {
     nuevo,
-    notificar,
+    notify,
     getReport,
     list
   };
@@ -17,7 +17,7 @@ module.exports = function dispositivosService(
     return { now: Date.now(), ...medicionEnCurso };// reportesRepository.getReport(reporteId);
   }
 
-  async function notificar(dispoId, medicion) {
+  async function notify(dispoId, medicion) {
     await lock.acquire();
 
     const perteneceAlReporte = _.get(medicionEnCurso, `mediciones.${dispoId}`);

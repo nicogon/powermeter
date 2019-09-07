@@ -9,11 +9,11 @@ module.exports = function routes(dispositivosController, reportesController, hom
     .post('/dispositivos/:dispoId/report', dispositivosController.report)
     .delete('/dispositivos/:dispoId', dispositivosController.borrar)
     .put('/dispositivos/:dispoId', dispositivosController.actualizar)
-    .get('/dispositivos', dispositivosController.listar)
+    .get('/dispositivos', dispositivosController.toList)
 
   // Reportes
     .post('/reportes', reportesController.nuevoReporte)
-    .get('/reportes', reportesController.listar)
+    .get('/reportes', reportesController.toList)
     .get('/reportes/new', reportesController.crearNuevoReporte)
     .get('/reportes/:reporteId', reportesController.reportDetails)
   // TODO: Borrar? editar?

@@ -3,7 +3,7 @@ module.exports = function reportesController(
   reportesService
 ) {
   return {
-    listar,
+    toList,
     crearNuevoReporte,
     reportDetails,
     nuevoReporte
@@ -76,7 +76,7 @@ module.exports = function reportesController(
     res.render('nuevoReporte', { dispositivos });
   }
 
-  async function listar(req, res) {
+  async function toList(req, res) {
     const reports = (await reportesService.list());
     res.render('reportes', { reports });
   }
