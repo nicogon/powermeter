@@ -18,7 +18,7 @@ module.exports = function dispositivosService(
 
   function adaptDispositivos(dispo) {
     const {
-      name, dispoId, medicion, pinza, lastPush, ultimosConsumos
+      name, dispoId, medicion, pinza, lastPush, lastConsumptions
     } = dispo;
 
     return {
@@ -28,21 +28,21 @@ module.exports = function dispositivosService(
       isOnline: isOnline(dispo),
       pinza,
       medicion,
-      ultimosConsumos
+      lastConsumptions
     };
   }
 
-  async function generarListaUltimosConsumos(dispoId, consumo) {
+  async function generateListLastConsumptions(dispoId, consumo) {
     const dispo = await dispositivosRepository.get(dispoId);
-    const ultimosConsumos = [
+    const lastConsumptions = [
       consumo,
-      ...((dispo && dispo.ultimosConsumos) || []).slice(0, 8)
+      ...((dispo && dispo.lastConsumptions) || []).slice(0, 8)
     ];
-    return ultimosConsumos;
+    return lastConsumptions;
   }
 
   async function report(dispoId, data) {
-    const ultimosConsumos = await generarListaUltimosConsumos(
+    const lastConsumptions = await generateListLastConsumptions(
       dispoId,
       data.medicion
     );
@@ -51,7 +51,7 @@ module.exports = function dispositivosService(
       pinza: data.pinza,
       medicion: data.medicion,
       lastPush: Date.now(),
-      ultimosConsumos
+      lastConsumptions
     });
 
     await reportesService.notify(dispoId, data.medicion);

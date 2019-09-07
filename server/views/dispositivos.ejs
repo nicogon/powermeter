@@ -57,11 +57,11 @@
                     data.forEach(item => {
                         //console.log(item)
                       //  console.log(myChart[item.dispoId]);
-                        myChart[item.dispoId].data.datasets[0].data = item.ultimosConsumos.reverse()
+                        myChart[item.dispoId].data.datasets[0].data = item.lastConsumptions.reverse()
                             console.log(myChart[item.dispoId].data)
                         
                         myChart[item.dispoId].update();
-                        console.log(item.ultimosConsumos)
+                        console.log(item.lastConsumptions)
 
                     })
                 });
@@ -178,7 +178,7 @@
                 var config = {
                     backgroundColor: "rgba(255,180,0,0.1)",
                     borderColor: "rgb(255,180,0)",
-                    data: <%=JSON.stringify(dispositivos[dispositivo].ultimosConsumos || [])%>
+                    data: <%=JSON.stringify(dispositivos[dispositivo].lastConsumptions || [])%>
                 }
                 var chartOptions = boSmallStatsOptions(Math.max(...config.data) + 1);
 
