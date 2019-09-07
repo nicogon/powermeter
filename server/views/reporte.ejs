@@ -351,18 +351,18 @@
 
         $(document).ready(function() {
 
-            function actualizarPorcentaje(data) {
+            function updatePorcentaje(data) {
                 porcentaje = calcularPorcentaje(data);
                 $("#porcentaje").width(porcentaje + "%");
                 $("#porcentaje-txt").html(porcentaje == 100 ? "Reporte Finalizado" : porcentaje + "% reporte en progreso");
             }
 
-            actualizarPorcentaje(reporte)
+            updatePorcentaje(reporte)
 
 
-            function actualizarCharts() {
+            function updateCharts() {
                 $.getJSON("/reportes/<%=reporte.reporteId%>/?format=json", function(data) {
-                    actualizarPorcentaje(data);
+                    updatePorcentaje(data);
 
                     for(medicion of data.mediciones){
                         $("#medicion-"+medicion.dispoId).html(medicion.medicion.toFixed(0)+" w")
@@ -384,7 +384,7 @@
             }
 
             setInterval(function() {
-                  actualizarCharts()
+                updateCharts()
             }, 1000);
 
         });

@@ -6,7 +6,7 @@ module.exports = function dispositivosService(
   return {
     list,
     report,
-    actualizar,
+    update,
     borrar
   };
 
@@ -61,7 +61,7 @@ module.exports = function dispositivosService(
     await dispositivosRepository.del(dispoId);
   }
 
-  async function actualizar(dispoId, name) {
+  async function update(dispoId, name) {
     await dispositivosRepository.upsert(dispoId, {
       name
     });

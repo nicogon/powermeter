@@ -2,12 +2,12 @@ module.exports = function dispositivosController(dispositivosService) {
   return {
     report,
     toList,
-    actualizar,
+    update,
     borrar
   };
 
-  async function actualizar(req, res) {
-    await dispositivosService.actualizar(req.params.dispoId, req.body.name);
+  async function update(req, res) {
+    await dispositivosService.update(req.params.dispoId, req.body.name);
     res.status(200).send();
   }
 

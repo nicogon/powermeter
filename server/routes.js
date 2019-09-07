@@ -8,7 +8,7 @@ module.exports = function routes(dispositivosController, reportesController, hom
     // Dispositivos
     .post('/dispositivos/:dispoId/report', dispositivosController.report)
     .delete('/dispositivos/:dispoId', dispositivosController.borrar)
-    .put('/dispositivos/:dispoId', dispositivosController.actualizar)
+    .put('/dispositivos/:dispoId', dispositivosController.update)
     .get('/dispositivos', dispositivosController.toList)
 
   // Reportes

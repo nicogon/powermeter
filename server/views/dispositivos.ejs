@@ -51,7 +51,7 @@
                 });
             });
 
-            function actualizarCharts() {
+            function updateCharts() {
                 $.getJSON("dispositivos/?format=json", function(data) {
 
                     data.forEach(item => {
@@ -69,7 +69,7 @@
 
 
             setInterval(function() {
-                actualizarCharts()
+                updateCharts()
             }, 1000);
 
 
