@@ -20,7 +20,9 @@ module.exports = function routes(devicesController, reportsController, homeContr
 
   //Simulaciones
     .get('/simulations', simulationsController.simulations)
-    .get('/simulations/new', simulationsController.createNewSimulation);
+    .get('/simulations/new', simulationsController.createNewSimulation)
+    .post('/simulations/', simulationsController.newSimulation)
+    .get('/simulations/:simulationId', simulationsController.simulationDetails);
 
     
 };
