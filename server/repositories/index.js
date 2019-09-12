@@ -6,7 +6,6 @@ const basename = path.basename(__filename);
 
 const config = require('./../config');
 
-console.log(`Environmenttwaarerea: ${config.environment}`);
 const dbConfig = require('./../config/db')[config.environment];
 
 const db = {};
@@ -16,10 +15,10 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
 sequelize
   .authenticate()
   .then(() => {
-    console.log('\nConnection has been established successfully.\n');
+    console.log('\nPostgres connection has been established successfully.\n');
   })
   .catch(err => {
-    console.error('\nUnable to connect to the database:', err);
+    console.error('\nUnable to connect to Postgres database:', err);
   });
 
 fs
