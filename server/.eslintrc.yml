@@ -10,5 +10,7 @@ rules:
   no-return-assign: 0
   no-use-before-define: off
   prefer-destructuring: 0
-  quotes: [2, "single", "avoid-escape"] 
+  quotes: [2, "single", "avoid-escape"]
   comma-dangle: ["error", "never"]
+  no-console: "off"
+  no-unused-vars: "off"
