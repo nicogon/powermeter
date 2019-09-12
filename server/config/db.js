@@ -1,4 +1,4 @@
-const config = require('./../config').common.database;
+const config = require('./index').common.database;
 
 module.exports = {
   development: {
