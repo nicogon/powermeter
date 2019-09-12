@@ -4,19 +4,14 @@ const Sequelize = require('sequelize');
 
 const basename = path.basename(__filename);
 
-const env = process.env.NODE_ENV || 'development';
-
 const config = require('./../config');
+
+console.log(`Environmenttwaarerea: ${config.environment}`);
+const dbConfig = require('./../config/db')[config.environment];
 
 const db = {};
 
-let sequelize;
-
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 
 fs
   .readdirSync(__dirname)

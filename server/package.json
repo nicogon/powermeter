@@ -19,6 +19,9 @@
     "mongodb": "^3.2.7",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
+    "orm": "^5.0.4",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
     "prettier": "^1.18.2",
     "pug": "^2.0.4",
     "sequelize": "^5.18.4",
@@ -39,8 +42,9 @@
     "url": "https: //github.com/nicogon/powermeter"
   },
   "scripts": {
+    "console": "node console.js",
     "lint": "eslint . --fix",
-    "migrations": "./node_modules/.bin/sequelize --config ./config/db.js --migrations-path .p/migrations db:migrate",
+    "migrations": "./node_modules/.bin/sequelize --config ./config/db.js --migrations-path ./migrations/migrations db:migrate",
     "seeds": "node ./app/models/scripts/seeds",
     "start": "./node_modules/.bin/nodemon --inspect index.js"
   }
