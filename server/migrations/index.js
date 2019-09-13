@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const config = require('./../config');
 const errors = require('./../errors');
 
-const sequelize = require('./../repositories').sequelize;
+const sequelize = require('./../models').sequelize;
 
 console.log('\nRunning migrations...');
 

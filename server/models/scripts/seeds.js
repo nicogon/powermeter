@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const Devise = require('../devicesRepository_nico').devises;
+const Devise = require('../../repositories/devicesRepository').devises;
 
 const addDevise = newDevise => Devise
   .findOne({ where: { email: newDevise.email } })

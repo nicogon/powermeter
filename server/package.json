@@ -42,10 +42,9 @@
     "url": "https: //github.com/nicogon/powermeter"
   },
   "scripts": {
-    "console": "node console.js",
     "lint": "eslint . --fix",
     "migrations": "./node_modules/.bin/sequelize --config ./config/db.js --migrations-path ./migrations/migrations db:migrate",
     "seeds": "node ./app/models/scripts/seeds",
-    "start": "./node_modules/.bin/nodemon --inspect index.js"
+    "start": "nodemon index.js"
   }
 }
