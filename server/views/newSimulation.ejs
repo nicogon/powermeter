@@ -19,18 +19,18 @@
 
                     <div class="form-group ">
                         <label for="feFirstName">Nombre de la simulación</label>
-                        <input type="text" class="form-control" placeholder="Nombre de la simulación" name="nombre">
+                        <input type="text" class="form-control" placeholder="Nombre de la simulación" name="name">
                     </div>
 
                     <div class="form-group">
                         <label for="feInputState">Duracion</label>
-                        <select name="duracion" id="feInputState" class="form-control">
+                        <select name="duration" id="feInputState" class="form-control">
                             <option selected="">Duracion...</option>
-                            <option value='604800000'>1 semana</option>
-                            <option value='1209600000 '>2 semana</option>
-                            <option value='0'>3 semanas</option>
-                            <option value='2419200000'>4 semanas</option>
-                            <option value='1'>1 mes</option>
+                            <option value='1'>1 semana</option>
+                            <option value='2'>2 semana</option>
+                            <option value='3'>3 semanas</option>
+                            <option value='4'>4 semanas</option>
+                            <option value='5'>1 mes</option>
                         </select>
                     </div>
 
@@ -75,6 +75,7 @@
 
                     const reportElement = `              
                         <li class="list-group-item p-3" id="card-${reportId}">
+                            <input type="hidden" name="reportId" value="${reportId}">
                             <div class='d-flex'>
                                 <label for="feInputState">Reporte</label>
                                 <a class="ml-auto" href="#" id="borrar-${reportId}" report-id="${reportId}">Borrar</a>

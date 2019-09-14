@@ -1,0 +1,85 @@
+<%- include("header",{mode:'simulation'}) %>
+
+<div class="main-content-container container-fluid">
+
+  <div class="d-flex justify-content-between">
+
+    <div class="page-header no-gutters py-4">
+      <div class="">
+        <span class="text-uppercase page-subtitle">Detalle Simulación</span>
+        <h3 class="page-title">
+          Simulación
+        </h3>
+      </div>
+    </div>
+    <div class="page-header py-4"><a href='/simulations/new' class="btn btn-sm btn-primary" style='color:white'>+ Nueva
+        Simulación</a></div>
+  </div>
+
+
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class="card card-small">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Detalle Simulación</h6>
+        </div>
+        <div class="card-body pt-0 row">
+          <table class="table mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th scope="col" class="border-0">Nombre</th>
+                <th scope="col" class="border-0">Porcentaje</th>
+                <th scope="col" class="border-0">Consumo</th>
+                <th scope="col" class="border-0">Costo Consumo Total</th>
+                <th scope="col" class="border-0"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%for (var item of simulation.averageConsumptions){%>
+              <tr>
+                <td>
+                  <%=item.name%>
+                </td>
+                <td>
+                    <%=item.percentage%>%
+                </td>
+                <td>
+                  <%=item.totalConsumption%> Kw
+                </td>
+                <td>
+                    $<%=item.totalCostConsumption%>
+                </td>
+              </tr>
+              <%}%> 
+              <!-- <tfoot> -->
+                  <thead class="bg-light">
+
+              <tr>
+                <td>
+                  <b>TOTALES</b>
+                </td>
+                <td>
+                    <b>100%</b>
+                </td>
+                <td>
+                    <b><%=simulation.totalKw%> Kw</b>
+                </td>
+                <td>
+                    <b>$<%=simulation.totalCost%></b>
+                </td>
+              </tr>
+            <!-- </tfoot> -->
+          </thead>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+
+    </div>
+
+    <% include footer.ejs %>

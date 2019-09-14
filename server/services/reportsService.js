@@ -105,50 +105,103 @@ module.exports = function devicesService(
   async function list() {
     mock = [
       {
-        reportId:"123",
+        reportId: "123",
         nombre: 'Cocina',
         duracion: 90,
-        mediciones: {
-        medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
-        medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
+        inicio: 1565223068401,
+        fin: 1595223968401,
+        sessionId: '4oy0xej',
+        currentConsumption: 100,
+        averageConsumption: 80, //Es necesario? Quizas..
+        maximumConsumption: 140,
+        mediciones: [
+          {
+            index: 0,
+            nombreMedicion: 'Microondas',
+            dispoId: 'deviceRed',
+            data: [],
+            // currentConsumption: 100,
+            duration: 60,
+            averageConsumption: 80
+            // maximumConsumption: 140
+          },
+          {
+            index: 1,
+            nombreMedicion: 'Heladera',
+            dispoId: 'deviceBlue',
+            data: [],
+            // currentConsumption: 100,
+            duration: 60,
+            averageConsumption: 100
+            // maximumConsumption: 140
+          }]
       },
-      inicio: 1565223068401,
-      fin: 1595223968401,
-      sessionId: '4oy0xej',
-      currentConsumption: 100,
-      averageConsumption: 80,
-      maximumConsumption: 140
-    }, 
-    {
-      reportId:"1234",
-      nombre: 'Comedor',
-      duracion: 180,
-      mediciones: {
-      medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
-      medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
-    },
-    inicio: 1565223068401,
-    fin: 1595223968401,
-    sessionId: '4oy0xek',
-    currentConsumption: 80,
-    averageConsumption: 40,
-    maximumConsumption: 120
-  }, 
-  {
-    reportId:"12345",
-    nombre: 'Pieza',
-    duracion: 360,
-    mediciones: {
-    medidor1: { index: 0, nombreMedicion: 'medicion1', dispoId: 'medidor1', data: [] },
-    medidor2: { index: 1, nombreMedicion: 'medicion2', dispoId: 'medidor2', data: [] }
-  },
-  inicio: 1565223068401,
-  fin: 1595223968401,
-  sessionId: '4oy0xel',
-  currentConsumption: 120,
-  averageConsumption: 100,
-  maximumConsumption: 180
-}];
+      {
+        reportId: "1234",
+        nombre: 'Comedor',
+        duracion: 180,
+        inicio: 1565223068401,
+        fin: 1595223968401,
+        sessionId: '4oy0xek',
+        currentConsumption: 80,
+        averageConsumption: 40,
+        maximumConsumption: 120,
+        mediciones: [
+          {
+            index: 0,
+            nombreMedicion: 'Televisor',
+            dispoId: 'deviceRed',
+            data: [],
+            // currentConsumption: 100,
+            duration: 60,
+            averageConsumption: 80
+            // maximumConsumption: 140
+          },
+          {
+            index: 1,
+            nombreMedicion: 'Aire acondicionado',
+            dispoId: 'deviceBlue',
+            data: [],
+            // currentConsumption: 100,
+            averageConsumption: 30,
+            duration: 60
+            // maximumConsumption: 140 
+          }
+        ]
+      },
+      {
+        reportId: "12345",
+        nombre: 'Pieza',
+        duracion: 360,
+        inicio: 1565223068401,
+        fin: 1595223968401,
+        sessionId: '4oy0xel',
+        currentConsumption: 120,
+        averageConsumption: 100,
+        maximumConsumption: 180,
+        mediciones: [
+          {
+            index: 0,
+            nombreMedicion: 'Lampara',
+            dispoId: 'deviceRed',
+            data: [],
+            duration: 60,
+            // currentConsumption: 100,
+            averageConsumption: 50
+            // maximumConsumption: 140
+          },
+          {
+            index: 1,
+            nombreMedicion: 'Televisor',
+            dispoId: 'deviceBlue',
+            data: [],
+            duration: 60,
+            // currentConsumption: 100,
+            averageConsumption: 180
+            // maximumConsumption: 140
+          }
+        ]
+      }];
     return mock;
   }
 };
