@@ -36,32 +36,80 @@ module.exports = function simulationsService(reportsService, simulationRepositor
   }
 
   async function create(simulation) {
-    let averageConsumptions = []
+    simulation.averageConsumptions = [];
 
-    //Tiene sentido esto que estoy haciendo? un array de nombre y consumo? Donde lo guardo? Como lo uso?
+    for (reportId of simulation.reports) {
 
-    simulation.reports.forEach((reportId, index) => {
-      const report = reportsService.getReport(reportId);
-     
-      report.mediciones.forEach((nombreMedicion, averageConsumption, duration) => {
-        const medition = {
-          name: nombreMedicion,
-          totalConsumtion: averageConsumption * duration * simulation.kwCost //duration in hours
+      const report = (await reportsService.list()).find(report => report.reportId == reportId);
+
+      for (medicion of report.mediciones) {
+
+        const simulationItem = {
+          name: medicion.nombreMedicion,
+          totalConsumption: medicion.averageConsumption * simulation.duration,
+          totalCostConsumption: medicion.averageConsumption * simulation.duration * simulation.kwCost //La idea es que el costo se ponga en el formulario de la simulacio
         }
-        averageConsumptions.push(medition)
-      })
-    })
 
-    //De donde sale el ID? ni idea
+        simulation.averageConsumptions.push(simulationItem)
+      }
+
+    }
+    simulation.totalKw = _.sum(simulation.averageConsumptions.map(item => item.totalCostConsumption));
+    simulation.totalCost = simulation.totalKw * simulation.kwCost
+
+    for (item of simulation.averageConsumptions) {
+        const total = parseInt(simulation.totalKw)
+        //TODO: Ver de aproximar bien estos porcentajes, para arriba o abajo
+        item.percentage = parseInt(100 * item.totalCostConsumption / total, 10)
+    }
+
+
+    simulation.id = "1234";
+
     const simulationId = "1234"
+    console.log(simulation)
+    // const simulationId = simulationRepository.save(simulacion);
     return simulationId
   }
 
 
-  function getSimulation(simulationId) {
-
-    //Aca No entiendo como hace getReports, porque hace algo de ... que es medio raro, y si 
-    //yo quieor ir al simulation repository, no existe, entonces.. como hago para obtenerlo? Ni idea
-    return simulationRepository.getSimulation(simulationId)// reportsRepository.getReport(reportId);
+  async function getSimulation(simulationId) {
+    return {
+      reports: [ '12345', '123' ],
+      name: 'Ivan',
+      duration: 720,
+      kwCost: 30,
+      averageConsumptions: [
+        {
+          name: 'Lampara',
+          totalConsumption: 36000,
+          totalCostConsumption: 1080000,
+          percentage: 12
+        },
+        {
+          name: 'Televisor',
+          totalConsumption: 129600,
+          totalCostConsumption: 3888000,
+          percentage: 43
+        },
+        {
+          name: 'Microondas',
+          totalConsumption: 57600,
+          totalCostConsumption: 1728000,
+          percentage: 19
+        },
+        {
+          name: 'Heladera',
+          totalConsumption: 72000,
+          totalCostConsumption: 2160000,
+          percentage: 24
+        }
+      ],
+      totalKw: 8856000,
+      totalCost: 265680000,
+      id: '1234'
+    }
+    //TODO: EN un futuro se usara la de abajo.
+    // return simulationRepository.getSimulation(simulationId)// reportsRepository.getReport(reportId);
   }
 };

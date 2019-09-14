@@ -163,7 +163,7 @@ module.exports = function devicesService(
             dispoId: 'deviceBlue',
             data: [],
             // currentConsumption: 100,
-            averageConsumption: 80,
+            averageConsumption: 30,
             duration: 60
             // maximumConsumption: 140 
           }
@@ -187,7 +187,7 @@ module.exports = function devicesService(
             data: [],
             duration: 60,
             // currentConsumption: 100,
-            averageConsumption: 40
+            averageConsumption: 50
             // maximumConsumption: 140
           },
           {
@@ -197,7 +197,7 @@ module.exports = function devicesService(
             data: [],
             duration: 60,
             // currentConsumption: 100,
-            averageConsumption: 120
+            averageConsumption: 180
             // maximumConsumption: 140
           }
         ]

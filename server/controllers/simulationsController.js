@@ -7,7 +7,6 @@ module.exports = function simulationsController(reportsService,simulationsServic
     };
   
     async function simulations(req, res) {
-        console.log("PASE")
         const simulations = (await simulationsService.list());
 
         res.render('simulations', { simulations });
@@ -15,7 +14,6 @@ module.exports = function simulationsController(reportsService,simulationsServic
 
     async function createNewSimulation(req, res) {
         const reports = (await reportsService.list());
-    
         res.render('newSimulation', { reports });
       }
 
@@ -36,11 +34,11 @@ module.exports = function simulationsController(reportsService,simulationsServic
         const duration = parseInt(req.body.duration);
         let durationInHours
         switch(duration) {
-          case '1': durationInHours = 24 * 7
-          case '2': durationInHours = 24 * 14
-          case '3': durationInHours = 24 * 21
-          case '4': durationInHours = 24 * 28
-          case '5': durationInHours = 24 * 30
+          case 1: durationInHours = 24 * 7
+          case 2: durationInHours = 24 * 14
+          case 3: durationInHours = 24 * 21
+          case 4: durationInHours = 24 * 28
+          case 5: durationInHours = 24 * 30
           break;
         }
         const simulation = {
@@ -49,33 +47,27 @@ module.exports = function simulationsController(reportsService,simulationsServic
 
         simulation.name = name
         simulation.duration = durationInHours
-
-        if (typeof req.body.nombreMedicion === 'string') {
-          simulation.reports.push(reportId);
+        simulation.kwCost = 30 //TODO: Ponerlo en el form
+        if (typeof req.body.reportId === 'string') {
+          simulation.reports.push(req.body.reportId);
         } else {
           req.body.reportId.forEach((reportId, index) => {
             simulation.reports.push(reportId);
           });
         }
 
-        simulationId = await simulationsService.create(simulacion);      
-
+        simulationId = await simulationsService.create(simulation);      
         res.redirect(`/simulations/${simulationId}/`);
+
+          // throw new Error();
 
       }
 
       async function simulationDetails(req, res) {
-        // TODO
         const simulationId = req.params.simulationId;
-        const simulation = await reportsService.getSimulation(simulationId);
+        const simulation = await simulationsService.getSimulation(simulationId);
     
-
-        //Aca un poco me marie, no entiendo bien que es eso de los ... antes de report, y eso de los values
-        // if (req.query.format === 'json') {
-        //   res.json({ ...report, mediciones: Object.values(report.mediciones) });
-        // } else {
-        //   res.render('report', { report });
-        // }
+        res.render('simulation', { simulation });
       }
     
   };
