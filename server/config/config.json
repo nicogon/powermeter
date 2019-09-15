@@ -1,9 +1,0 @@
-{
-  "development": {
-    "username": "powermeter",
-    "password": "powermeter",
-    "database": "powermeter",
-    "host": "localhost",
-    "dialect": "postgres"
-  }
-}
