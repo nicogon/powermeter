@@ -1,32 +1,44 @@
-module.exports = function devicesController(devicesService) {
+module.exports = function devicesController(devicesService, Device) {
   return {
-    report,
-    toList,
-    update,
-    borrar
+    report, toList, update, borrar
   };
 
+  // PUT :base_url/dispositivos/:dispoId
   async function update(req, res) {
-    await devicesService.update(req.params.dispoId, req.body.name);
+    findDevice(req).then(device => device.update({ name: req.body.name }));
     res.status(200).send();
   }
 
+  // DELETE :base_url/dispositivos/:dispoId
   async function borrar(req, res) {
-    await devicesService.borrar(req.params.dispoId);
+    findDevice(req).then(device => device.destroy());
     res.status(200).send();
   }
 
+  // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
-    await devicesService.report(req.params.dispoId, req.body);
+    // TODO: Pending reports model join
+    devicesService.report(req.params.dispoId, req.body);
     res.status(200).send();
   }
 
+  // GET :base_url/dispositivos
   async function toList(req, res) {
+    // const devices = Device.findAll().map(device => adaptDevice(device));
     const devices = await devicesService.list();
     if (req.query.format === 'json') {
       res.json(devices);
     } else {
       res.render('devices', { devices });
     }
+  }
+
+  function adaptDevice(device) {
+    const { name } = device;
+    return { name };
+  }
+
+  function findDevice(req) {
+    Device.findByPk(req.params.dispoId);
   }
 };
