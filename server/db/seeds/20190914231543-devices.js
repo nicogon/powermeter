@@ -2,20 +2,22 @@
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('devices', [
+    return queryInterface.bulkInsert('Devices', [
       {
         id: 1,
         name: 'Pinza 1',
         duration: 'hora',
-        time_start: Date.now(),
-        time_end: Date.now() + 1 * 60 * 60 * 1000,
+        time_start: '2019/09/14 21:15',
+        time_end: '2019/09/14 22:15',
         average_medition: 1,
-        maximum_medition: 2
+        maximum_medition: 2,
+        createdAt: '2019/09/14 21:15',
+        updatedAt: '2019/09/14 21:15'
       }],
     {});
   },
 
   down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('devices', [{ name: 'Pinza 1' }]);
+    return queryInterface.bulkDelete('Devices', [{ name: 'Pinza 1' }]);
   }
 };

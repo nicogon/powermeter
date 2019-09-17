@@ -12,7 +12,7 @@ Create new instance object
 ```js
 const Device = models.devices
 
-Device.build(
+Device.create(
   {
     name: 'Pinza 1',
     duration: 'hora',
@@ -26,7 +26,10 @@ Device.build(
 
 Find by id
 ```js
-const Device = models.devices
+models.Device.findByPk(1).then(device => console.log(device));
+```
 
-Device.findByPk(1).then(device => console.log(device));
+Find all devices
+```js
+models.Device.findAll().then(device => console.log(device))
 ```
