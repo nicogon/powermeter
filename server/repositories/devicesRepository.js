@@ -1,31 +1,29 @@
-module.exports = function devicesRepository(mongoClient) {
+module.exports = function devicesRepository(dispoMem) {
   return {
     list, upsert, del, get
   };
 
 
   function del(dispoId) {
-    return mongoClient
-      .collection('devices')
-      .deleteOne({ dispoId });
+    return {}
   }
 
   async function get(dispoId) {
-    return mongoClient
-      .collection('devices')
-      .findOne({ dispoId });
+    return {...dispoMem.find(dispo => dispo.dispoId = dispoId)};
   }
 
   async function list() {
-    return mongoClient
-      .collection('devices')
-      .find({})
-      .toArray();
+    return dispoMem;
   }
 
   async function upsert(dispoId, data) {
-    return mongoClient
-      .collection('devices')
-      .updateOne({ dispoId }, { $set: data }, { upsert: true });
+    let dispo = dispoMem.findIndex(unit => unit.dispoId == dispoId);
+    if(dispo==-1) {
+      dispoMem.push({...data,dispoId:dispoId}) 
+    }else{
+      dispoMem[dispo] = {...dispoMem[dispo], ...data, dispoId};
+    }
   }
+  
+  
 };

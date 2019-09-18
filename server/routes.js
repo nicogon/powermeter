@@ -6,10 +6,10 @@ module.exports = function routes(devicesController, reportsController, homeContr
     .get('/', homeController.home)
 
     // Dispositivos
-    .post('/dispositivos/:dispoId/report', devicesController.report)
-    .delete('/dispositivos/:dispoId', devicesController.borrar)
-    .put('/dispositivos/:dispoId', devicesController.update)
-    .get('/dispositivos', devicesController.toList)
+    .post('/devices/:dispoId/report', devicesController.report)
+    .delete('/devices/:dispoId', devicesController.borrar)
+    .put('/devices/:dispoId', devicesController.update)
+    .get('/devices', devicesController.toList)
 
   // Reportes
     .post('/reportes', reportsController.newReport)

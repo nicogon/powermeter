@@ -144,13 +144,13 @@
                                             <%=medicion.nombreMedicion%>
                                         </td>
                                         <td id="medicion-<%-medicion.dispoId%>">
-                                            <%=(medicion.medicion).toFixed(0)%> w
+                                            <%=(medicion.medicion || 0).toFixed(0)%> w
                                         </td>
                                         <td id="medicionPromedio-<%-medicion.dispoId%>">
-                                            <%=(medicion.medicionPromedio).toFixed(0)%> w
+                                            <%=(medicion.medicionPromedio || 0).toFixed(0)%> w
                                         </td>
                                         <td id="medicionMaxima-<%-medicion.dispoId%>"> 
-                                            <%=(medicion.medicionMaxima).toFixed(0)%> w
+                                            <%=(medicion.medicionMaxima || 0).toFixed(0)%> w
                                         </td>
 
                                     </tr>
