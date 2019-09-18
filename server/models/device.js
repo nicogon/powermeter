@@ -1,6 +1,8 @@
 /* eslint-disable function-paren-newline */
+const pry = require('pryjs');
 
 module.exports = (sequelize, DataTypes) => {
+  // Attributes
   const Device = sequelize.define('Device',
     {
       id: {
@@ -17,12 +19,23 @@ module.exports = (sequelize, DataTypes) => {
       average_medition: DataTypes.FLOAT,
       maximum_medition: DataTypes.FLOAT
     },
-    {
-      timestamp: true,
-      classMethods: {
-        associate(models) { Device.has_many(models.puntualMeditions, { as: 'puntualMeditions' }); }
-      }
-    }
+    { timestamp: true }
   );
+
+  // Associations
+  Device.associate = (models) => {
+    models.Device.hasMany(models.PuntualMedition, {
+      as: 'puntualMeditions',
+      foreignKey: 'id'
+    });
+  };
+
+  // Instance methods
+  Device.prototype.maxConsumption = () => 2; // this.puntualMeditions.max
+  Device.prototype.avgConsumption = () => 2; // this.puntualMeditions.avg
+  Device.prototype.consumption = () => 2; // this.puntualMeditions.last.value
+  Device.prototype.lastPush = () => Date.now; // this.puntualMeditions.last.created_at
+  Device.prototype.isOnline = () => true; // lastPush in (Date.now-5.segs..Date.now)
+
   return Device;
 };

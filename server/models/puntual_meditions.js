@@ -1,6 +1,7 @@
 /* eslint-disable function-paren-newline */
 
 module.exports = (sequelize, DataTypes) => {
+  // Attributes
   const PuntualMedition = sequelize.define('PuntualMedition',
     {
       id: {
@@ -13,12 +14,17 @@ module.exports = (sequelize, DataTypes) => {
       value: DataTypes.FLOAT,
       offset: DataTypes.INTEGER
     },
-    {
-      timestamps: false,
-      classMethods: {
-        associate(models) { PuntualMedition.belongsTo(models.devices, { as: 'device' }); }
-      }
-    }
+    { timestamps: false }
   );
+
+  // Associations
+  PuntualMedition.associate = (models) => {
+    models.PuntualMedition.hasMany(models.Device, {
+      onDelete: 'CASCADE',
+      as: 'device',
+      foreignKey: 'id'
+    });
+  };
+
   return PuntualMedition;
 };
