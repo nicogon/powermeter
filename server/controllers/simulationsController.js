@@ -58,9 +58,6 @@ module.exports = function simulationsController(reportsService,simulationsServic
 
         simulationId = await simulationsService.create(simulation);      
         res.redirect(`/simulations/${simulationId}/`);
-
-          // throw new Error();
-
       }
 
       async function simulationDetails(req, res) {
