@@ -1,4 +1,4 @@
-<%- include("header",{mode:'simulation'}) %>
+<%- include("header",{mode:''}) %>
 
 <div class="main-content-container container-fluid">
 
@@ -41,13 +41,13 @@
                   <%=item.name%>
                 </td>
                 <td>
-                    <%=item.percentage%>%
+                  <%=item.percentage%>%
                 </td>
                 <td>
                   <%=item.totalConsumption%> Kw
                 </td>
                 <td>
-                    $<%=item.totalCostConsumption%>
+                  $<%=item.totalCostConsumption%>
                 </td>
               </tr>
               <%}%> 
@@ -63,23 +63,23 @@
                 </td>
                 <td>
                     <b><%=simulation.totalKw%> Kw</b>
-                </td>
-                <td>
-                    <b>$<%=simulation.totalCost%></b>
-                </td>
+              </td>
+              <td>
+                <b>$<%=simulation.totalCost%></b>
+              </td>
               </tr>
-            <!-- </tfoot> -->
-          </thead>
+              <!-- </tfoot> -->
+              </thead>
 
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       
-
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <% include footer.ejs %>
+
+</div>
+
+<% include footer.ejs %>
