@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
-        notEmpty: true
+        notEmpty: true,
+        autoIncrement: true
       },
       name: DataTypes.STRING,
       duration: DataTypes.ENUM('dia', 'hora', 'semana'),
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       maximum_medition: DataTypes.FLOAT
     },
     {
+      timestamp: true,
       classMethods: {
         associate(models) { Device.has_many(models.puntualMeditions, { as: 'puntualMeditions' }); }
       }
