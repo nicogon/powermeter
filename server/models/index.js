@@ -14,12 +14,7 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
 
 sequelize
   .authenticate()
-  .then(() => {
-    console.log('\nPostgres connection has been established successfully.\n');
-  })
-  .catch(err => {
-    console.error('\nUnable to connect to Postgres database:', err);
-  });
+  .catch((err) => { console.error('\nUnable to connect to Postgres database:', err); });
 
 fs
   .readdirSync(__dirname)

@@ -26,7 +26,7 @@
 
                 console.log(name)
                 $.ajax({
-                    url: '/dispositivos/' + id + '/',
+                    url: '/devices/' + id + '/',
                     type: 'PUT',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
@@ -41,7 +41,7 @@
                 const id = $(this).attr('data-id');
                 console.log(id)
                 $.ajax({
-                    url: '/dispositivos/' + id + '/',
+                    url: '/devices/' + id + '/',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     type: 'DELETE',
@@ -52,7 +52,7 @@
             });
 
             function updateCharts() {
-                $.getJSON("dispositivos/?format=json", function(data) {
+                $.getJSON("/devices/?format=json", function(data) {
 
                     data.forEach(item => {
                         //console.log(item)

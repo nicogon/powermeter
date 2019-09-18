@@ -3,7 +3,7 @@ const _ = require('lodash');
 module.exports = function devicesService(
   devicesRepository,
   reportsRepository,
-  sessionId, lock,
+  sessionId,
   medicionEnCurso
 ) {
   return {
@@ -18,7 +18,7 @@ module.exports = function devicesService(
   }
 
   async function notify(dispoId, medicion) {
-    await lock.acquire();
+    //await lock.acquire();
 
     const perteneceAlReport = _.get(medicionEnCurso, `mediciones.${dispoId}`);
 
@@ -73,7 +73,7 @@ module.exports = function devicesService(
         }
       );
     }
-    await lock.release();
+  //  await lock.release();
   }
 
   function randomId() {
@@ -88,8 +88,11 @@ module.exports = function devicesService(
   }) {
     const reportId = randomId();
 
+    const medicion = 0;
+    
     medicionEnCurso = {
       reportId,
+      medicion,
       nombre,
       duracion,
       mediciones,

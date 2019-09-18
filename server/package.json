@@ -10,13 +10,9 @@
     "dependable": "^1.1.0",
     "dotenv": "^8.1.0",
     "ejs": "^2.6.2",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-prettier": "^3.1.0",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "mongodb": "^3.2.7",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
     "orm": "^5.0.4",
@@ -28,7 +24,10 @@
     "umzug": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^6.0.1"
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.0"
   },
   "engines": {
     "node": "8.9.4",
@@ -43,8 +42,9 @@
   },
   "scripts": {
     "lint": "eslint . --fix",
-    "migrations": "./node_modules/.bin/sequelize --config ./config/db.js --migrations-path ./migrations/migrations db:migrate",
-    "seeds": "node ./app/models/scripts/seeds",
+    "migrations": "./node_modules/.bin/sequelize --config ./config/db.js --migrations-path ./db/migrations db:migrate",
+    "seeds": "./node_modules/.bin/sequelize --config ./config/db.js --seeders-path ./db/seeds db:seed:all",
+    "sequelize": "./node_modules/.bin/sequelize --config ./config/db.js",
     "start": "nodemon index.js"
   }
 }

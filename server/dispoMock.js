@@ -57,7 +57,7 @@ fetch(report_url(id_devise_1), {
 
 setInterval(function () {
   report();
-}, 2000);
+}, 5000);
 
 /*
 const repo = require('./repositories/devicesRepository');

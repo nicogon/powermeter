@@ -12,7 +12,7 @@ module.exports = function devicesService(
 
   function isOnline(dispo) {
     const isSameSession = sessionId === dispo.sessionId;
-    const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 5000;
+    const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 10000;
     return isSameSession && timeDistance;
   }
 
@@ -42,16 +42,18 @@ module.exports = function devicesService(
   }
 
   async function report(dispoId, data) {
+   /*
+   anda mal
     const lastConsumptions = await generateListLastConsumptions(
       dispoId,
       data.medicion
     );
+    */
     await devicesRepository.upsert(dispoId, {
       sessionId,
       pinza: data.pinza,
       medicion: data.medicion,
-      lastPush: Date.now(),
-      lastConsumptions
+      lastPush: Date.now()
     });
 
     await reportsService.notify(dispoId, data.medicion);
