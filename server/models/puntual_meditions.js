@@ -7,12 +7,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
-        notEmpty: true
+        notEmpty: true,
+        autoIncrement: true
       },
       value: DataTypes.FLOAT,
       offset: DataTypes.INTEGER
     },
     {
+      timestamps: false,
       classMethods: {
         associate(models) { PuntualMedition.belongsTo(models.devices, { as: 'device' }); }
       }
