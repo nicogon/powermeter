@@ -1,4 +1,8 @@
 const dependable = require('dependable');
+const sequelize = require('sequelize');
+const device = require('./models').Device;
+const sensor = require('./models').Sensor;
+
 const path = require('path');
 const { EventEmitter } = require('events');
 
@@ -30,6 +34,14 @@ async function createContainer() {
 
   container.register('dispoMem', function medicionEnCursofn() {
     return dispoMem;
+  });
+
+  container.register('device', function deviceFn() {
+    return device;
+  });
+
+  container.register('sensor', function sensorFn() {
+    return sensor;
   });
 
   container.register('sessionId', function sessionIdFn() {

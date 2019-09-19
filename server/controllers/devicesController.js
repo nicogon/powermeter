@@ -1,7 +1,6 @@
 // TODO: Quiero que se puedan incluir modulos con el inyector de dependencias.
-const Device = require('../models').Device;
 
-module.exports = function devicesController(devicesService) {
+module.exports = function devicesController(devicesService, device) {
   return {
     report, toList, update, borrar
   };
@@ -27,7 +26,7 @@ module.exports = function devicesController(devicesService) {
 
   // GET :base_url/dispositivos
   async function toList(req, res) {
-    const devices = await Device.findAll({ raw: true }).map(device => adaptDevice(device));
+    const devices = await devicesService.list();
     if (req.query.format === 'json') {
       res.json(devices);
     } else {
