@@ -43,10 +43,10 @@ Run in terminal:
 
 ```bash
 $ sudo -u postgres psql postgres
-postgres=# CREATE ROLE powermeter LOGIN CREATEDB PASSWORD 'powemeter';
+postgres=# CREATE ROLE powermeter LOGIN CREATEDB PASSWORD 'powermeter';
 postgres=# CREATE DATABASE powermeter WITH OWNER = powermeter;
 # Then you can login,
-$ psql -h localhost -d powemerter -U powermeter -p 5432
+$ psql -h localhost -d powermerter -U powermeter -p 5432
 ```
 
 [More info in Stackoverflow post](https://stackoverflow.com/questions/2172569/how-do-i-login-and-authenticate-to-postgresql-after-a-fresh-install)
