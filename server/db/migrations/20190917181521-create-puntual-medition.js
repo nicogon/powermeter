@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      device_id: {
+      deviceId: {
         primaryKey: true,
         type: Sequelize.INTEGER,
         references: { model: 'Devices', key: 'id' }
