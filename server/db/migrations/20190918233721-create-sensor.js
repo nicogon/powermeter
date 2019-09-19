@@ -12,6 +12,7 @@ module.exports = {
       references: { model: 'Devices', key: 'id' }
     },
     name: Sequelize.STRING,
+    lastPush: Sequelize.INTEGER,
     sensibility: Sequelize.FLOAT
   }),
 

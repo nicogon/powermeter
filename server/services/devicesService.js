@@ -1,7 +1,8 @@
 module.exports = function devicesService(
   devicesRepository,
   reportsService,
-  sessionId
+  sessionId,
+  device
 ) {
   return {
     list,
@@ -42,7 +43,7 @@ module.exports = function devicesService(
   }
 
   async function report(dispoId, data) {
-   /*
+    /*
    anda mal
     const lastConsumptions = await generateListLastConsumptions(
       dispoId,
@@ -70,7 +71,9 @@ module.exports = function devicesService(
   }
 
   async function list() {
-    const listado = await devicesRepository.list();
-    return listado.map(adaptDevices);
+  //  const deviceslist = .map(device => adaptDevice(device));
+     const listado = await devicesRepository.list();
+     console.log(listado)
+    return listado;//.map(adaptDevices);
   }
 };

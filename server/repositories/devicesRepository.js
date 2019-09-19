@@ -1,29 +1,27 @@
-module.exports = function devicesRepository(dispoMem) {
+module.exports = function devicesRepository(dispoMem, sensor) {
   return {
     list, upsert, del, get
   };
 
 
   function del(dispoId) {
-    return {}
+    return {};
   }
 
   async function get(dispoId) {
-    return {...dispoMem.find(dispo => dispo.dispoId = dispoId)};
+    return { ...dispoMem.find(dispo => dispo.dispoId = dispoId) };
   }
 
   async function list() {
-    return dispoMem;
+    return sensor.findAll({ raw: true })//return dispoMem;
   }
 
   async function upsert(dispoId, data) {
-    let dispo = dispoMem.findIndex(unit => unit.dispoId == dispoId);
-    if(dispo==-1) {
-      dispoMem.push({...data,dispoId:dispoId}) 
-    }else{
-      dispoMem[dispo] = {...dispoMem[dispo], ...data, dispoId};
+    const dispo = dispoMem.findIndex(unit => unit.dispoId == dispoId);
+    if (dispo == -1) {
+      dispoMem.push({ ...data, dispoId });
+    }else {
+      dispoMem[dispo] = { ...dispoMem[dispo], ...data, dispoId };
     }
   }
-  
-  
 };
