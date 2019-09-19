@@ -15,22 +15,28 @@ module.exports = function reportsController(
     const nombre = req.body.nombre;
     // eslint-disable-next-line radix
     const duracion = parseInt(req.body.duracion);
-    const mediciones = {};
+    const mediciones = [];
+    const medicion = 0;
+
     if (typeof req.body.nombreMedicion === 'string') {
-      mediciones[req.body.dispoId] = {
+      mediciones.push({
         dispoId: req.body.dispoId,
+        medicion,
         nombreMedicion: req.body.nombreMedicion,
         data: [],
         index: 0
-      };
+      })
+
     } else {
+      const medicion = 0;
       req.body.dispoId.forEach((dispoId, index) => {
-        mediciones[dispoId] = {
+        mediciones.push({
           index,
+          medicion,
           nombreMedicion: req.body.nombreMedicion[index],
           dispoId,
           data: []
-        };
+        });
       });
     }
     const inicio = Date.now();
@@ -65,7 +71,6 @@ module.exports = function reportsController(
     /*
     const name = req.body.name;
     const duracion = req.body.duracion;
-
     const devices = req.body.device((device) => {});
 */
 
