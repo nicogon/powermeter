@@ -20,15 +20,13 @@ module.exports = function devicesService(
   async function notify(dispoId, medicion) {
     //await lock.acquire();
 
-    const perteneceAlReport = _.get(medicionEnCurso, `mediciones.${dispoId}`);
-
-
-
+    console.log(medicionEnCurso)
+    let medicionAMofidicar = medicionEnCurso.mediciones.find(medicion=>medicion.dispoId == dispoId)
+    
     // Finalizo
-    if (perteneceAlReport && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
+    if (medicionAMofidicar && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
 
 
-      console.log(medicionEnCurso)
       /*
       guardarMedicion(medicionEnCurso);
       medicionEnCurso = null;
@@ -38,17 +36,17 @@ module.exports = function devicesService(
 
     }
 
-    if (perteneceAlReport && medicionEnCurso && medicionEnCurso.fin > Date.now()) {
-      const medicionMaximaVieja = _.get(medicionEnCurso, `mediciones.${dispoId}.medicionMaxima`, 0);
+    if (medicionAMofidicar && medicionEnCurso && medicionEnCurso.fin > Date.now()) {
+      const medicionMaximaVieja = medicionAMofidicar.medicionMaxima || 0;
       const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
-      const sumatoriaMedicion = _.sum((Object.values(medicionEnCurso.mediciones)).map(medicionInt => (medicionInt.medicion || 0)));
+      const sumatoriaMedicion = _.sum(medicionEnCurso.mediciones.map(medicionInt => (medicionInt.medicion || 0)));
       const medicionMaximaTotal = Math.max((medicionEnCurso.medicionMaxima || 0), sumatoriaMedicion);
 
 
       const contadorMedicionesTotal = _.get(medicionEnCurso, 'contadorMediciones', 0) + 1;
-      const contadorMediciones = _.get(medicionEnCurso, `mediciones.${dispoId}.contadorMediciones`, 0) + 1;
+      const contadorMediciones = medicionAMofidicar.contadorMediciones || 0 + 1;
       const medicionPromedioTotal = _.round((((_.get(medicionEnCurso, 'medicionPromedio', 0) * (contadorMedicionesTotal - 1)) + sumatoriaMedicion) / contadorMedicionesTotal), 1);
-      const medicionPromedio = _.round((((_.get(medicionEnCurso, `mediciones.${dispoId}.medicionPromedio`, 0) * (contadorMediciones - 1)) + medicion) / contadorMediciones), 1);
+      const medicionPromedio = _.round((((medicionAMofidicar.medicionPromedio || 0 * (contadorMediciones - 1)) + medicion) / contadorMediciones), 1);
 
       medicionEnCurso = {
         ...medicionEnCurso,
@@ -58,15 +56,15 @@ module.exports = function devicesService(
         medicionPromedio: medicionPromedioTotal
       };
 
-      medicionEnCurso.mediciones[dispoId] = {
-        ...medicionEnCurso.mediciones[dispoId],
+      medicionAMofidicar = {
+        ...medicionAMofidicar,
         medicion,
         medicionMaxima,
         medicionPromedio,
         contadorMediciones
       };
 
-      medicionEnCurso.mediciones[dispoId].data.push(
+      medicionAMofidicar.data.push(
         {
           offset: parseInt(Date.now() - medicionEnCurso.inicio),
           medicion

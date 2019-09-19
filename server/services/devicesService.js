@@ -56,7 +56,7 @@ module.exports = function devicesService(
       lastPush: Date.now()
     });
 
-    await reportsService.notify(dispoId, data.medicion);
+    await reportsService.notify(dispoId, data.medicion).catch(console.log);
   }
 
   async function borrar(dispoId) {

@@ -7,10 +7,10 @@ const { EventEmitter } = require('events');
 const medicionEnCurso = {
   nombre: 'oooo',
   duracion: 900000,
-  mediciones: {
-    medidor1: { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
-    medidor2: { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] }
-  },
+  mediciones: [
+    { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
+    { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] },
+  ], 
   inicio: 1565223068401,
   fin: 1595223968401,
   sessionId: '4oy0xej'

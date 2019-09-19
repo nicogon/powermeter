@@ -29,8 +29,8 @@ const int alertPin = 13;
 
 bool disableMediciones = false;
 volatile bool continuousConversionReady = false;
-const char* ssid     = "nico5";
-const char* password = "kokokokoko";
+const char* ssid     = "powermeter";
+const char* password = "powermeter";
 long ant;
 int i = 0;
 int rec = 0; int f;
@@ -162,11 +162,14 @@ void continuousAlert() {
 }
 
 void reportar(float potenciaEficaz) {
-  http.begin("http://192.168.0.14:3000/dispositivos/1234/report");
+  Serial.println("about to fetch");
+  http.begin("http://192.168.0.33:3000/devices/1234/report");
   http.addHeader("Content-Type", "application/json");
   int code = http.POST("{\"medicion\":" + String(potenciaEficaz, 1) + ",\"pinza\":35,\"dispoId\":\"" + dispoId + "\"}");
   http.writeToStream(&Serial);
   http.end();
+  Serial.println("fetched");
+
 }
 
 float calcularValorCorriente() {
@@ -176,7 +179,7 @@ float calcularValorCorriente() {
     valorEficaz += data[a] * data[a] / sampleCount;
   }
   float valor = sqrt(valorEficaz) * 0.94;
-  return valor > 1 ? valor : 0;
+  return valor*220 > 1 ? valor : 0;
 }
 
 float calcularValorPotencia(float corrienteEficaz) {
@@ -207,6 +210,8 @@ void loop(void)
     if ((millis() - ant) > sampleCount) {
       float corrienteEficaz = calcularValorCorriente();
       float potenciaEficaz = calcularValorPotencia(corrienteEficaz);
+       Serial.println(potenciaEficaz);
+
       actualizarDisplay(potenciaEficaz, corrienteEficaz);
       i = 0;
       reportar(potenciaEficaz);
