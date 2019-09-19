@@ -19,14 +19,14 @@ module.exports = function reportsController(
     const medicion = 0;
 
     if (typeof req.body.nombreMedicion === 'string') {
-     mediciones.push({
-      dispoId: req.body.dispoId,
-      medicion,
-      nombreMedicion: req.body.nombreMedicion,
-      data: [],
-      index: 0
-    })
-    
+      mediciones.push({
+        dispoId: req.body.dispoId,
+        medicion,
+        nombreMedicion: req.body.nombreMedicion,
+        data: [],
+        index: 0
+      })
+
     } else {
       const medicion = 0;
       req.body.dispoId.forEach((dispoId, index) => {
@@ -71,7 +71,6 @@ module.exports = function reportsController(
     /*
     const name = req.body.name;
     const duracion = req.body.duracion;
-
     const devices = req.body.device((device) => {});
 */
 

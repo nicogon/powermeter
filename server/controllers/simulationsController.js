@@ -5,7 +5,7 @@ module.exports = function simulationsController(reportsService,simulationsServic
       newSimulation,
       simulationDetails
     };
-  
+
     async function simulations(req, res) {
         const simulations = (await simulationsService.list());
 
@@ -56,17 +56,16 @@ module.exports = function simulationsController(reportsService,simulationsServic
           });
         }
 
-        simulationId = await simulationsService.create(simulation);      
+        simulationId = await simulationsService.create(simulation);
         res.redirect(`/simulations/${simulationId}/`);
       }
 
       async function simulationDetails(req, res) {
         const simulationId = req.params.simulationId;
         const simulation = await simulationsService.getSimulation(simulationId);
-    
+
         res.render('simulation', { simulation });
       }
-    
+
   };
-  
-  
+
