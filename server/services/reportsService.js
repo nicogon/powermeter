@@ -22,7 +22,7 @@ module.exports = function devicesService(
   async function notify(dispoId, medicion) {
     // await lock.acquire();
 
-    if (process.env.SHOW_CONSOLE_LOGS) console.log(medicionEnCurso);
+    if (process.env.SHOW_CONSOLE_LOGS === true) console.log(medicionEnCurso);
 
     let medicionAMofidicar = medicionEnCurso.mediciones.find(medition => medition.deviceId === dispoId);
 
