@@ -1,74 +1,44 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 
-const apiHostUrl = process.env.API_HOST_URL || `localhost`;
-const port = process.env.PORT || 8081;
-const url = `http://${apiHostUrl}:${port}`;
+const url = process.env.APP_URL || `http://${process.env.API_HOST_URL}:${process.env.PORT}`;
+const reportUrl = dispoId => `${url}/devices/${dispoId}/report`;
 
-var id_devise_1 = 'medidor1';
-var id_devise_2 = 'medidor2';
-var id_devise_3 = 'medidor3';
-
-function report_url(dispo_id) { return `${ url }/devices/${ dispo_id }/report`; }
-
-let contador = 0
+let contador = 0;
 
 function report() {
-  contador ++;
-  fetch(report_url(id_devise_1), {
+  // eslint-disable-next-line no-plusplus
+  contador++;
+
+  fetch(reportUrl(1), {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      medicion: contador % 5 + 10,
-      pinza: 35,
-      dispoId: 'medidor2'
+      medition: { value: (contador % 7) + 10 },
+      sensor: { id: 35 },
+      device: { id: 1 } // Ya me lo mandas por la URL param, para que me lo repetis en el body?
     })
   }).catch(console.log);
 
-
-  fetch(report_url(id_devise_2), {
+  fetch(reportUrl(2), {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      medicion: contador % 3  + 10,
-      pinza: 35,
-      dispoId: 'medidor1'
+      medition: { value: (contador % 5) + 10 },
+      sensor: { id: 17 },
+      device: { id: 2 }
     })
   }).catch(console.log);
 
-
+  fetch(reportUrl(3), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      medition: { value: (contador % 3) + 10 },
+      sensor: { id: 21 },
+      device: { id: 3 }
+    })
+  }).catch(console.log);
 }
 
-fetch(report_url(id_devise_1), {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    medicion: 33,
-    pinza: 35,
-    dispoId: 'unicavez'
-  })
-}).catch(console.log);
-
-setInterval(function () {
-  report();
-}, 5000);
-
-/*
-const repo = require('./repositories/devicesRepository');
-
-
-async function ejecutar() {
-  // result = await repo.insertardevice({pe:'re'});
-
-  result = await repo.listardevices();
-  console.log(result);
-}
-
-ejecutar();
-*/
+setInterval(() => { report(); }, 5000);

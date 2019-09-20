@@ -1,17 +1,18 @@
-const dependable = require('dependable');
-const sequelize = require('sequelize');
-const Device = require('./models').Device;
-const Sensor = require('./models').Sensor;
-
 const path = require('path');
 const { EventEmitter } = require('events');
+const dependable = require('dependable');
+const sequelize = require('sequelize');
+
+const Device = require('./models').Device;
+const Sensor = require('./models').Sensor;
+const PuntualMedition = require('./models').PuntualMedition;
 
 const medicionEnCurso = {
   nombre: 'oooo',
   duracion: 900000,
   mediciones: [
-    { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
-    { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] },
+    { index: 0, nombreMedicion: 'iii', deviceId: '1', data: [] },
+    { index: 1, nombreMedicion: 'kk', deviceId: '2', data: [] },
   ],
   inicio: 1565223068401,
   fin: 1595223968401,
@@ -36,13 +37,10 @@ async function createContainer() {
     return dispoMem;
   });
 
-  container.register('Device', function deviceFn() {
-    return Device;
-  });
-
-  container.register('Sensor', function sensorFn() {
-    return Sensor;
-  });
+  // Models
+  container.register('Device', function deviceFn() { return Device; });
+  container.register('Sensor', function sensorFn() { return Sensor; });
+  container.register('PuntualMedition', function sensorFn() { return PuntualMedition; });
 
   container.register('sessionId', function sessionIdFn() {
     return '4oy0xej';// sessionId;

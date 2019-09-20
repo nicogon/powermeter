@@ -44,12 +44,12 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
     */
     await devicesRepository.upsert(dispoId, {
       sessionId,
-      pinza: data.pinza,
-      medicion: data.medicion,
+      pinza: data.sensor.id,
+      medicion: data.medition.value,
       lastPush: Date.now()
     });
 
-    await reportsService.notify(dispoId, data.medicion).catch(console.log);
+    await reportsService.notify(dispoId, data.medition.value).catch(console.log);
   }
 
   async function borrar(dispoId) {
@@ -65,7 +65,7 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
   async function list() {
   //  const deviceslist = .map(device => adaptDevice(device));
      const listado = await devicesRepository.list();
-     console.log(listado)
+    //  console.log(listado) // Comentado por molesto
     return listado;//.map(adaptDevices);
   }
 };

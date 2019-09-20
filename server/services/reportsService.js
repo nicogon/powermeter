@@ -20,9 +20,13 @@ module.exports = function devicesService(
   async function notify(dispoId, medicion) {
     //await lock.acquire();
 
-    console.log(medicionEnCurso)
+    // El log de abajo solo muestra container.js#medicionEnCurso
+    // console.log(medicionEnCurso) // Comentado por molesto
+
+    // TODO: Hasta aca llego Lucas. Las mediciones ya estan persistidas
+    // Hay que ver como refrescar el grafico en base a la data recibida
     let medicionAMofidicar = medicionEnCurso.mediciones.find(medicion=>medicion.dispoId == dispoId)
-    
+
     // Finalizo
     if (medicionAMofidicar && medicionEnCurso && medicionEnCurso.fin < Date.now()) {
 
@@ -87,7 +91,7 @@ module.exports = function devicesService(
     const reportId = randomId();
 
     const medicion = 0;
-    
+
     medicionEnCurso = {
       reportId,
       medicion,
@@ -166,7 +170,7 @@ module.exports = function devicesService(
             // currentConsumption: 100,
             averageConsumption: 30,
             duration: 60
-            // maximumConsumption: 140 
+            // maximumConsumption: 140
           }
         ]
       },

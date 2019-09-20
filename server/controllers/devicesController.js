@@ -1,4 +1,4 @@
-module.exports = function devicesController(devicesService, Device) {
+module.exports = function devicesController(devicesService, Device, PuntualMedition, Sensor) {
   return {
     report, toList, update, borrar
   };
@@ -17,7 +17,8 @@ module.exports = function devicesController(devicesService, Device) {
 
   // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
-    // TODO: Pending reports model join
+    persistMedition(req.body);
+    // logMedition(req.body); // Comentado por molesto
     devicesService.report(req.params.dispoId, req.body);
     res.status(200).send();
   }
@@ -39,5 +40,25 @@ module.exports = function devicesController(devicesService, Device) {
 
   function findDevice(req) {
     Device.findByPk(req.params.dispoId);
+  }
+
+  function persistMedition(requestBody) {
+    Device.findOrCreate({ where: requestBody.device });
+    Sensor.findOrCreate({
+      where: requestBody.sensor,
+      defaults: { deviceId: requestBody.device.id }
+    });
+    PuntualMedition.findOrCreate({
+      where: requestBody.medition,
+      defaults: { deviceId: requestBody.device.id }
+    });
+  }
+
+  function logMedition(reqBody) {
+    const deviceId = reqBody.device.id;
+    const sensorId = reqBody.sensor.id;
+    const medition = reqBody.medition.value;
+    console.log(`[Medido y persistido] Device: ${deviceId}, `
+                + `Sensor: ${sensorId}, Medicion: ${medition}`);
   }
 };

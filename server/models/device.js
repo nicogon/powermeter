@@ -25,7 +25,14 @@ module.exports = (sequelize, DataTypes) => {
   // Associations
   Device.associate = (models) => {
     models.Device.hasMany(models.PuntualMedition, {
+      onDelete: 'CASCADE',
       as: 'puntualMeditions',
+      foreignKey: 'id'
+    });
+
+    models.Device.hasOne(models.Sensor, {
+      onDelete: 'CASCADE',
+      as: 'sensor',
       foreignKey: 'id'
     });
   };
