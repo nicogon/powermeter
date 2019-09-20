@@ -18,7 +18,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
   // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
     persistMedition(req.body);
-    // logMedition(req.body); // Comentado por molesto
+    if (process.env.SHOW_CONSOLE_LOGS === true) logMedition(req.body);
     devicesService.report(req.params.dispoId, req.body);
     res.status(200).send();
   }
@@ -48,10 +48,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
       where: requestBody.sensor,
       defaults: { deviceId: requestBody.device.id }
     });
-    PuntualMedition.findOrCreate({
-      where: requestBody.medition,
-      defaults: { deviceId: requestBody.device.id }
-    });
+    PuntualMedition.create({ value: requestBody.medition.value, deviceId: requestBody.device.id });
   }
 
   function logMedition(reqBody) {
