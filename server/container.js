@@ -11,8 +11,8 @@ const medicionEnCurso = {
   nombre: 'oooo',
   duracion: 900000,
   mediciones: [
-    { index: 0, nombreMedicion: 'iii', dispoId: 'medidor1', data: [] },
-    { index: 1, nombreMedicion: 'kk', dispoId: 'medidor2', data: [] },
+    { index: 0, nombreMedicion: 'iii', deviceId: '1', data: [] },
+    { index: 1, nombreMedicion: 'kk', deviceId: '2', data: [] },
   ],
   inicio: 1565223068401,
   fin: 1595223968401,
