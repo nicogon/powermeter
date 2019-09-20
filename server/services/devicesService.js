@@ -64,8 +64,8 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
 
   async function list() {
   //  const deviceslist = .map(device => adaptDevice(device));
-     const listado = await devicesRepository.list();
-    //  console.log(listado) // Comentado por molesto
-    return listado;//.map(adaptDevices);
+    const listado = await devicesRepository.list();
+    if (process.env.SHOW_CONSOLE_LOGS) console.log(listado);
+    return listado; // .map(adaptDevices);
   }
 };

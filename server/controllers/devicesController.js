@@ -18,7 +18,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
   // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
     persistMedition(req.body);
-    // logMedition(req.body); // Comentado por molesto
+    if (process.env.SHOW_CONSOLE_LOGS) logMedition(req.body);
     devicesService.report(req.params.dispoId, req.body);
     res.status(200).send();
   }

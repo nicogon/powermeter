@@ -21,7 +21,8 @@ module.exports = function devicesService(
     //await lock.acquire();
 
     // El log de abajo solo muestra container.js#medicionEnCurso
-    // console.log(medicionEnCurso) // Comentado por molesto
+
+    if (process.env.SHOW_CONSOLE_LOGS) console.log(medicionEnCurso);
 
     // TODO: Hasta aca llego Lucas. Las mediciones ya estan persistidas
     // Hay que ver como refrescar el grafico en base a la data recibida
