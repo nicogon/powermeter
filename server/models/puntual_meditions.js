@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
         autoIncrement: true
       },
+      deviceId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        notEmpty: true
+      },
       value: DataTypes.FLOAT,
       offset: DataTypes.INTEGER
     },
@@ -19,8 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   PuntualMedition.associate = (models) => {
-    models.PuntualMedition.hasMany(models.Device, {
-      onDelete: 'CASCADE',
+    models.PuntualMedition.belongsTo(models.Device, {
       as: 'device',
       foreignKey: 'id'
     });

@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
         autoIncrement: true
       },
+      deviceId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        notEmpty: true
+      },
       name: DataTypes.STRING,
       lastPush: DataTypes.STRING,
       sensibility: DataTypes.FLOAT
@@ -20,8 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   Sensor.associate = (models) => {
-    models.Sensor.hasMany(models.Device, {
-      onDelete: 'CASCADE',
+    models.Sensor.belongsTo(models.Device, {
       as: 'device',
       foreignKey: 'id'
     });

@@ -1,10 +1,11 @@
-const dependable = require('dependable');
-const sequelize = require('sequelize');
-const Device = require('./models').Device;
-const Sensor = require('./models').Sensor;
-
 const path = require('path');
 const { EventEmitter } = require('events');
+const dependable = require('dependable');
+const sequelize = require('sequelize');
+
+const Device = require('./models').Device;
+const Sensor = require('./models').Sensor;
+const PuntualMedition = require('./models').PuntualMedition;
 
 const medicionEnCurso = {
   nombre: 'oooo',
@@ -36,13 +37,10 @@ async function createContainer() {
     return dispoMem;
   });
 
-  container.register('Device', function deviceFn() {
-    return Device;
-  });
-
-  container.register('Sensor', function sensorFn() {
-    return Sensor;
-  });
+  // Models
+  container.register('Device', function deviceFn() { return Device; });
+  container.register('Sensor', function sensorFn() { return Sensor; });
+  container.register('PuntualMedition', function sensorFn() { return PuntualMedition; });
 
   container.register('sessionId', function sessionIdFn() {
     return '4oy0xej';// sessionId;
