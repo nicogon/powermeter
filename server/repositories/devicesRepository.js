@@ -1,4 +1,4 @@
-module.exports = function devicesRepository(dispoMem, sensor) {
+module.exports = function devicesRepository(dispoMem, Sensor) {
   return {
     list, upsert, del, get
   };
@@ -13,7 +13,7 @@ module.exports = function devicesRepository(dispoMem, sensor) {
   }
 
   async function list() {
-    return sensor.findAll({ raw: true })//return dispoMem;
+    return Sensor.findAll({ raw: true })//return dispoMem;
   }
 
   async function upsert(dispoId, data) {

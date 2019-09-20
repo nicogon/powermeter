@@ -1,3 +1,4 @@
-psql -U postgres -c 'drop database powermeter;'
-psql -U postgres -c "CREATE ROLE powermeter LOGIN CREATEDB PASSWORD 'powermeter';"
-psql -U postgres -c "CREATE DATABASE powermeter WITH OWNER = powermeter;"
+npm run sequelize db:drop
+npm run sequelize db:create
+npm run migrations
+npm run seeds

@@ -1,14 +1,6 @@
-module.exports = function devicesService(
-  devicesRepository,
-  reportsService,
-  sessionId,
-  device
-) {
+module.exports = function devicesService(devicesRepository, reportsService, sessionId, Device) {
   return {
-    list,
-    report,
-    update,
-    borrar
+    list, report, update, borrar
   };
 
   function isOnline(dispo) {

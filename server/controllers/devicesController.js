@@ -1,6 +1,4 @@
-// TODO: Quiero que se puedan incluir modulos con el inyector de dependencias.
-
-module.exports = function devicesController(devicesService, device) {
+module.exports = function devicesController(devicesService, Device) {
   return {
     report, toList, update, borrar
   };
