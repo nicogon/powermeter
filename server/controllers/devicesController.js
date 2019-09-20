@@ -48,10 +48,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
       where: requestBody.sensor,
       defaults: { deviceId: requestBody.device.id }
     });
-    PuntualMedition.findOrCreate({
-      where: requestBody.medition,
-      defaults: { deviceId: requestBody.device.id }
-    });
+    PuntualMedition.create({ value: requestBody.medition.value, deviceId: requestBody.device.id });
   }
 
   function logMedition(reqBody) {
