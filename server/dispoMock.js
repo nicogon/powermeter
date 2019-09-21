@@ -19,7 +19,7 @@ function report() {
     })
   }).catch(console.log);
 
-  /*
+  
   fetch(reportUrl(2), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -36,7 +36,7 @@ function report() {
       medition:  (contador % 7) + 3 ,
       sensibility: 20
     })
-  }).catch(console.log);*/
+  }).catch(console.log);
 }
 
 setInterval(() => { report(); }, 5000);

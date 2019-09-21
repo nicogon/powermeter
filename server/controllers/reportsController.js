@@ -20,7 +20,7 @@ module.exports = function reportsController(
 
     if (typeof req.body.nombreMedicion === 'string') {
       mediciones.push({
-        dispoId: req.body.dispoId,
+        id: req.body.dispoId,
         medicion,
         nombreMedicion: req.body.nombreMedicion,
         data: [],
@@ -34,7 +34,7 @@ module.exports = function reportsController(
           index,
           medicion,
           nombreMedicion: req.body.nombreMedicion[index],
-          dispoId,
+          id:dispoId,
           data: []
         });
       });

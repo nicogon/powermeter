@@ -3,7 +3,7 @@ const pry = require('pryjs');
 
 module.exports = (sequelize, DataTypes) => {
   // Attributes
-  const Device = sequelize.define('Device',
+  const Medition = sequelize.define('Medition',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -22,33 +22,20 @@ module.exports = (sequelize, DataTypes) => {
   // Associations 
 
   // q hago con esto?
-  Device.associate = (models) => {
-    models.Device.hasMany(models.PuntualMedition, {
+  Medition.associate = (models) => {
+    models.Medition.hasMany(models.PuntualMedition, {
       onDelete: 'CASCADE',
-      as: 'puntualMeditions',
-      foreignKey: 'id'
-    });
-
-      // Associations
-
-    models.Device.belongsTo(models.Medition, {
-      as: 'device',
-      foreignKey: 'id'
-    });
-
-    models.Device.hasOne(models.Sensor, {
-      onDelete: 'CASCADE',
-      as: 'sensor',
+      as: 'devices',
       foreignKey: 'id'
     });
   };
 
   // Instance methods
-  Device.prototype.maxConsumption = () => 2; // this.puntualMeditions.max
-  Device.prototype.avgConsumption = () => 2; // this.puntualMeditions.avg
+  Medition.prototype.maxConsumption = () => 2; // this.puntualMeditions.max
+  Medition.prototype.avgConsumption = () => 2; // this.puntualMeditions.avg
  // Device.prototype.consumption = () => 2; // this.puntualMeditions.last.value
- // Device.prototype.lastPush = () => Date.now; // this.puntualMeditions.last.created_at
+//Device.prototype.lastPush = () => Date.now; // this.puntualMeditions.last.created_at
  // Device.prototype.isOnline = () => true; // lastPush in (Date.now-5.segs..Date.now)
 
-  return Device;
+  return Medition;
 };

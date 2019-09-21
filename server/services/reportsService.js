@@ -24,7 +24,7 @@ module.exports = function devicesService(
 
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(medicionEnCurso);
 
-    let medicionAMofidicar = medicionEnCurso.mediciones.find(medition => medition.deviceId === dispoId);
+    let medicionAMofidicar = medicionEnCurso.mediciones.find(medition => medition.id === dispoId);
 
     if (haFinalizado(medicionAMofidicar)) { releaseCurrentMedition(medicionAMofidicar); }
 
@@ -59,16 +59,16 @@ module.exports = function devicesService(
   }
 
   function updateCurrentMedition() {
-    const sumatoriaMedicion = _.sum(medicionEnCurso.mediciones.map(medicionInt => (medicionInt.medicion || 0)));
-    const medicionMaximaTotal = Math.max((medicionEnCurso.medicionMaxima || 0), sumatoriaMedicion);
+    const averageConsumption = _.sum(medicionEnCurso.mediciones.map(medicionInt => (medicionInt.consumption || 0)));
+    const maximumConsumption = Math.max((medicionEnCurso.maximumConsumption || 0), averageConsumption);
     const contadorMedicionesTotal = _.get(medicionEnCurso, 'contadorMediciones', 0) + 1;
-    const medicionPromedioTotal = _.round((((_.get(medicionEnCurso, 'medicionPromedio', 0) * (contadorMedicionesTotal - 1)) + sumatoriaMedicion) / contadorMedicionesTotal), 1);
+    const medicionPromedioTotal = _.round((((_.get(medicionEnCurso, 'averageConsumption', 0) * (contadorMedicionesTotal - 1)) + maximumConsumption) / contadorMedicionesTotal), 1);
 
     // eslint-disable-next-line no-param-reassign
     medicionEnCurso = {
       ...medicionEnCurso,
-      sumatoriaMedicion,
-      medicionMaxima: medicionMaximaTotal,
+      averageConsumption,
+      maximumConsumption,
       contadorMediciones: contadorMedicionesTotal,
       medicionPromedio: medicionPromedioTotal
     };
@@ -76,18 +76,18 @@ module.exports = function devicesService(
     return medicionEnCurso;
   }
 
-  function modifyMedition(medicionAMofidicar, medicion) {
-    const medicionMaximaVieja = medicionAMofidicar.medicionMaxima || 0;
-    const medicionMaxima = Math.max(medicionMaximaVieja, medicion);
+  function modifyMedition(medicionAMofidicar, medition) {
+    const medicionMaximaVieja = medicionAMofidicar.maximumConsumption || 0;
+    const maximumConsumption = Math.max(medicionMaximaVieja, medition);
     const contadorMediciones = medicionAMofidicar.contadorMediciones || 0 + 1;
-    const medicionPromedio = _.round((((medicionAMofidicar.medicionPromedio || 0 * (contadorMediciones - 1)) + medicion) / contadorMediciones), 1);
+    const averageConsumption = _.round((((medicionAMofidicar.averageConsumption || 0 * (contadorMediciones - 1)) + medition) / contadorMediciones), 1);
 
     // eslint-disable-next-line no-param-reassign
     medicionAMofidicar = {
-      ...medicionAMofidicar, medicion, medicionMaxima, medicionPromedio, contadorMediciones
+      ...medicionAMofidicar, medition, maximumConsumption, averageConsumption, contadorMediciones
     };
 
-    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - medicionEnCurso.inicio, _), medicion });
+    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - medicionEnCurso.inicio, _), medition });
     return medicionAMofidicar;
   }
 

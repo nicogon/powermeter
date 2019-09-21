@@ -11,7 +11,7 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
   }
 
   function adaptDevices(dispo) {
-    return {...dispo, isOnline: isOnline(dispo),}
+    return {...dispo, isOnline: isOnline(dispo), name: dispo.name ? dispo.name : `Sensor ${dispo.id}`}
   }
 
   async function generateListLastConsumptions(dispoId, consumo) {
@@ -36,7 +36,8 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
       lastPush: Date.now()
     });
 
-    await reportsService.notify(dispoId, data.medition.value).catch(console.log);
+    console.log(data.medition,"asdasdasdasdasdasdasd")
+    await reportsService.notify(dispoId, data.medition).catch(console.log);
   }
 
   async function borrar(dispoId) {

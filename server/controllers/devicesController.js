@@ -20,13 +20,37 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
    // persistMedition(req.body);
     if (process.env.SHOW_CONSOLE_LOGS === true) logMedition(req.body);
     devicesService.report(req.params.dispoId, req.body);
+    console.log(req.params.dispoId)
     res.status(200).send();
   }
 
   // GET :base_url/dispositivos
   async function toList(req, res) {
+   
+    const repepe = {
+      name: 'Heladera',
+      duration: 'hora',
+      average_medition: 1,
+      maximum_medition: 2,
+      sensor: { id: 1 } };
+
+ //const re =  await Device.create(repepe);
+
+ //console.log(re)
+/*
+    const pepe = await Device.findByPk(2,{
+      
+      
+      include: [{
+        model: Sensor,
+         as: 'sensor',
+         attributes: ['id']
+    //  required: false
+       }],
+      
+      raw: false });
+    console.log(pepe.toJSON())*/
     const devices = await devicesService.list();
-    console.log(devices)
     if (req.query.format === 'json') {
       res.json(devices);
     } else {

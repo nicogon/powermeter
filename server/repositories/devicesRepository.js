@@ -18,7 +18,6 @@ module.exports = function devicesRepository(dispoMem, Sensor) {
   }
 
   async function upsert(dispoId, data) {
-    console.log(data)
     Sensor.upsert({
       id:dispoId,
        ...data 
