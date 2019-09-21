@@ -43,8 +43,8 @@
                             <label for="feInputState">Agregar sensores</label>
                             <select id='meditions' class="form-control">
                               <option selected="">Seleccione  al menos un dispositivo...</option>
-                        <%for (var medition in meditions){%>
-                            <option value="<%=meditions[medition].id%>"><%=meditions[medition].name%></option>
+                        <%for (var sensor of sensors){%>
+                            <option value="<%=sensor.id%>"><%=sensor.name%></option>
                         <%}%>
                             </select>
                         </div>

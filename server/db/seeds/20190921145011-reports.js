@@ -3,6 +3,7 @@
 module.exports = {
   up(queryInterface, _Sequelize) {
     return queryInterface.bulkInsert('Reports', [
+  /*
       {
         id: 1,
         name: 'Cocina',
@@ -12,6 +13,7 @@ module.exports = {
         averageMedition: 2,
         maximumMedition: 3
       }
+      */
     ], {});
   },
 

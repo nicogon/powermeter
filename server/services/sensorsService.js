@@ -36,7 +36,6 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
       lastPush: Date.now()
     });
 
-    console.log(data.medition,"asdasdasdasdasdasdasd")
     await reportsService.notify(dispoId, data.medition).catch(console.log);
   }
 

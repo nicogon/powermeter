@@ -14,7 +14,7 @@ function report() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      medition:  (contador % 7) + 10 ,
+      currentMedition:  (contador % 7) + 10 ,
       sensibility: 30
     })
   }).catch(console.log);
@@ -24,7 +24,7 @@ function report() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      medition:  (contador % 5) + 10 ,
+      currentMedition:  (contador % 5) + 10 ,
       sensibility: 15
     })
   }).catch(console.log);
@@ -33,7 +33,7 @@ function report() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      medition:  (contador % 7) + 3 ,
+      currentMedition:  (contador % 7) + 3 ,
       sensibility: 20
     })
   }).catch(console.log);

@@ -8,10 +8,7 @@ module.exports = {
     name: Sequelize.STRING,
     sensibility: Sequelize.FLOAT,
     timeStart: Sequelize.DATE,
-    duration: {
-      type: Sequelize.ENUM,
-      values: ['hora', 'dia', 'semana', 'mes']
-    },
+    duration: Sequelize.INT,
     averageMedition: Sequelize.FLOAT,
     maximumMedition: Sequelize.FLOAT
   }),

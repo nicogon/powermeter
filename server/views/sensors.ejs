@@ -93,11 +93,11 @@
                             <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
                                 <div class="stats-small__data text-center">
                                     <span class="stats-small__label text-uppercase">CONSUMO</span>
-                                    <h6 class="stats-small__value count my-3"><%=sensor.medition%>W</h6>
+                                    <h6 class="stats-small__value count my-3"><%=sensor.currentMedition%>W</h6>
                                 </div>
 
                                 <div style='color: #17c671;text-align: center'>
-                                    <%=(sensor.medition/220).toFixed(2)%>A
+                                    <%=(sensor.currentMedition/220).toFixed(2)%>A
                                 </div>
                             </div>
                             <canvas height="220" class="blog-overview-stats-small-1" id='chart-<%=sensor.id%>'></canvas>

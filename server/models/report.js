@@ -22,10 +22,14 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   Report.associate = (models) => {
+  /* 
+  creo que no va
     models.Report.belongsTo(models.Medition, {
       as: 'medition',
       foreignKey: 'id'
     });
+
+    */
   };
 
   return Report;

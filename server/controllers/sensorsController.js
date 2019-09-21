@@ -50,6 +50,7 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
       raw: false });
     console.log(pepe.toJSON())*/
     const sensors = await sensorsService.list();
+    console.log(sensors)
     if (req.query.format === 'json') {
       res.json(sensors);
     } else {

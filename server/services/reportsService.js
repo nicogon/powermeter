@@ -22,6 +22,8 @@ module.exports = function reportsService(
   async function notify(sensorId, meditionValue) {
     // await lock.acquire();
 
+    console.log(sensorId, meditionValue)
+
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
     // Buscar si existe una medicion asociada a un sensor
@@ -97,23 +99,21 @@ module.exports = function reportsService(
   async function nuevo({
     nombre, duracion, mediciones, inicio, fin
   }) {
-    const reportId = randomId();
+   // const reportId = randomId();
 
     const medicion = 0;
 
     tempReport = {
-      reportId,
-      medicion,
+      currentMedition,
       nombre,
-      duracion,
+      duration,
       mediciones,
       inicio,
-      fin,
-      sessionId
+      fin
     };
 
 
-    return reportId;
+    return 'temp';
   }
 
   async function list() {

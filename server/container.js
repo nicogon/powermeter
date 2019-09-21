@@ -32,7 +32,7 @@ async function createContainer() {
 
   entries.forEach(entry => container.load(path.join(__dirname, entry)));
 
-  container.register('tempReport', function tempReport() {
+  container.register('tempReport', function tempReportfn() {
     return tempReport;
   });
 

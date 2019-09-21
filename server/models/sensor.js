@@ -9,9 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       },
       name: {
-        type: DataTypes.STRING,
-        defaultValue: `Sensor ${this.id}`
+        type: DataTypes.STRING
       },
+      currentMedition: DataTypes.FLOAT,
+      lastPush: DataTypes.BIGINT,
       sensibility: DataTypes.FLOAT
     }, {}
   );
