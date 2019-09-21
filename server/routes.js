@@ -1,15 +1,15 @@
 const express = require('express');
 
-module.exports = function routes(devicesController, reportsController, homeController, simulationsController) {
+module.exports = function routes(sensorsController, reportsController, homeController, simulationsController) {
   return express
     .Router()
     .get('/', homeController.home)
 
     // Dispositivos
-    .post('/devices/:dispoId/report', devicesController.report)
-    .delete('/devices/:dispoId', devicesController.borrar)
-    .put('/devices/:dispoId', devicesController.update)
-    .get('/devices', devicesController.toList)
+    .post('/sensores/:dispoId/report', sensorsController.report)
+    .delete('/sensores/:sensorId', sensorsController.borrar)
+    .put('/sensores/:sensorId', sensorsController.update)
+    .get('/sensores', sensorsController.toList)
 
   // Reportes
     .post('/reportes', reportsController.newReport)

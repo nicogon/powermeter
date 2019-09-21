@@ -14,3 +14,4 @@ rules:
   comma-dangle: ["error", "never"]
   no-console: "off"
   no-unused-vars: "off"
+  function-paren-newline: "off"

@@ -37,15 +37,15 @@
 
                     </li>
                     <li class="list-group-item p-3" id="dispoMenu">
-                        <label for="feInputState">Dispositivos</label>
+                        <label for="feInputState">Sensores</label>
 
                         <div class="form-group">
-                            <label for="feInputState">Agregar dispositivos</label>
-                            <select id='devices' class="form-control">
+                            <label for="feInputState">Agregar sensores</label>
+                            <select id='meditions' class="form-control">
                               <option selected="">Seleccione  al menos un dispositivo...</option>
-                        <%for (var device in devices){%>
-                            <option value="<%=devices[device].id%>"><%=devices[device].name%></option>
-                        <%}%>         
+                        <%for (var medition in meditions){%>
+                            <option value="<%=meditions[medition].id%>"><%=meditions[medition].name%></option>
+                        <%}%>
                             </select>
                         </div>
 
@@ -66,15 +66,15 @@
     <script>
         $(document).ready(function() {
 
-            $("#devices").change(() => {
-                const dispoId = $("#devices").val();
-                const dispoName = $("#devices option:selected").html();
+            $("#meditions").change(() => {
+                const dispoId = $("#meditions").val();
+                const dispoName = $("#meditions option:selected").html();
 
-                if ($("#devices option:selected").index() == 0) return;
+                if ($("#meditions option:selected").index() == 0) return;
 
                 if ($("#card-" + dispoId).length > 0) return;
 
-                const dispoElement = `              
+                const dispoElement = `
                     <li class="list-group-item p-3" id="card-${dispoId}">
                         <div class='d-flex'>
                             <label for="feInputState">Dispositivo</label>

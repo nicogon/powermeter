@@ -2,8 +2,8 @@
 
 const _ = require('lodash');
 
-module.exports = function devicesService(
-  devicesRepository,
+module.exports = function reportsService(
+  sensorsRepository,
   reportsRepository,
   sessionId,
   medicionEnCurso
@@ -136,7 +136,7 @@ module.exports = function devicesService(
           {
             index: 0,
             nombreMedicion: 'Microondas',
-            dispoId: 'deviceRed',
+            dispoId: 'meditionRed',
             data: [],
             idMedicion: '1',
             // currentConsumption: 100,
@@ -147,7 +147,7 @@ module.exports = function devicesService(
           {
             index: 1,
             nombreMedicion: 'Heladera',
-            dispoId: 'deviceBlue',
+            dispoId: 'meditionBlue',
             data: [],
             idMedicion: '2',
             // currentConsumption: 100,
@@ -170,7 +170,7 @@ module.exports = function devicesService(
           {
             index: 0,
             nombreMedicion: 'Televisor',
-            dispoId: 'deviceRed',
+            dispoId: 'meditionRed',
             data: [],
             // currentConsumption: 100,
             duration: 60,
@@ -181,7 +181,7 @@ module.exports = function devicesService(
           {
             index: 1,
             nombreMedicion: 'Aire acondicionado',
-            dispoId: 'deviceBlue',
+            dispoId: 'meditionBlue',
             data: [],
             // currentConsumption: 100,
             idMedicion: '4',
@@ -205,7 +205,7 @@ module.exports = function devicesService(
           {
             index: 0,
             nombreMedicion: 'Lampara',
-            dispoId: 'deviceRed',
+            dispoId: 'meditionRed',
             data: [],
             duration: 60,
             idMedicion: '5',
@@ -216,7 +216,7 @@ module.exports = function devicesService(
           {
             index: 1,
             nombreMedicion: 'Televisor',
-            dispoId: 'deviceBlue',
+            dispoId: 'meditionBlue',
             data: [],
             duration: 60,
             idMedicion: '6',

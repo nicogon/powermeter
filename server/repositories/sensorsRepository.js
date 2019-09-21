@@ -1,4 +1,4 @@
-module.exports = function devicesRepository(dispoMem, Sensor) {
+module.exports = function sensorsRepository(dispoMem, Sensor) {
   return {
     list, upsert, del, get
   };
