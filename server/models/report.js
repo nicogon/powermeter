@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       sensibility: DataTypes.FLOAT,
       timeStart: DataTypes.FLOAT,
-      minutes: DataTypes.FLOAT,
+      minutes: DataTypes.INTEGER,
       averageMedition: DataTypes.FLOAT,
       maximumMedition: DataTypes.FLOAT
     }, {}
