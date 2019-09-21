@@ -138,6 +138,7 @@ module.exports = function devicesService(
             nombreMedicion: 'Microondas',
             dispoId: 'deviceRed',
             data: [],
+            idMedicion: '1',
             // currentConsumption: 100,
             duration: 60,
             averageConsumption: 80
@@ -148,6 +149,7 @@ module.exports = function devicesService(
             nombreMedicion: 'Heladera',
             dispoId: 'deviceBlue',
             data: [],
+            idMedicion: '2',
             // currentConsumption: 100,
             duration: 60,
             averageConsumption: 100
@@ -172,6 +174,7 @@ module.exports = function devicesService(
             data: [],
             // currentConsumption: 100,
             duration: 60,
+            idMedicion: '3',
             averageConsumption: 80
             // maximumConsumption: 140
           },
@@ -181,6 +184,7 @@ module.exports = function devicesService(
             dispoId: 'deviceBlue',
             data: [],
             // currentConsumption: 100,
+            idMedicion: '4',
             averageConsumption: 30,
             duration: 60
             // maximumConsumption: 140
@@ -204,6 +208,7 @@ module.exports = function devicesService(
             dispoId: 'deviceRed',
             data: [],
             duration: 60,
+            idMedicion: '5',
             // currentConsumption: 100,
             averageConsumption: 50
             // maximumConsumption: 140
@@ -214,6 +219,7 @@ module.exports = function devicesService(
             dispoId: 'deviceBlue',
             data: [],
             duration: 60,
+            idMedicion: '6',
             // currentConsumption: 100,
             averageConsumption: 180
             // maximumConsumption: 140

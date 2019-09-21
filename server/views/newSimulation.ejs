@@ -1,5 +1,10 @@
 <%- include("header",{mode:'simulations'}) %>
 
+
+<link rel="stylesheet" href="/styles/internet/roundslider.min.css">
+<script src="/scripts/internet/roundslider.js"></script>
+
+
 <div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Simulaciones</span>
@@ -33,16 +38,18 @@
                             <option value='5'>1 mes</option>
                         </select>
                     </div>
-
+                    <div id="slider"></div>
                 </li>
                 <li class="list-group-item p-3" id="reportMenu">
                     <label for="feInputState">Reportes</label>
                     <div class="form-group">
                         <section class="section-preview">
                             <%for (var report of reports){%>
+
                             <div class="custom-control custom-checkbox mb-1">
                                 <input type="checkbox" class="custom-control-input" id="<%=report.reportId%>"
-                                    data-name="<%=report.nombre%>" value="<%=report.reportId%>">
+                                    data-name="<%=report.nombre%>" data-meditions="<%=report.mediciones%>"
+                                    value="<%=report.reportId%>">
                                 <label class="custom-control-label" for=<%=report.reportId%>><%=report.nombre%></label>
                             </div>
                             <%}%>  
@@ -51,65 +58,101 @@
                     <li class="list-group-item p-3">
                         <button type="submit" class="btn btn-accent">Crear Simulación</button>
                     </li>
-                </ul>
-            </form>
-        </div>
-
+            </ul>
+        </form>
     </div>
+</div>
 
 
     <script>
         $(document).ready(function () {
-            $("input").change(function () {
-                var $input = $(this);
+            var reports = <%-JSON.stringify(reports) %>
 
-                const reportId = $input.val();
-                const reportName = $input.data('name');
-                const isChecked = $input.is(":checked")
-                if (isChecked) {
+                $("input").change(function () {
+                    var $input = $(this);
 
-                    console.log(isChecked)
+                    const reportId = $input.val();
 
-                    console.log(reportId)
-                    console.log(reportName)
+                    const report = reports.find(individualReport => individualReport.reportId == reportId)
 
-                    const reportElement = `              
-                        <li class="list-group-item p-3" id="card-${reportId}">
-                            <input type="hidden" name="reportId" value="${reportId}">
-                            <div class='d-flex'>
-                                <label for="feInputState">Reporte</label>
-                                <a class="ml-auto" href="#" id="borrar-${reportId}" report-id="${reportId}">Borrar</a>
-                            </div>
-                            <h5>${reportName}</h5>
-                            <div class="form-group ">
-                                <label for="feFirstName">Factor de potencia</label>
-                                <div id="slider-${reportId}" class="slider-success my-4" style="margin: 0 20px">
-                                    <input type="hidden" class="custom-slider-input">
+                    console.log(reports)
+                    const reportName = $input.data('name');
+                    const isChecked = $input.is(":checked")
+
+
+                    if (isChecked) {
+
+                        console.log(isChecked)
+
+                        console.log(reportId)
+                        console.log(reportName)
+                        console.log(report.mediciones)
+                        function generateCard(medicion) {
+
+                            return ` 
+                            <div class="col-md-6 col-xl-3 mb-4">
+                                <div class="stats-small stats-small--1 card card-small p-2">
+                                    <div class="card-body p-0 d-flex">
+                                        <div class="d-flex flex-column m-auto">
+                                            <div class="stats-small__data text-center">
+                                                <span class="stats-small__label mb-2 text-uppercase">${medicion.nombreMedicion}</span>
+                                            </div>
+                                            <div id="slider-${medicion.idMedicion}"></div> 
+                                            <div class="stats-small__data text-center">
+                                                    <span class="page-subtitle">Horas</span>
+                                            </div>                                            
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>`;
+                            </div>`
 
-                    $("#reportMenu").after(reportElement);
 
-                    $("#borrar-" + reportId).click(() => {
-                        $("#card-" + reportId).remove();
-                    });
-
-                    $('#slider-' + reportId).customSlider({
-                        start: 100,
-                        connect: [true, false],
-                        tooltips: true,
-                        range: {
-                            'min': 0,
-                            'max': 100
                         }
-                    });
-                }
-                else {
-                    $("#card-" + reportId).remove();
-                }
+
+
+                        reportElement = '';
+                        for (medicion of report.mediciones) {
+                            reportElement += generateCard(medicion);
+                        }
+
+                        reportElement = `<li id="card-${reportId}"><div class="col-lg-12">
+                                <h4>${report.nombre}</h4>
+                                <h6>Seleccione la cantidad de horas por día que utiliza cada uno de estos elementos</h6>
+                            <div class='row'> ${reportElement}</div></div></li>`;
+
+
+                        $("#reportMenu").after(reportElement);
+
+                        $("#borrar-" + reportId).click(() => {
+                            $("#card-" + reportId).remove();
+                        });
+
+                        for (medicion of report.mediciones) {
+                            $(`#slider-${medicion.idMedicion}`).roundSlider({
+                            sliderType: "min-range",
+                            width: 22,
+                            radius: 100,
+                            value: 12,
+                            max: "24",
+                            circleShape: "half-top"
+                        });
+                        }
+                    }
+                    else {
+                        $("#card-" + reportId).remove();
+                    }
+                });
+
+            $("#slider-").roundSlider({
+                sliderType: "min-range",
+                width: 22,
+                radius: 100,
+                value: 24,
+                max: "24",
+                circleShape: "half-top"
             });
         });
+
 
     </script>
 
