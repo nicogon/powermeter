@@ -10,9 +10,9 @@ $ node console
 Create new instance object
 
 ```js
-const Device = models.devices
+const Medition = models.devices
 
-Device.create(
+Medition.create(
   {
     name: 'Pinza 1',
     duration: 'hora',
@@ -26,10 +26,10 @@ Device.create(
 
 Find by id
 ```js
-models.Device.findByPk(1).then(device => console.log(device));
+models.Medition.findByPk(1).then(device => console.log(device));
 ```
 
 Find all devices
 ```js
-models.Device.findAll().then(device => console.log(device))
+models.Medition.findAll().then(device => console.log(device))
 ```

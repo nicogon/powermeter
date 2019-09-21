@@ -1,4 +1,4 @@
-module.exports = function sensorsController(sensorsService, Device, PuntualMedition, Sensor) {
+module.exports = function sensorsController(sensorsService, Medition, PuntualMedition, Sensor) {
   return {
     report, toList, update, borrar
   };
@@ -25,7 +25,7 @@ module.exports = function sensorsController(sensorsService, Device, PuntualMedit
 
   // GET :base_url/dispositivos
   async function toList(req, res) {
-   
+
     const repepe = {
       name: 'Heladera',
       duration: 'hora',
@@ -33,20 +33,20 @@ module.exports = function sensorsController(sensorsService, Device, PuntualMedit
       maximum_medition: 2,
       sensor: { id: 1 } };
 
- //const re =  await Device.create(repepe);
+ //const re =  await Medition.create(repepe);
 
  //console.log(re)
 /*
-    const pepe = await Device.findByPk(2,{
-      
-      
+    const pepe = await Medition.findByPk(2,{
+
+
       include: [{
         model: Sensor,
          as: 'sensor',
          attributes: ['id']
     //  required: false
        }],
-      
+
       raw: false });
     console.log(pepe.toJSON())*/
     const sensors = await sensorsService.list();
@@ -64,12 +64,12 @@ module.exports = function sensorsController(sensorsService, Device, PuntualMedit
   }
 
   function findDevice(req) {
-    Device.findByPk(req.params.dispoId);
+    Medition.findByPk(req.params.dispoId);
   }
-  
+
 
   function persistMedition(requestBody) {
-    Device.findOrCreate({ where: requestBody.device });
+    Medition.findOrCreate({ where: requestBody.device });
     Sensor.findOrCreate({
       where: requestBody.sensor,
       defaults: { deviceId: requestBody.device.id }

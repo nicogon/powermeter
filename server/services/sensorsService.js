@@ -1,4 +1,4 @@
-module.exports = function sensorsService(sensorsRepository, reportsService, sessionId, Device) {
+module.exports = function sensorsService(sensorsRepository, reportsService, sessionId, Medition) {
   return {
     list, report, update, borrar
   };
