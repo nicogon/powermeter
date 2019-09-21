@@ -137,7 +137,7 @@
       font-size: $main-sidebar-dropdown-item-font-size;
       font-weight: $main-sidebar-dropdown-item-font-weight;
 
-      @media (-webkit-min-device-pixel-ratio: 1.5),
+      @media (-webkit-min-medition-pixel-ratio: 1.5),
       (min-resolution: 144dpi) {
         font-weight: $main-sidebar-dropdown-item-font-weight-retina;
       }

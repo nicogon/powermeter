@@ -1,4 +1,4 @@
-module.exports = function sensorsService(sensorsRepository, reportsService, sessionId, Device) {
+module.exports = function sensorsService(sensorsRepository, reportsService, sessionId, Medition) {
   return {
     list, report, update, borrar
   };
@@ -10,7 +10,7 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
     return isSameSession && timeDistance;
   }
 
-  function adaptDevices(dispo) {
+  function adaptMeditions(dispo) {
     return {...dispo, isOnline: isOnline(dispo), name: dispo.name ? dispo.name : `Sensor ${dispo.id}`}
   }
 
@@ -51,9 +51,9 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
   }
 
   async function list() {
-  //  const deviceslist = .map(device => adaptDevice(device));
-    const listado = (await sensorsRepository.list()).map(adaptDevices);
+  //  const meditionslist = .map(medition => adaptMedition(medition));
+    const listado = (await sensorsRepository.list()).map(adaptMeditions);
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(listado);
-    return listado; // .map(adaptDevices);
+    return listado; // .map(adaptMeditions);
   }
 };
