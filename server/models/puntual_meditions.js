@@ -4,14 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   // Attributes
   const PuntualMedition = sequelize.define('PuntualMedition',
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        allowNull: false,
-        notEmpty: true,
-        autoIncrement: true
-      },
-      deviceId: {
+      meditionId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -19,14 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       value: DataTypes.FLOAT,
       offset: DataTypes.INTEGER
-    },
-    { timestamps: false }
+    }, {}
   );
 
   // Associations
   PuntualMedition.associate = (models) => {
-    models.PuntualMedition.belongsTo(models.Device, {
-      as: 'device',
+    models.PuntualMedition.belongsTo(models.Medition, {
+      as: 'medition',
       foreignKey: 'id'
     });
   };

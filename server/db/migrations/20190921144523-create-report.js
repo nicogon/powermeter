@@ -6,7 +6,10 @@ module.exports = {
       type: Sequelize.INTEGER
     },
     name: Sequelize.STRING,
-    sensibility: Sequelize.FLOAT
+    timeStart: Sequelize.DATE,
+    duration: Sequelize.ENUM,
+    averageMedition: Sequelize.FLOAT,
+    maximumMedition: Sequelize.FLOAT
   }),
 
   down: (queryInterface, _Sequelize) => queryInterface.dropTable('Sensors')

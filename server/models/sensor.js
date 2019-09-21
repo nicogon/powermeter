@@ -10,18 +10,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         notEmpty: true
       },
-      medition: DataTypes.FLOAT,
-      name: DataTypes.STRING,
-      lastPush: DataTypes.BIGINT,
+      name: {
+        type: DataTypes.STRING,
+        defaultValue: `Sensor ${this.id}`
+      },
       sensibility: DataTypes.FLOAT
-    },
-    { timestamps: false }
+    }, {}
   );
 
   // Associations
   Sensor.associate = (models) => {
-    models.Sensor.belongsTo(models.Device, {
-      as: 'device',
+    models.Sensor.belongsTo(models.Medition, {
+      as: 'medition',
       foreignKey: 'id'
     });
   };

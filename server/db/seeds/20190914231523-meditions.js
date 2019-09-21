@@ -3,9 +3,13 @@ module.exports = {
     return queryInterface.bulkInsert('Meditions', [
       {
         id: 1,
-        name: 'Casa',
-        averageMedition: 1,
-        maximumMedition: 2
+        sensorId: 1,
+        reportId: 1,
+        name: 'Heladera',
+        averageMedition: 2,
+        maximumMedition: 3,
+        consumption: 1,
+        lastPush: 20190921143023
       }],
     {});
   },
