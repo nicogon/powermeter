@@ -136,7 +136,7 @@ module.exports = function reportsService(
           {
             index: 0,
             nombreMedicion: 'Microondas',
-            dispoId: 'deviceRed',
+            dispoId: 'meditionRed',
             data: [],
             // currentConsumption: 100,
             duration: 60,
@@ -146,7 +146,7 @@ module.exports = function reportsService(
           {
             index: 1,
             nombreMedicion: 'Heladera',
-            dispoId: 'deviceBlue',
+            dispoId: 'meditionBlue',
             data: [],
             // currentConsumption: 100,
             duration: 60,
@@ -168,7 +168,7 @@ module.exports = function reportsService(
           {
             index: 0,
             nombreMedicion: 'Televisor',
-            dispoId: 'deviceRed',
+            dispoId: 'meditionRed',
             data: [],
             // currentConsumption: 100,
             duration: 60,
@@ -178,7 +178,7 @@ module.exports = function reportsService(
           {
             index: 1,
             nombreMedicion: 'Aire acondicionado',
-            dispoId: 'deviceBlue',
+            dispoId: 'meditionBlue',
             data: [],
             // currentConsumption: 100,
             averageConsumption: 30,
@@ -201,7 +201,7 @@ module.exports = function reportsService(
           {
             index: 0,
             nombreMedicion: 'Lampara',
-            dispoId: 'deviceRed',
+            dispoId: 'meditionRed',
             data: [],
             duration: 60,
             // currentConsumption: 100,
@@ -211,7 +211,7 @@ module.exports = function reportsService(
           {
             index: 1,
             nombreMedicion: 'Televisor',
-            dispoId: 'deviceBlue',
+            dispoId: 'meditionBlue',
             data: [],
             duration: 60,
             // currentConsumption: 100,

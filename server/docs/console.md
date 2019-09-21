@@ -10,7 +10,7 @@ $ node console
 Create new instance object
 
 ```js
-const Medition = models.devices
+const Medition = models.meditions
 
 Medition.create(
   {
@@ -29,7 +29,7 @@ Find by id
 models.Medition.findByPk(1).then(medition => console.log(medition));
 ```
 
-Find all devices
+Find all meditions
 ```js
 models.Medition.findAll().then(medition => console.log(medition))
 ```

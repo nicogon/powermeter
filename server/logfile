@@ -8,15 +8,15 @@
 	type “help” for help
 	CREATE ROLE powermeter LOGIN CREATEDB PASSWORD 'powermeter';
 2019-09-19 10:27:57.056 -03 [36144] FATAL:  database "powermerter" does not exist
-2019-09-19 10:28:32.832 -03 [36168] ERROR:  relation "Devices" does not exist at character 130
-2019-09-19 10:28:32.832 -03 [36168] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Devices" AS "Medition";
-2019-09-19 10:28:54.772 -03 [36181] ERROR:  relation "Devices" does not exist at character 130
-2019-09-19 10:28:54.772 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Devices" AS "Medition";
-2019-09-19 10:28:57.029 -03 [36181] ERROR:  relation "Devices" does not exist at character 130
-2019-09-19 10:28:57.029 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Devices" AS "Medition";
-2019-09-19 10:28:58.280 -03 [36181] ERROR:  relation "Devices" does not exist at character 130
-2019-09-19 10:28:58.280 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Devices" AS "Medition";
-2019-09-19 10:28:59.753 -03 [36181] ERROR:  relation "Devices" does not exist at character 130
-2019-09-19 10:28:59.753 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Devices" AS "Medition";
-2019-09-19 10:29:01.279 -03 [36181] ERROR:  relation "Devices" does not exist at character 130
-2019-09-19 10:29:01.279 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Devices" AS "Medition";
+2019-09-19 10:28:32.832 -03 [36168] ERROR:  relation "Meditions" does not exist at character 130
+2019-09-19 10:28:32.832 -03 [36168] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Meditions" AS "Medition";
+2019-09-19 10:28:54.772 -03 [36181] ERROR:  relation "Meditions" does not exist at character 130
+2019-09-19 10:28:54.772 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Meditions" AS "Medition";
+2019-09-19 10:28:57.029 -03 [36181] ERROR:  relation "Meditions" does not exist at character 130
+2019-09-19 10:28:57.029 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Meditions" AS "Medition";
+2019-09-19 10:28:58.280 -03 [36181] ERROR:  relation "Meditions" does not exist at character 130
+2019-09-19 10:28:58.280 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Meditions" AS "Medition";
+2019-09-19 10:28:59.753 -03 [36181] ERROR:  relation "Meditions" does not exist at character 130
+2019-09-19 10:28:59.753 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Meditions" AS "Medition";
+2019-09-19 10:29:01.279 -03 [36181] ERROR:  relation "Meditions" does not exist at character 130
+2019-09-19 10:29:01.279 -03 [36181] STATEMENT:  SELECT "id", "name", "duration", "time_start", "time_end", "average_medition", "maximum_medition", "createdAt", "updatedAt" FROM "Meditions" AS "Medition";
