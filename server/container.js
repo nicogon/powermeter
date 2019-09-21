@@ -7,7 +7,7 @@ const Device = require('./models').Device;
 const Sensor = require('./models').Sensor;
 const PuntualMedition = require('./models').PuntualMedition;
 
-const medicionEnCurso = {
+const tempReport = {
   nombre: 'oooo',
   duracion: 900000,
   mediciones: [
@@ -29,11 +29,11 @@ async function createContainer() {
 
   entries.forEach(entry => container.load(path.join(__dirname, entry)));
 
-  container.register('medicionEnCurso', function medicionEnCursofn() {
-    return medicionEnCurso;
+  container.register('tempReport', function tempReport() {
+    return tempReport;
   });
 
-  container.register('dispoMem', function medicionEnCursofn() {
+  container.register('dispoMem', function tempReportfn() {
     return dispoMem;
   });
 

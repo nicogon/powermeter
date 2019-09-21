@@ -6,7 +6,7 @@ module.exports = function reportsService(
   sensorsRepository,
   reportsRepository,
   sessionId,
-  medicionEnCurso
+  tempReport
 ) {
   return {
     nuevo,
@@ -16,64 +16,60 @@ module.exports = function reportsService(
   };
 
   function getReport(reportId) {
-    return { now: Date.now(), ...medicionEnCurso };// reportsRepository.getReport(reportId);
+    return { now: Date.now(), ...tempReport };// reportsRepository.getReport(reportId);
   }
 
-  async function notify(dispoId, medicion) {
+  async function notify(sensorId, meditionValue) {
     // await lock.acquire();
 
-    if (process.env.SHOW_CONSOLE_LOGS === true) console.log(medicionEnCurso);
+    if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
-    let medicionAMofidicar = medicionEnCurso.mediciones.find(medition => medition.id === dispoId);
+    // Buscar si existe una medicion asociada a un sensor
+    let activeMedition = tempReport.mediciones.find(medition => medition.id === sensorId);
 
-    if (haFinalizado(medicionAMofidicar)) { releaseCurrentMedition(medicionAMofidicar); }
 
-    if (!(medicionAMofidicar && medicionEnCurso && (medicionEnCurso.fin > Date.now()))) { return; }
+    // Si la medicion finalizo, borrar el objeto temporal de la memoria
+    if (hasFinish()) { 
+      saveReport();
+    }
 
-    medicionAMofidicar = updateCurrentAndMaxMeditions(medicionAMofidicar, medicion);
+    if(activeMedition){
+      updateActiveAndMaxMeditions(activeMedition, meditionValue);
+    }
 
     //  await lock.release();
   }
 
-  function haFinalizado(medicionAMofidicar) {
-    return medicionAMofidicar && medicionEnCurso && medicionEnCurso.fin < Date.now();
+  function hasFinish() {
+    return tempReport && tempReport.fin < Date.now();
   }
 
-  function releaseCurrentMedition(_medicionAMofidicar) {
-    /*
-    {
-      /*
-      guardarMedicion(medicionEnCurso);
-      medicionEnCurso = null;
-      await lock.release();
-      return;
-    }
-    */
-    // eslint-disable-next-line no-param-reassign
-    medicionEnCurso = null;
+  function saveReport() {
+    // TODO
+    tempReport = null;
   }
 
-  function updateCurrentAndMaxMeditions(medicionAMofidicar, medicion) {
-    updateCurrentMedition();
-    modifyMedition(medicionAMofidicar, medicion);
+  function updateActiveAndMaxMeditions(activeMedition, medicion) {
+    updateTemporalReport();
+    modifyMedition(activeMedition, medicion);
   }
 
-  function updateCurrentMedition() {
-    const averageConsumption = _.sum(medicionEnCurso.mediciones.map(medicionInt => (medicionInt.consumption || 0)));
-    const maximumConsumption = Math.max((medicionEnCurso.maximumConsumption || 0), averageConsumption);
-    const contadorMedicionesTotal = _.get(medicionEnCurso, 'contadorMediciones', 0) + 1;
-    const medicionPromedioTotal = _.round((((_.get(medicionEnCurso, 'averageConsumption', 0) * (contadorMedicionesTotal - 1)) + maximumConsumption) / contadorMedicionesTotal), 1);
+  function updateTemporalReport() {
+    const averageConsumption = _.sum(tempReport.mediciones.map(medicionInt => (medicionInt.consumption || 0)));
+    const maximumConsumption = Math.max((tempReport.maximumConsumption || 0), averageConsumption);
+    const contadorMedicionesTotal = _.get(tempReport, 'contadorMediciones', 0) + 1;
+    const medicionPromedioTotal = _.round((((_.get(tempReport, 'averageConsumption', 0) * (contadorMedicionesTotal - 1)) + maximumConsumption) / contadorMedicionesTotal), 1);
 
     // eslint-disable-next-line no-param-reassign
-    medicionEnCurso = {
-      ...medicionEnCurso,
+    tempReport = {
+      ...tempReport,
       averageConsumption,
       maximumConsumption,
       contadorMediciones: contadorMedicionesTotal,
       medicionPromedio: medicionPromedioTotal
     };
 
-    return medicionEnCurso;
+    return tempReport;
   }
 
   function modifyMedition(medicionAMofidicar, medition) {
@@ -87,7 +83,7 @@ module.exports = function reportsService(
       ...medicionAMofidicar, medition, maximumConsumption, averageConsumption, contadorMediciones
     };
 
-    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - medicionEnCurso.inicio, _), medition });
+    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - tempReport.inicio, _), medition });
     return medicionAMofidicar;
   }
 
@@ -105,7 +101,7 @@ module.exports = function reportsService(
 
     const medicion = 0;
 
-    medicionEnCurso = {
+    tempReport = {
       reportId,
       medicion,
       nombre,
