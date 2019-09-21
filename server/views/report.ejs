@@ -138,7 +138,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for(medicion of report.mediciones){ %>
+                                <% for(medicion of report.meditions){ %>
                                     <tr>
                                         <td id="medicionNombre-<%-medicion.dispoId%>">
                                             <%=medicion.nombreMedicion%>
@@ -199,8 +199,8 @@
 
 
     <script>
-        let graphData = <%-JSON.stringify((report.mediciones))%>
-        let report = <%-JSON.stringify({...report, mediciones:undefined})%>
+        let graphData = <%-JSON.stringify((report.meditions))%>
+        let report = <%-JSON.stringify({...report, meditions:undefined})%>
 
 
 

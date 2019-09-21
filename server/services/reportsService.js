@@ -27,7 +27,7 @@ module.exports = function reportsService(
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
     // Buscar si existe una medicion asociada a un sensor
-    let activeMedition = tempReport.mediciones.find(medition => medition.id === sensorId);
+    let activeMedition = tempReport.meditions.find(medition => medition.id === sensorId);
 
 
     // Si la medicion finalizo, borrar el objeto temporal de la memoria
@@ -97,19 +97,19 @@ module.exports = function reportsService(
   }
 
   async function nuevo({
-    name, duration, meditions, inicio, fin
+    name, secondsDuration, meditions, inicio, fin
   }) {
    // const reportId = randomId();
 
     const medicion = 0;
 
     tempReport = {
-      currentMedition,
+      currentMedition:0,
       name,
       secondsDuration,
       meditions,
-      timeStart,
-      timeEnd
+     // timeStart,
+   //   timeEnd
     };
 
 

@@ -36,7 +36,7 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
       lastPush: Date.now()
     });
 
-    await reportsService.notify(dispoId, data.medition).catch(console.log);
+    await reportsService.notify(dispoId, data.currentMedition).catch(console.log);
   }
 
   async function borrar(dispoId) {

@@ -14,12 +14,12 @@ module.exports = function reportsController(
 
     const nombre = req.body.nombre;
     // eslint-disable-next-line radix
-    const duracion = parseInt(req.body.duracion);
-    const mediciones = [];
+    const secondsDuration = parseInt(req.body.duracion);
+    const meditions = [];
     const medicion = 0;
 
     if (typeof req.body.nombreMedicion === 'string') {
-      mediciones.push({
+      meditions.push({
         id: req.body.dispoId,
         medicion,
         nombreMedicion: req.body.nombreMedicion,
@@ -30,7 +30,7 @@ module.exports = function reportsController(
     } else {
       const medicion = 0;
       req.body.dispoId.forEach((dispoId, index) => {
-        mediciones.push({
+        meditions.push({
           index,
           medicion,
           nombreMedicion: req.body.nombreMedicion[index],
@@ -40,12 +40,12 @@ module.exports = function reportsController(
       });
     }
     const inicio = Date.now();
-    const fin = Date.now() + duracion;
+    const fin = Date.now() + secondsDuration;
 
     const reportId = await reportsService.nuevo({
       nombre,
-      duracion,
-      mediciones,
+      secondsDuration,
+      meditions,
       inicio,
       fin
     });
