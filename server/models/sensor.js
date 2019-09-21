@@ -8,17 +8,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
-        notEmpty: true,
-        autoIncrement: true
-      },
-      deviceId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        allowNull: false,
         notEmpty: true
       },
+      medition: DataTypes.FLOAT,
       name: DataTypes.STRING,
-      lastPush: DataTypes.STRING,
+      lastPush: DataTypes.BIGINT,
       sensibility: DataTypes.FLOAT
     },
     { timestamps: false }

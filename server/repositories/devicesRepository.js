@@ -1,4 +1,4 @@
-module.exports = function devicesRepository(dispoMem, Device) {
+module.exports = function devicesRepository(dispoMem, Sensor) {
   return {
     list, upsert, del, get
   };
@@ -13,16 +13,22 @@ module.exports = function devicesRepository(dispoMem, Device) {
   }
 
   async function list() {
-    return Device.findAll({ raw: true });
+    return Sensor.findAll({ raw: true });
     // return Sensor.findAll({ raw: true }) //return dispoMem;
   }
 
   async function upsert(dispoId, data) {
+    console.log(data)
+    Sensor.upsert({
+      id:dispoId,
+       ...data 
+    });
+   /*
     const dispo = dispoMem.findIndex(unit => unit.dispoId == dispoId);
     if (dispo == -1) {
       dispoMem.push({ ...data, dispoId });
     }else {
       dispoMem[dispo] = { ...dispoMem[dispo], ...data, dispoId };
-    }
+    } */
   }
 };

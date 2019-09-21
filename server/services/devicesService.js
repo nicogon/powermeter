@@ -4,25 +4,14 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
   };
 
   function isOnline(dispo) {
-    const isSameSession = sessionId === dispo.sessionId;
-    const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 10000;
+   // const isSameSession = sessionId === dispo.sessionId;
+   const isSameSession = true;
+   const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 10000;
     return isSameSession && timeDistance;
   }
 
   function adaptDevices(dispo) {
-    const {
-      name, dispoId, medicion, pinza, lastPush, lastConsumptions
-    } = dispo;
-
-    return {
-      name,
-      lastPush,
-      dispoId,
-      isOnline: isOnline(dispo),
-      pinza,
-      medicion,
-      lastConsumptions
-    };
+    return {...dispo, isOnline: isOnline(dispo),}
   }
 
   async function generateListLastConsumptions(dispoId, consumo) {
@@ -43,9 +32,7 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
     );
     */
     await devicesRepository.upsert(dispoId, {
-      sessionId,
-      pinza: data.sensor.id,
-      medicion: data.medition.value,
+      ...data,
       lastPush: Date.now()
     });
 
@@ -64,7 +51,7 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
 
   async function list() {
   //  const deviceslist = .map(device => adaptDevice(device));
-    const listado = await devicesRepository.list();
+    const listado = (await devicesRepository.list()).map(adaptDevices);
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(listado);
     return listado; // .map(adaptDevices);
   }

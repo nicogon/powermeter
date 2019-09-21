@@ -3,7 +3,7 @@
 module.exports = {
   up(queryInterface, _Sequelize) {
     return queryInterface.bulkInsert('Sensors', [
-      { id: 1, deviceId: 1, name: 'Pinza 1', sensibility: 30 }
+      { id: 1,medition:30, name: 'Pinza 1', sensibility: 30 }
     ], {});
   },
 

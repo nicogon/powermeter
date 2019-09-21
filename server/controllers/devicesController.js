@@ -17,7 +17,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
 
   // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
-    persistMedition(req.body);
+   // persistMedition(req.body);
     if (process.env.SHOW_CONSOLE_LOGS === true) logMedition(req.body);
     devicesService.report(req.params.dispoId, req.body);
     res.status(200).send();
@@ -26,6 +26,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
   // GET :base_url/dispositivos
   async function toList(req, res) {
     const devices = await devicesService.list();
+    console.log(devices)
     if (req.query.format === 'json') {
       res.json(devices);
     } else {

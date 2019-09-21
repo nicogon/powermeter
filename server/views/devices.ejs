@@ -80,7 +80,7 @@
     </script>
 
 
-    <%for (var device in devices){%>
+    <%for (var device of devices){%>
         <br>
         <div class="card card-small">
             <div class="card-body pt-0 row" style='margin-top:10px'>
@@ -90,14 +90,14 @@
                             <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
                                 <div class="stats-small__data text-center">
                                     <span class="stats-small__label text-uppercase">CONSUMO</span>
-                                    <h6 class="stats-small__value count my-3">23W</h6>
+                                    <h6 class="stats-small__value count my-3"><%=device.medition%>W</h6>
                                 </div>
 
                                 <div style='color: #17c671;text-align: center'>
-                                    <%=devices[device].medicion%>A
+                                    <%=(device.medition/220).toFixed(2)%>A
                                 </div>
                             </div>
-                            <canvas height="220" class="blog-overview-stats-small-1" id='chart-<%=devices[device].dispoId%>'></canvas>
+                            <canvas height="220" class="blog-overview-stats-small-1" id='chart-<%=device.id%>'></canvas>
                         </div>
                     </div>
                 </div>
@@ -105,24 +105,24 @@
                     <div style="position:absolute;right:15px;top:3px">
 
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-white borrar" data-id="<%=devices[device].dispoId%>"><i class="material-icons">delete</i> </button>
-                            <button type="button" class="btn btn-white showEdit" data-id="<%=devices[device].dispoId%>"><i class="material-icons">edit</i></button>
+                            <button type="button" class="btn btn-white borrar" data-id="<%=device.id%>"><i class="material-icons">delete</i> </button>
+                            <button type="button" class="btn btn-white showEdit" data-id="<%=device.id%>"><i class="material-icons">edit</i></button>
                         </div>
 
                     </div>
-                    <h4 id="<%=devices[device].dispoId%>-titulo">
-                        <%=devices[device].name%>
+                    <h4 id="<%=device.id%>-titulo">
+                        <%=device.name%>
                     </h4>
-                    <div class="input-group mb-3 hidden" id="<%=devices[device].dispoId%>-form">
-                        <input type="text" class="form-control" id="<%=devices[device].dispoId%>-input" placeholder="Ingrese nombre del dispositivo">
+                    <div class="input-group mb-3 hidden" id="<%=device.id%>-form">
+                        <input type="text" class="form-control" id="<%=device.id%>-input" placeholder="Ingrese nombre del dispositivo">
                         <div class="input-group-append">
-                            <button class="btn btn-white guardar" data-id="<%=devices[device].dispoId%>" type="button">Guardar</button>
+                            <button class="btn btn-white guardar" data-id="<%=device.id%>" type="button">Guardar</button>
                         </div>
                     </div>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=devices[device].isOnline? 'success' : 'danger'%>"><%=devices[device].isOnline? 'Online' : 'Offline'%></strong></span>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger">35A</strong> </span>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=devices[device].dispoId%></span>
-                    <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=devices[device].isOnline?  Math.round((Date.now() -devices[device].lastPush)/60000) + 'min': ''%></strong></span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=device.isOnline? 'success' : 'danger'%>"><%=device.isOnline? 'Online' : 'Offline'%></strong></span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger"><%=device.sensibility%>A</strong> </span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=device.id%></span>
+                    <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=device.isOnline?  Math.round((Date.now() -device.lastPush)/60000) + 'min': ''%></strong></span>
                 </div>
             </div>
         </div>
@@ -178,13 +178,13 @@
                 var config = {
                     backgroundColor: "rgba(255,180,0,0.1)",
                     borderColor: "rgb(255,180,0)",
-                    data: <%=JSON.stringify(devices[device].lastConsumptions || [])%>
+                    data: <%=JSON.stringify(device.lastConsumptions || [])%>
                 }
                 var chartOptions = boSmallStatsOptions(Math.max(...config.data) + 1);
 
 
-                var ctx = document.getElementById('chart-<%=devices[device].dispoId%>').getContext('2d');
-                myChart['<%=devices[device].dispoId%>'] = new Chart(ctx, {
+                var ctx = document.getElementById('chart-<%=device.dispoId%>').getContext('2d');
+                myChart['<%=device.dispoId%>'] = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7"],
