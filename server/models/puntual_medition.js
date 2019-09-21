@@ -1,5 +1,3 @@
-/* eslint-disable function-paren-newline */
-
 module.exports = (sequelize, DataTypes) => {
   // Attributes
   const PuntualMedition = sequelize.define('PuntualMedition',

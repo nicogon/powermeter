@@ -1,5 +1,3 @@
-/* eslint-disable function-paren-newline */
-
 module.exports = (sequelize, DataTypes) => {
   // Attributes
   const Sensor = sequelize.define('Report',
