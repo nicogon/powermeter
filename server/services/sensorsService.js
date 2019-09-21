@@ -51,7 +51,7 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
   }
 
   async function list() {
-  //  const deviceslist = .map(device => adaptDevice(device));
+  //  const deviceslist = .map(medition => adaptDevice(medition));
     const listado = (await sensorsRepository.list()).map(adaptDevices);
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(listado);
     return listado; // .map(adaptDevices);

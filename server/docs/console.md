@@ -26,10 +26,10 @@ Medition.create(
 
 Find by id
 ```js
-models.Medition.findByPk(1).then(device => console.log(device));
+models.Medition.findByPk(1).then(medition => console.log(medition));
 ```
 
 Find all devices
 ```js
-models.Medition.findAll().then(device => console.log(device))
+models.Medition.findAll().then(medition => console.log(medition))
 ```

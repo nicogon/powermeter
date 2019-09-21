@@ -5,13 +5,13 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
 
   // PUT :base_url/dispositivos/:dispoId
   async function update(req, res) {
-    findDevice(req).then(device => device.update({ name: req.body.name }));
+    findDevice(req).then(medition => medition.update({ name: req.body.name }));
     res.status(200).send();
   }
 
   // DELETE :base_url/dispositivos/:dispoId
   async function borrar(req, res) {
-    findDevice(req).then(device => device.destroy());
+    findDevice(req).then(medition => medition.destroy());
     res.status(200).send();
   }
 
@@ -58,8 +58,8 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
   }
 
   /*
-  function adaptDevice(device) {
-    const { name } = device;
+  function adaptDevice(medition) {
+    const { name } = medition;
     return { name };
   }
 
@@ -69,12 +69,12 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
 
 
   function persistMedition(requestBody) {
-    Medition.findOrCreate({ where: requestBody.device });
+    Medition.findOrCreate({ where: requestBody.medition });
     Sensor.findOrCreate({
       where: requestBody.sensor,
-      defaults: { deviceId: requestBody.device.id }
+      defaults: { deviceId: requestBody.medition.id }
     });
-    PuntualMedition.create({ value: requestBody.medition.value, deviceId: requestBody.device.id });
+    PuntualMedition.create({ value: requestBody.medition.value, deviceId: requestBody.medition.id });
   }
 
   */

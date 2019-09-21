@@ -43,9 +43,9 @@
                             <label for="feInputState">Agregar sensores</label>
                             <select id='devices' class="form-control">
                               <option selected="">Seleccione  al menos un dispositivo...</option>
-                        <%for (var device in devices){%>
-                            <option value="<%=devices[device].id%>"><%=devices[device].name%></option>
-                        <%}%>         
+                        <%for (var medition in devices){%>
+                            <option value="<%=devices[medition].id%>"><%=devices[medition].name%></option>
+                        <%}%>
                             </select>
                         </div>
 
@@ -74,7 +74,7 @@
 
                 if ($("#card-" + dispoId).length > 0) return;
 
-                const dispoElement = `              
+                const dispoElement = `
                     <li class="list-group-item p-3" id="card-${dispoId}">
                         <div class='d-flex'>
                             <label for="feInputState">Dispositivo</label>
