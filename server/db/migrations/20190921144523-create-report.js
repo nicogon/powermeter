@@ -8,7 +8,7 @@ module.exports = {
     name: Sequelize.STRING,
     sensibility: Sequelize.FLOAT,
     timeStart: Sequelize.DATE,
-    minutes: Sequelize.INTEGER,
+    secondsDuration: Sequelize.INTEGER,
     averageMedition: Sequelize.FLOAT,
     maximumMedition: Sequelize.FLOAT
   }),
