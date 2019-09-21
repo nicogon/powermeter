@@ -97,7 +97,7 @@ module.exports = function reportsService(
   }
 
   async function nuevo({
-    nombre, duracion, mediciones, inicio, fin
+    name, duration, meditions, inicio, fin
   }) {
    // const reportId = randomId();
 
@@ -105,11 +105,11 @@ module.exports = function reportsService(
 
     tempReport = {
       currentMedition,
-      nombre,
-      duration,
-      mediciones,
-      inicio,
-      fin
+      name,
+      secondsDuration,
+      meditions,
+      timeStart,
+      timeEnd
     };
 
 

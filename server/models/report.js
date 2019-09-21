@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       timeStart: DataTypes.FLOAT,
-      secondsDuration: DataTypes.INT,
+      secondsDuration: DataTypes.INTEGER,
       averageMedition: DataTypes.FLOAT,
       maximumMedition: DataTypes.FLOAT
     }, {}

@@ -7,7 +7,7 @@ module.exports = {
     },
     name: Sequelize.STRING,
     timeStart: Sequelize.DATE,
-    secondsDuration: Sequelize.INT,
+    secondsDuration: Sequelize.INTEGER,
     averageMedition: Sequelize.FLOAT,
     maximumMedition: Sequelize.FLOAT
   }),

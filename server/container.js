@@ -11,14 +11,14 @@ const Sensor = require('./models').Sensor;
 const Simulation = require('./models').Simulation;
 
 const tempReport = {
-  nombre: 'oooo',
-  duracion: 900000,
-  mediciones: [
+  name: 'oooo',
+  secondsDuration: 900000,
+  meditions: [
     { index: 0, nombreMedicion: 'iii', meditionId: '1', data: [] },
     { index: 1, nombreMedicion: 'kk', meditionId: '2', data: [] },
   ],
-  inicio: 1565223068401,
-  fin: 1595223968401,
+  timeStart: 1565223068401,
+  timeEnd: 1595223968401,
   sessionId: '4oy0xej'
 };
 
