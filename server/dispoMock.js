@@ -2,7 +2,7 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 
 const url = process.env.APP_URL || `http://${process.env.API_HOST_URL}:${process.env.PORT}`;
-const reportUrl = dispoId => `${url}/devices/${dispoId}/report`;
+const reportUrl = dispoId => `${url}/sensores/${dispoId}/report`;
 
 let contador = 0;
 

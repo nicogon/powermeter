@@ -1,5 +1,5 @@
 module.exports = function reportsController(
-  devicesService,
+  sensorsService,
   reportsService
 ) {
   return {
@@ -74,11 +74,11 @@ module.exports = function reportsController(
     const devices = req.body.device((device) => {});
 */
 
-    const devices = (await devicesService.list()).filter(
-      device => device.isOnline
+    const sensors = (await sensorsService.list()).filter(
+      sensor => sensor.isOnline
     );
 
-    res.render('newReport', { devices });
+    res.render('newReport', { sensors });
   }
 
   async function toList(req, res) {

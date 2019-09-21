@@ -1,4 +1,4 @@
-module.exports = function devicesController(devicesService, Device, PuntualMedition, Sensor) {
+module.exports = function sensorsController(sensorsService, Device, PuntualMedition, Sensor) {
   return {
     report, toList, update, borrar
   };
@@ -18,9 +18,8 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
   // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
    // persistMedition(req.body);
-    if (process.env.SHOW_CONSOLE_LOGS === true) logMedition(req.body);
-    devicesService.report(req.params.dispoId, req.body);
-    console.log(req.params.dispoId)
+    if (process.env.SHOW_CONSOLE_LOGS === true) logSensor(req.body);
+    sensorsService.report(req.params.dispoId, req.body);
     res.status(200).send();
   }
 
@@ -50,14 +49,15 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
       
       raw: false });
     console.log(pepe.toJSON())*/
-    const devices = await devicesService.list();
+    const sensors = await sensorsService.list();
     if (req.query.format === 'json') {
-      res.json(devices);
+      res.json(sensors);
     } else {
-      res.render('devices', { devices });
+      res.render('sensors', { sensors });
     }
   }
 
+  /*
   function adaptDevice(device) {
     const { name } = device;
     return { name };
@@ -66,6 +66,7 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
   function findDevice(req) {
     Device.findByPk(req.params.dispoId);
   }
+  
 
   function persistMedition(requestBody) {
     Device.findOrCreate({ where: requestBody.device });
@@ -76,11 +77,11 @@ module.exports = function devicesController(devicesService, Device, PuntualMedit
     PuntualMedition.create({ value: requestBody.medition.value, deviceId: requestBody.device.id });
   }
 
-  function logMedition(reqBody) {
-    const deviceId = reqBody.device.id;
-    const sensorId = reqBody.sensor.id;
-    const medition = reqBody.medition.value;
-    console.log(`[Medido y persistido] Device: ${deviceId}, `
-                + `Sensor: ${sensorId}, Medicion: ${medition}`);
+  */
+
+  function logSensor(reqBody) {
+    const medition = reqBody.medition;
+    console.log(`[Medido  sensor: **** `
+                + `Sensor: *** , Medicion: ${medition}`);
   }
 };

@@ -29,7 +29,7 @@
 
                 console.log(name)
                 $.ajax({
-                    url: '/devices/' + id + '/',
+                    url: '/sensors/' + id + '/',
                     type: 'PUT',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
@@ -44,7 +44,7 @@
                 const id = $(this).attr('data-id');
                 console.log(id)
                 $.ajax({
-                    url: '/devices/' + id + '/',
+                    url: '/sensores/' + id + '/',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     type: 'DELETE',
@@ -55,7 +55,7 @@
             });
 
             function updateCharts() {
-                $.getJSON("/devices/?format=json", function(data) {
+                $.getJSON("/sensores/?format=json", function(data) {
 
                     data.forEach(item => {
                         //console.log(item)
@@ -83,7 +83,7 @@
     </script>
 
 
-    <%for (var device of devices){%>
+    <%for (var sensor of sensors){%>
         <br>
         <div class="card card-small">
             <div class="card-body pt-0 row" style='margin-top:10px'>
@@ -93,14 +93,14 @@
                             <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
                                 <div class="stats-small__data text-center">
                                     <span class="stats-small__label text-uppercase">CONSUMO</span>
-                                    <h6 class="stats-small__value count my-3"><%=device.medition%>W</h6>
+                                    <h6 class="stats-small__value count my-3"><%=sensor.medition%>W</h6>
                                 </div>
 
                                 <div style='color: #17c671;text-align: center'>
-                                    <%=(device.medition/220).toFixed(2)%>A
+                                    <%=(sensor.medition/220).toFixed(2)%>A
                                 </div>
                             </div>
-                            <canvas height="220" class="blog-overview-stats-small-1" id='chart-<%=device.id%>'></canvas>
+                            <canvas height="220" class="blog-overview-stats-small-1" id='chart-<%=sensor.id%>'></canvas>
                         </div>
                     </div>
                 </div>
@@ -108,24 +108,24 @@
                     <div style="position:absolute;right:15px;top:3px">
 
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-white borrar" data-id="<%=device.id%>"><i class="material-icons">delete</i> </button>
-                            <button type="button" class="btn btn-white showEdit" data-id="<%=device.id%>"><i class="material-icons">edit</i></button>
+                            <button type="button" class="btn btn-white borrar" data-id="<%=sensor.id%>"><i class="material-icons">delete</i> </button>
+                            <button type="button" class="btn btn-white showEdit" data-id="<%=sensor.id%>"><i class="material-icons">edit</i></button>
                         </div>
 
                     </div>
-                    <h4 id="<%=device.id%>-titulo">
-                        <%=device.name%>
+                    <h4 id="<%=sensor.id%>-titulo">
+                        <%=sensor.name%>
                     </h4>
-                    <div class="input-group mb-3 hidden" id="<%=device.id%>-form">
-                        <input type="text" class="form-control" id="<%=device.id%>-input" placeholder="Ingrese nombre del dispositivo">
+                    <div class="input-group mb-3 hidden" id="<%=sensor.id%>-form">
+                        <input type="text" class="form-control" id="<%=sensor.id%>-input" placeholder="Ingrese nombre del dispositivo">
                         <div class="input-group-append">
-                            <button class="btn btn-white guardar" data-id="<%=device.id%>" type="button">Guardar</button>
+                            <button class="btn btn-white guardar" data-id="<%=sensor.id%>" type="button">Guardar</button>
                         </div>
                     </div>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=device.isOnline? 'success' : 'danger'%>"><%=device.isOnline? 'Online' : 'Offline'%></strong></span>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger"><%=device.sensibility%>A</strong> </span>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=device.id%></span>
-                    <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=device.isOnline?  Math.round((Date.now() -device.lastPush)/60000) + 'min': ''%></strong></span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=sensor.isOnline? 'success' : 'danger'%>"><%=sensor.isOnline? 'Online' : 'Offline'%></strong></span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger"><%=sensor.sensibility%>A</strong> </span>
+                    <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=sensor.id%></span>
+                    <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=sensor.isOnline?  Math.round((Date.now() -sensor.lastPush)/60000) + 'min': ''%></strong></span>
                 </div>
             </div>
         </div>
@@ -181,13 +181,13 @@
                 var config = {
                     backgroundColor: "rgba(255,180,0,0.1)",
                     borderColor: "rgb(255,180,0)",
-                    data: <%=JSON.stringify(device.lastConsumptions || [])%>
+                    data: <%=JSON.stringify(sensor.lastConsumptions || [])%>
                 }
                 var chartOptions = boSmallStatsOptions(Math.max(...config.data) + 1);
 
 
-                var ctx = document.getElementById('chart-<%=device.dispoId%>').getContext('2d');
-                myChart['<%=device.dispoId%>'] = new Chart(ctx, {
+                var ctx = document.getElementById('chart-<%=sensor.dispoId%>').getContext('2d');
+                myChart['<%=sensor.dispoId%>'] = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7"],

@@ -1,4 +1,4 @@
-module.exports = function devicesService(devicesRepository, reportsService, sessionId, Device) {
+module.exports = function sensorsService(sensorsRepository, reportsService, sessionId, Device) {
   return {
     list, report, update, borrar
   };
@@ -15,7 +15,7 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
   }
 
   async function generateListLastConsumptions(dispoId, consumo) {
-    const dispo = await devicesRepository.get(dispoId);
+    const dispo = await sensorsRepository.get(dispoId);
     const lastConsumptions = [
       consumo,
       ...((dispo && dispo.lastConsumptions) || []).slice(0, 8)
@@ -31,7 +31,7 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
       data.medicion
     );
     */
-    await devicesRepository.upsert(dispoId, {
+    await sensorsRepository.upsert(dispoId, {
       ...data,
       lastPush: Date.now()
     });
@@ -41,18 +41,18 @@ module.exports = function devicesService(devicesRepository, reportsService, sess
   }
 
   async function borrar(dispoId) {
-    await devicesRepository.del(dispoId);
+    await sensorsRepository.del(dispoId);
   }
 
   async function update(dispoId, name) {
-    await devicesRepository.upsert(dispoId, {
+    await sensorsRepository.upsert(dispoId, {
       name
     });
   }
 
   async function list() {
   //  const deviceslist = .map(device => adaptDevice(device));
-    const listado = (await devicesRepository.list()).map(adaptDevices);
+    const listado = (await sensorsRepository.list()).map(adaptDevices);
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(listado);
     return listado; // .map(adaptDevices);
   }
