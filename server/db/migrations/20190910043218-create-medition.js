@@ -14,7 +14,7 @@ module.exports = {
       },
       reportId: {
         type: Sequelize.INTEGER,
-        model: 'Sensors', // <<< Note, its table's name, not object name
+        model: 'Reports', // <<< Note, its table's name, not object name
         key: 'id' // <<< Note, its a column name
       },
       name: Sequelize.STRING,
