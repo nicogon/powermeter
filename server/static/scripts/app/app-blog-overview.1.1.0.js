@@ -221,7 +221,7 @@
     window.BlogOverviewUsers.render();
 */
     //
-    // Users by device pie chart
+    // Users by medition pie chart
     //
 
     // Data
@@ -257,9 +257,9 @@
       }
     };
 
-    var ubdCtx = document.getElementsByClassName('blog-users-by-device')[0];
+    var ubdCtx = document.getElementsByClassName('blog-users-by-medition')[0];
 
-    // Generate the users by device chart.
+    // Generate the users by medition chart.
     window.ubdChart = new Chart(ubdCtx, {
       type: 'pie',
       data: ubdData,

@@ -1,17 +1,17 @@
-module.exports = function sensorsController(sensorsService, Device, PuntualMedition, Sensor) {
+module.exports = function sensorsController(sensorsService, Medition, PuntualMedition, Sensor) {
   return {
     report, toList, update, borrar
   };
 
   // PUT :base_url/dispositivos/:dispoId
   async function update(req, res) {
-    findDevice(req).then(device => device.update({ name: req.body.name }));
+    findMedition(req).then(medition => medition.update({ name: req.body.name }));
     res.status(200).send();
   }
 
   // DELETE :base_url/dispositivos/:dispoId
   async function borrar(req, res) {
-    findDevice(req).then(device => device.destroy());
+    findMedition(req).then(medition => medition.destroy());
     res.status(200).send();
   }
 
@@ -25,7 +25,7 @@ module.exports = function sensorsController(sensorsService, Device, PuntualMedit
 
   // GET :base_url/dispositivos
   async function toList(req, res) {
-   
+
     const repepe = {
       name: 'Heladera',
       duration: 'hora',
@@ -33,20 +33,20 @@ module.exports = function sensorsController(sensorsService, Device, PuntualMedit
       maximum_medition: 2,
       sensor: { id: 1 } };
 
- //const re =  await Device.create(repepe);
+ //const re =  await Medition.create(repepe);
 
  //console.log(re)
 /*
-    const pepe = await Device.findByPk(2,{
-      
-      
+    const pepe = await Medition.findByPk(2,{
+
+
       include: [{
         model: Sensor,
          as: 'sensor',
          attributes: ['id']
     //  required: false
        }],
-      
+
       raw: false });
     console.log(pepe.toJSON())*/
     const sensors = await sensorsService.list();
@@ -58,23 +58,23 @@ module.exports = function sensorsController(sensorsService, Device, PuntualMedit
   }
 
   /*
-  function adaptDevice(device) {
-    const { name } = device;
+  function adaptMedition(medition) {
+    const { name } = medition;
     return { name };
   }
 
-  function findDevice(req) {
-    Device.findByPk(req.params.dispoId);
+  function findMedition(req) {
+    Medition.findByPk(req.params.dispoId);
   }
-  
+
 
   function persistMedition(requestBody) {
-    Device.findOrCreate({ where: requestBody.device });
+    Medition.findOrCreate({ where: requestBody.medition });
     Sensor.findOrCreate({
       where: requestBody.sensor,
-      defaults: { deviceId: requestBody.device.id }
+      defaults: { meditionId: requestBody.medition.id }
     });
-    PuntualMedition.create({ value: requestBody.medition.value, deviceId: requestBody.device.id });
+    PuntualMedition.create({ value: requestBody.medition.value, meditionId: requestBody.medition.id });
   }
 
   */

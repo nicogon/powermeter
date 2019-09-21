@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   // Attributes
-  const Sensor = sequelize.define('Report',
+  const Report = sequelize.define('Report',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -8,10 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         notEmpty: true
       },
-      name: {
-        type: DataTypes.STRING,
-        defaultValue: `Sensor ${this.id}`
-      },
+      name: DataTypes.STRING,
       sensibility: DataTypes.FLOAT,
       timeStart: DataTypes.FLOAT,
       duration: {
@@ -24,12 +21,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   // Associations
-  Sensor.associate = (models) => {
-    models.Sensor.belongsTo(models.Medition, {
+  Report.associate = (models) => {
+    models.Report.belongsTo(models.Medition, {
       as: 'medition',
       foreignKey: 'id'
     });
   };
 
-  return Sensor;
+  return Report;
 };

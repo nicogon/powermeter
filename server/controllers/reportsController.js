@@ -71,7 +71,7 @@ module.exports = function reportsController(
     /*
     const name = req.body.name;
     const duracion = req.body.duracion;
-    const devices = req.body.device((device) => {});
+    const meditions = req.body.medition((medition) => {});
 */
 
     const sensors = (await sensorsService.list()).filter(
