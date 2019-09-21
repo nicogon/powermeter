@@ -11,10 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       sensibility: DataTypes.FLOAT,
       timeStart: DataTypes.FLOAT,
-      duration: {
-        type: DataTypes.ENUM,
-        values: ['hora', 'dia', 'semana', 'mes']
-      },
+      minutes: DataTypes.FLOAT,
       averageMedition: DataTypes.FLOAT,
       maximumMedition: DataTypes.FLOAT
     }, {}

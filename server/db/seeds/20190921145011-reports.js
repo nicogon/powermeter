@@ -8,7 +8,7 @@ module.exports = {
         name: 'Cocina',
         sensibility: 24,
         timeStart: '2019/09/21 14:50',
-        duration: 'dia',
+        duration: 60,
         averageMedition: 2,
         maximumMedition: 3
       }
