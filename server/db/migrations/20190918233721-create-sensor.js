@@ -5,9 +5,7 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    medition: Sequelize.FLOAT,
     name: Sequelize.STRING,
-    lastPush: Sequelize.BIGINT,
     sensibility: Sequelize.FLOAT
   }),
 

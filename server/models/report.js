@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   // Attributes
-  const Sensor = sequelize.define('Sensor',
+  const Sensor = sequelize.define('Report',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -12,7 +12,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue: `Sensor ${this.id}`
       },
-      sensibility: DataTypes.FLOAT
+      sensibility: DataTypes.FLOAT,
+      timeStart: DataTypes.FLOAT,
+      duration: {
+        type: DataTypes.ENUM,
+        values: ['hora', 'dia', 'semana', 'mes']
+      },
+      averageMedition: DataTypes.FLOAT,
+      maximumMedition: DataTypes.FLOAT
     }, {}
   );
 
