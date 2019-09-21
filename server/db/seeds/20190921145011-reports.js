@@ -6,10 +6,11 @@ module.exports = {
       {
         id: 1,
         name: 'Cocina',
+        sensibility: 24,
         timeStart: '2019/09/21 14:50',
-        duration: 'hora',
-        averageMedition: 20,
-        maximumMedition: 24
+        duration: 'dia',
+        averageMedition: 2,
+        maximumMedition: 3
       }
     ], {});
   },

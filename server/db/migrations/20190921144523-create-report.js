@@ -1,16 +1,20 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Sensors', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Reports', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
     name: Sequelize.STRING,
+    sensibility: Sequelize.FLOAT,
     timeStart: Sequelize.DATE,
-    duration: Sequelize.ENUM,
+    duration: {
+      type: Sequelize.ENUM,
+      values: ['hora', 'dia', 'semana', 'mes']
+    },
     averageMedition: Sequelize.FLOAT,
     maximumMedition: Sequelize.FLOAT
   }),
 
-  down: (queryInterface, _Sequelize) => queryInterface.dropTable('Sensors')
+  down: (queryInterface, _Sequelize) => queryInterface.dropTable('Reports')
 };
