@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       kwhCost: DataTypes.FLOAT,
       duration: {
         type: DataTypes.ENUM,
-        values: ['hora', 'dia', 'semana', 'mes']
+        values: ['dia', 'semana', 'quincena', 'mes']
       }
     }, {}
   );
