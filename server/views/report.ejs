@@ -8,7 +8,7 @@
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle">Reporte</span>
                 <h3 class="page-title">
-                    <%=report.nombre%>
+                    <%=report.name%>
                 </h3>
             </div>
         </div>
@@ -51,10 +51,10 @@
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo actual</span>
                                 <h6 class="stats-small__value count my-3" id="medicion">
-                                    <%=report.sumatoriaMedicion%>w</h6>
+                                    <%=report.currentPower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.currentCurrent%>A</span>
                             </div>
                         </div>
                     </div>
@@ -68,10 +68,10 @@
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo promedio</span>
                                 <h6 class="stats-small__value count my-3" id="promedio">
-                                    <%=report.medicionPromedio%>w</h6>
+                                    <%=report.averagePower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.averageCurrent%>A</span>
                             </div>
                         </div>
                     </div>
@@ -85,10 +85,10 @@
                             <div class="stats-small__data text-center">
                                 <span class="stats-small__label text-uppercase">Consumo maximo</span>
                                 <h6 class="stats-small__value count my-3" id="maxima">
-                                    <%=report.medicionMaxima%>w</h6>
+                                    <%=report.maximumPower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.maximumPower%>A</span>
                             </div>
                         </div>
                     </div>
@@ -141,16 +141,16 @@
                                 <% for(medicion of report.meditions){ %>
                                     <tr>
                                         <td id="medicionNombre-<%-medicion.dispoId%>">
-                                            <%=medicion.nombreMedicion%>
+                                            <%=medicion.name%>
                                         </td>
                                         <td id="medicion-<%-medicion.dispoId%>">
-                                            <%=(medicion.medicion || 0).toFixed(0)%> w
+                                            <%=(medicion.currentPower)%>W <small><%=(medicion.currentCurrent)%>A</small>
                                         </td>
                                         <td id="medicionPromedio-<%-medicion.dispoId%>">
-                                            <%=(medicion.medicionPromedio || 0).toFixed(0)%> w
+                                            <%=(medicion.averagePower)%>W <small><%=(medicion.averageCurrent)%>A</small>
                                         </td>
                                         <td id="medicionMaxima-<%-medicion.dispoId%>"> 
-                                            <%=(medicion.medicionMaxima || 0).toFixed(0)%> w
+                                            <%=(medicion.maximumPower)%>W <small><%=(medicion.maximumCurrent)%>A</small>
                                         </td>
 
                                     </tr>
@@ -167,6 +167,10 @@
 
 
         <style>
+
+            td small{
+                color:#999;
+            }
             .progress {
                 width: 100%;
                 height: 30px
@@ -230,11 +234,11 @@
 
         function adaptMedicion(data) {
             return data.map(({
-                medicion,
-                offset
+                offset,
+                consumption
             }) => ({
                 x: offset,
-                y: medicion
+                y: consumption
             }));
         }
 
@@ -249,7 +253,7 @@
                 const color = randomHSL(index);
                 const color2 = randomHSL(index, true);
                 return {
-                    label: dataSet.nombreMedicion,
+                    label: dataSet.name,
                     backgroundColor: color2,
                     borderColor: color,
                     data: adaptMedicion(dataSet.data)
@@ -260,7 +264,7 @@
         }
 
         function calcularNombres(data) {
-            return data.map((medicion) => (medicion.nombreMedicion));
+            return data.map((medicion) => (medicion.name));
         }
 
 
@@ -273,9 +277,9 @@
         function calcularPorcentajes(data) {
             let maximo = 0;
             for (const medicion of data) {
-                maximo += medicion.medicionPromedio;
+                maximo += medicion.averagePower;
             }
-            return data.map((medicion) => ((100 * medicion.medicionPromedio / maximo).toFixed(2)))
+            return data.map((medicion) => ((100 * medicion.averagePower / maximo).toFixed(2)))
         }
 
 
@@ -341,10 +345,11 @@
         };
 
         function calcularPorcentaje(data) {
+            console.log(data)
             if (data.fin < data.now) {
                 return 100;
             } else {
-                return 100 - (100 * (data.fin - data.now) / data.duracion).toFixed(0);
+                return 100 - (100 * (data.timeEnd - data.now) / data.secondsDuration).toFixed(0);
             }
         }
 
@@ -365,15 +370,15 @@
                     updatePorcentaje(data);
 
                     for(medicion of data.mediciones){
-                        $("#medicion-"+medicion.dispoId).html(medicion.medicion.toFixed(0)+" w")
-                        $("#medicionMaxima-"+medicion.dispoId).html(medicion.medicionMaxima.toFixed(0)+" w")
-                        $("#medicionPromedio-"+medicion.dispoId).html(medicion.medicionPromedio.toFixed(0)+" w")
+                        $("#medicion-"+medicion.dispoId).html(medicion.medicion+" w")
+                        $("#medicionMaxima-"+medicion.dispoId).html(medicion.medicionMaxima+" w")
+                        $("#medicionPromedio-"+medicion.dispoId).html(medicion.medicionPromedio+" w")
                     }
 
 
-                    $("#medicion").html(data.sumatoriaMedicion.toFixed(0)+" w")
-                    $("#maxima").html(data.medicionMaxima.toFixed(0)+" w");
-                    $("#promedio").html(data.medicionPromedio.toFixed(0)+" w")
+                    $("#medicion").html(data.sumatoriaMedicion+" w")
+                    $("#maxima").html(data.medicionMaxima+" w");
+                    $("#promedio").html(data.medicionPromedio+" w")
 
 
                     powerChart.data.datasets = adaptDatasets(data.mediciones);

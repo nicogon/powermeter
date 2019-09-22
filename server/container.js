@@ -11,16 +11,23 @@ const Sensor = require('./models').Sensor;
 const Simulation = require('./models').Simulation;
 
 const tempReport = {
-  name: 'oooo',
-  secondsDuration: 900000,
-  meditions: [
-    { index: 0, nombreMedicion: 'iii', meditionId: '1', data: [] },
-    { index: 1, nombreMedicion: 'kk', meditionId: '2', data: [] },
-  ],
-  timeStart: 1565223068401,
-  timeEnd: 1595223968401,
-  sessionId: '4oy0xej'
-};
+   name: 'casa',
+  secondsDuration: 86400000,
+  meditions:
+   [ { id: '2',
+       name: 'heladera',
+       data: [],
+       currentPower: 0,
+       maximumPower: 0,
+       averagePower: 0,
+       meditionCounter: 0 } ],
+  timeStart: 1569111444317,
+  timeEnd: 1569197844317,
+  currentPower: 0,
+  maximumPower: 0,
+  averagePower: 0,
+  meditionCounter: 0 }
+;
 
 async function createContainer() {
   const sessionId = Math.random().toString(36).substring(7);

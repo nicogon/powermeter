@@ -17,7 +17,7 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
 
   // POST :base_url/dispositivos/:dispoId/report
   async function report(req, res) {
-   // persistMedition(req.body);
+    // persistMedition(req.body);
     if (process.env.SHOW_CONSOLE_LOGS === true) logSensor(req.body);
     sensorsService.report(req.params.dispoId, req.body);
     res.status(200).send();
@@ -25,18 +25,18 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
 
   // GET :base_url/dispositivos
   async function toList(req, res) {
-
     const repepe = {
       name: 'Heladera',
       duration: 'hora',
       average_medition: 1,
       maximum_medition: 2,
-      sensor: { id: 1 } };
+      sensor: { id: 1 }
+    };
 
- //const re =  await Medition.create(repepe);
+    // const re =  await Medition.create(repepe);
 
- //console.log(re)
-/*
+    // console.log(re)
+    /*
     const pepe = await Medition.findByPk(2,{
 
 
@@ -48,9 +48,9 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
        }],
 
       raw: false });
-    console.log(pepe.toJSON())*/
+    console.log(pepe.toJSON()) */
     const sensors = await sensorsService.list();
-    console.log(sensors)
+    console.log(sensors);
     if (req.query.format === 'json') {
       res.json(sensors);
     } else {
@@ -82,7 +82,7 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
 
   function logSensor(reqBody) {
     const medition = reqBody.medition;
-    console.log(`[Medido  sensor: **** `
+    console.log('[Medido  sensor: **** '
                 + `Sensor: *** , Medicion: ${medition}`);
   }
 };

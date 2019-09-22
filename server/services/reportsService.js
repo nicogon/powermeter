@@ -22,20 +22,17 @@ module.exports = function reportsService(
   async function notify(sensorId, meditionValue) {
     // await lock.acquire();
 
-    console.log(sensorId, meditionValue)
-
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
     // Buscar si existe una medicion asociada a un sensor
-    let activeMedition = tempReport.meditions.find(medition => medition.id === sensorId);
-
+    const activeMedition = tempReport.meditions.find(medition => medition.id === sensorId);
 
     // Si la medicion finalizo, borrar el objeto temporal de la memoria
-    if (hasFinish()) { 
+    if (hasFinish()) {
       saveReport();
     }
 
-    if(activeMedition){
+    if (activeMedition) {
       updateActiveAndMaxMeditions(activeMedition, meditionValue);
     }
 
@@ -52,40 +49,35 @@ module.exports = function reportsService(
   }
 
   function updateActiveAndMaxMeditions(activeMedition, medicion) {
-    updateTemporalReport();
     modifyMedition(activeMedition, medicion);
+    updateTemporalReport();
+    console.log(tempReport)
+
   }
 
+  function fixed(num,e=2) {    
+    return +(Math.round(num + "e+"+e)  + "e-"+e);
+}
+
+  function calculateMeditions(medition, currentPower) {
+    medition.maximumPower = fixed(Math.max(medition.maximumPower, currentPower),1);
+    medition.currentPower = fixed(currentPower,1);
+    medition.meditionCounter++;
+    medition.averagePower = fixed((medition.averagePower * (medition.meditionCounter - 1) + currentPower) / medition.meditionCounter,1);
+    return medition;
+  }
+
+
   function updateTemporalReport() {
-    const averageConsumption = _.sum(tempReport.mediciones.map(medicionInt => (medicionInt.consumption || 0)));
-    const maximumConsumption = Math.max((tempReport.maximumConsumption || 0), averageConsumption);
-    const contadorMedicionesTotal = _.get(tempReport, 'contadorMediciones', 0) + 1;
-    const medicionPromedioTotal = _.round((((_.get(tempReport, 'averageConsumption', 0) * (contadorMedicionesTotal - 1)) + maximumConsumption) / contadorMedicionesTotal), 1);
-
-    // eslint-disable-next-line no-param-reassign
-    tempReport = {
-      ...tempReport,
-      averageConsumption,
-      maximumConsumption,
-      contadorMediciones: contadorMedicionesTotal,
-      medicionPromedio: medicionPromedioTotal
-    };
-
+    const currentPower = _.sum(tempReport.meditions.map(medicionInt => (medicionInt.currentPower)));
+    tempReport = calculateMeditions(tempReport, currentPower);
+    tempReport = populateCurrent(tempReport);
     return tempReport;
   }
 
-  function modifyMedition(medicionAMofidicar, medition) {
-    const medicionMaximaVieja = medicionAMofidicar.maximumConsumption || 0;
-    const maximumConsumption = Math.max(medicionMaximaVieja, medition);
-    const contadorMediciones = medicionAMofidicar.contadorMediciones || 0 + 1;
-    const averageConsumption = _.round((((medicionAMofidicar.averageConsumption || 0 * (contadorMediciones - 1)) + medition) / contadorMediciones), 1);
-
-    // eslint-disable-next-line no-param-reassign
-    medicionAMofidicar = {
-      ...medicionAMofidicar, medition, maximumConsumption, averageConsumption, contadorMediciones
-    };
-
-    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - tempReport.inicio, _), medition });
+  function modifyMedition(medicionAMofidicar, consumption) {
+    medicionAMofidicar = calculateMeditions(medicionAMofidicar, consumption);
+    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - tempReport.timeStart, _), consumption });
     return medicionAMofidicar;
   }
 
@@ -96,38 +88,47 @@ module.exports = function reportsService(
       .substr(2, 10);
   }
 
+  function populateCurrent(medition){
+    medition.currentCurrent = fixed(medition.currentPower/220);
+    medition.averageCurrent = fixed(medition.averagePower/220);
+    medition.maximumCurrent = fixed(medition.maximumPower/220);
+    if(medition.meditions) medition.meditions = medition.meditions.map(populateCurrent)
+    return medition;
+  }
+
   async function nuevo({
-    name, secondsDuration, meditions, inicio, fin
+    name, secondsDuration, meditions
   }) {
-   // const reportId = randomId();
-
-    const medicion = 0;
-
     tempReport = {
-      currentMedition:0,
       name,
       secondsDuration,
-      meditions,
-     // timeStart,
-   //   timeEnd
+      meditions: meditions.map(initializateMeditions),
+      timeStart: Date.now(),
+      timeEnd: Date.now() + secondsDuration
     };
 
-
+    tempReport = initializateMeditions(tempReport);
     return 'temp';
+  }
+
+  function initializateMeditions(medition) {
+    return {
+      ...medition, currentPower: 0, maximumPower: 0, averagePower: 0, meditionCounter: 0
+    };
   }
 
   async function list() {
     mock = [
       {
-        reportId: "123",
+        reportId: '123',
         nombre: 'Cocina',
         duracion: 90,
         inicio: 1565223068401,
         fin: 1595223968401,
         sessionId: '4oy0xej',
-        currentConsumption: 100,
-        averageConsumption: 80, //Es necesario? Quizas..
-        maximumConsumption: 140,
+        currentPower: 100,
+        averagePower: 80, // Es necesario? Quizas..
+        maximumPower: 140,
         mediciones: [
           {
             index: 0,
@@ -135,10 +136,10 @@ module.exports = function reportsService(
             dispoId: 'meditionRed',
             data: [],
             idMedicion: '1',
-            // currentConsumption: 100,
+            // currentPower: 100,
             duration: 60,
-            averageConsumption: 80
-            // maximumConsumption: 140
+            averagePower: 80
+            // maximumPower: 140
           },
           {
             index: 1,
@@ -146,57 +147,57 @@ module.exports = function reportsService(
             dispoId: 'meditionBlue',
             data: [],
             idMedicion: '2',
-            // currentConsumption: 100,
+            // currentPower: 100,
             duration: 60,
-            averageConsumption: 100
-            // maximumConsumption: 140
+            averagePower: 100
+            // maximumPower: 140
           }]
       },
       {
-        reportId: "1234",
+        reportId: '1234',
         nombre: 'Comedor',
         duracion: 180,
         inicio: 1565223068401,
         fin: 1595223968401,
         sessionId: '4oy0xek',
-        currentConsumption: 80,
-        averageConsumption: 40,
-        maximumConsumption: 120,
+        currentPower: 80,
+        averagePower: 40,
+        maximumPower: 120,
         mediciones: [
           {
             index: 0,
             nombreMedicion: 'Televisor',
             dispoId: 'meditionRed',
             data: [],
-            // currentConsumption: 100,
+            // currentPower: 100,
             duration: 60,
             idMedicion: '3',
-            averageConsumption: 80
-            // maximumConsumption: 140
+            averagePower: 80
+            // maximumPower: 140
           },
           {
             index: 1,
             nombreMedicion: 'Aire acondicionado',
             dispoId: 'meditionBlue',
             data: [],
-            // currentConsumption: 100,
+            // currentPower: 100,
             idMedicion: '4',
-            averageConsumption: 30,
+            averagePower: 30,
             duration: 60
-            // maximumConsumption: 140
+            // maximumPower: 140
           }
         ]
       },
       {
-        reportId: "12345",
+        reportId: '12345',
         nombre: 'Pieza',
         duracion: 360,
         inicio: 1565223068401,
         fin: 1595223968401,
         sessionId: '4oy0xel',
-        currentConsumption: 120,
-        averageConsumption: 100,
-        maximumConsumption: 180,
+        currentPower: 120,
+        averagePower: 100,
+        maximumPower: 180,
         mediciones: [
           {
             index: 0,
@@ -205,9 +206,9 @@ module.exports = function reportsService(
             data: [],
             duration: 60,
             idMedicion: '5',
-            // currentConsumption: 100,
-            averageConsumption: 50
-            // maximumConsumption: 140
+            // currentPower: 100,
+            averagePower: 50
+            // maximumPower: 140
           },
           {
             index: 1,
@@ -216,9 +217,9 @@ module.exports = function reportsService(
             data: [],
             duration: 60,
             idMedicion: '6',
-            // currentConsumption: 100,
-            averageConsumption: 180
-            // maximumConsumption: 140
+            // currentPower: 100,
+            averagePower: 180
+            // maximumPower: 140
           }
         ]
       }];

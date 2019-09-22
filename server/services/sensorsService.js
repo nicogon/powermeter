@@ -4,14 +4,14 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
   };
 
   function isOnline(dispo) {
-   // const isSameSession = sessionId === dispo.sessionId;
-   const isSameSession = true;
-   const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 10000;
+    // const isSameSession = sessionId === dispo.sessionId;
+    const isSameSession = true;
+    const timeDistance = Math.abs(dispo.lastPush - Date.now()) < 10000;
     return isSameSession && timeDistance;
   }
 
   function adaptMeditions(dispo) {
-    return {...dispo, isOnline: isOnline(dispo), name: dispo.name ? dispo.name : `Sensor ${dispo.id}`}
+    return { ...dispo, isOnline: isOnline(dispo), name: dispo.name ? dispo.name : `Sensor ${dispo.id}` };
   }
 
   async function generateListLastConsumptions(dispoId, consumo) {

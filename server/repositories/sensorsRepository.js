@@ -19,10 +19,10 @@ module.exports = function sensorsRepository(dispoMem, Sensor) {
 
   async function upsert(dispoId, data) {
     Sensor.upsert({
-      id:dispoId,
-       ...data 
+      id: dispoId,
+      ...data
     });
-   /*
+    /*
     const dispo = dispoMem.findIndex(unit => unit.dispoId == dispoId);
     if (dispo == -1) {
       dispoMem.push({ ...data, dispoId });

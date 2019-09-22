@@ -12,42 +12,34 @@ module.exports = function reportsController(
   async function newReport(req, res) {
     // TODO
 
-    const nombre = req.body.nombre;
+    const name = req.body.name;
     // eslint-disable-next-line radix
     const secondsDuration = parseInt(req.body.duracion);
     const meditions = [];
-    const medicion = 0;
 
     if (typeof req.body.nombreMedicion === 'string') {
       meditions.push({
         id: req.body.dispoId,
-        medicion,
-        nombreMedicion: req.body.nombreMedicion,
-        data: [],
-        index: 0
-      })
-
+        name: req.body.nombreMedicion,
+        data: []
+      });
     } else {
       const medicion = 0;
       req.body.dispoId.forEach((dispoId, index) => {
         meditions.push({
           index,
           medicion,
-          nombreMedicion: req.body.nombreMedicion[index],
-          id:dispoId,
+          name: req.body.nombreMedicion[index],
+          id: dispoId,
           data: []
         });
       });
     }
-    const inicio = Date.now();
-    const fin = Date.now() + secondsDuration;
 
     const reportId = await reportsService.nuevo({
-      nombre,
+      name,
       secondsDuration,
-      meditions,
-      inicio,
-      fin
+      meditions
     });
 
     res.redirect(`/reportes/${reportId}/`);

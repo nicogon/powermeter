@@ -7,9 +7,9 @@ module.exports = {
     database: config.name,
     host: config.host,
     dialect: 'postgres',
-    logging: console.log,
+    logging: false,
     define: {
-      timestamps: false  // I don't want timestamp fields by default
+      timestamps: false // I don't want timestamp fields by default
     }
   }
 };
