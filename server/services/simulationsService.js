@@ -66,8 +66,9 @@ module.exports = function simulationsService(reportsService, simulationRepositor
 
     simulation.id = "1234";
 
+    //TODO: Al save le tengo que pasar como duración dia, semana, quincena, mes.
     const simulationId = "1234"
-    console.log(simulation)
+    // console.log(simulation)
     // const simulationId = simulationRepository.save(simulacion);
     return simulationId
   }
