@@ -17,10 +17,8 @@ module.exports = {
       key: 'id' // <<< Note, its a column name
     },
     name: Sequelize.STRING,
-    averageMedition: Sequelize.FLOAT,
-    maximumMedition: Sequelize.FLOAT,
-    consumption: Sequelize.FLOAT,
-    lastPush: Sequelize.BIGINT
+    averagePower: Sequelize.FLOAT,
+    maximumPower: Sequelize.FLOAT,
   }),
   down: (queryInterface, _Sequelize) => queryInterface.dropTable('Meditions')
 };

@@ -6,26 +6,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
-        notEmpty: true
+        notEmpty: true,
+        autoIncrement: true
       },
       name: DataTypes.STRING,
-      timeStart: DataTypes.FLOAT,
+      timeStart: DataTypes.BIGINT,
       secondsDuration: DataTypes.INTEGER,
-      averageMedition: DataTypes.FLOAT,
-      maximumMedition: DataTypes.FLOAT
+      averagePower: DataTypes.FLOAT,
+      maximumPower: DataTypes.FLOAT
     }, {}
   );
 
   // Associations
   Report.associate = (models) => {
-  /*
-  creo que no va
-    models.Report.belongsTo(models.Medition, {
-      as: 'medition',
+  
+ // creo que no va
+    models.Report.hasMany(models.Medition, {
+      as: 'meditions',
       foreignKey: 'id'
     });
 
-    */
+    
   };
 
   return Report;

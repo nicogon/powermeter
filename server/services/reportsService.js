@@ -6,7 +6,8 @@ module.exports = function reportsService(
   sensorsRepository,
   reportsRepository,
   sessionId,
-  tempReport
+  tempReport,
+  lock
 ) {
   return {
     nuevo,
@@ -20,38 +21,41 @@ module.exports = function reportsService(
   }
 
   async function notify(sensorId, meditionValue) {
-    // await lock.acquire();
+     await lock.acquire();
 
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
     // Buscar si existe una medicion asociada a un sensor
-    const activeMedition = tempReport.meditions.find(medition => medition.id === sensorId);
+    const activeMedition = tempReport && tempReport.meditions.find(medition => medition.dispoId === sensorId);
 
     // Si la medicion finalizo, borrar el objeto temporal de la memoria
     if (hasFinish()) {
-      saveReport();
+      console.log("TERMINO")
+     await saveReport(tempReport);
+      
     }
 
-    if (activeMedition) {
+    if (tempReport && activeMedition) {
       updateActiveAndMaxMeditions(activeMedition, meditionValue);
     }
 
-    //  await lock.release();
+      await lock.release();
   }
 
   function hasFinish() {
-    return tempReport && tempReport.fin < Date.now();
+    return tempReport && tempReport.timeEnd < Date.now();
   }
 
-  function saveReport() {
-    // TODO
+  async function saveReport() {
+    console.log(tempReport)
+    const storedReport = await reportsRepository.saveReport(tempReport).catch(()=>tempReport = null);
     tempReport = null;
   }
 
   function updateActiveAndMaxMeditions(activeMedition, medicion) {
     modifyMedition(activeMedition, medicion);
     updateTemporalReport();
-    console.log(tempReport)
+    //console.log(tempReport)
 
   }
 
@@ -75,9 +79,9 @@ module.exports = function reportsService(
     return tempReport;
   }
 
-  function modifyMedition(medicionAMofidicar, consumption) {
-    medicionAMofidicar = calculateMeditions(medicionAMofidicar, consumption);
-    medicionAMofidicar.data.push({ offset: parseInt(Date.now() - tempReport.timeStart, _), consumption });
+  function modifyMedition(medicionAMofidicar, value) {
+    medicionAMofidicar = calculateMeditions(medicionAMofidicar, value);
+    medicionAMofidicar.puntualMeditions.push({ offset: parseInt(Date.now() - tempReport.timeStart, _), value });
     return medicionAMofidicar;
   }
 

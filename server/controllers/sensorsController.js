@@ -1,4 +1,4 @@
-module.exports = function sensorsController(sensorsService, Medition, PuntualMedition, Sensor) {
+module.exports = function sensorsController(sensorsService, Report, Medition, PuntualMedition, Sensor) {
   return {
     report, toList, update, borrar
   };
@@ -37,20 +37,22 @@ module.exports = function sensorsController(sensorsService, Medition, PuntualMed
 
     // console.log(re)
     /*
-    const pepe = await Medition.findByPk(2,{
+    const pepe = await Report.findByPk(1,{
 
 
       include: [{
-        model: Sensor,
-         as: 'sensor',
-         attributes: ['id']
+        model: Medition,
+         as: 'meditions',
+         include:[{model:PuntualMedition, as: 'puntualMeditions'}]
+     //    attributes: ['id']
     //  required: false
        }],
 
-      raw: false });
-    console.log(pepe.toJSON()) */
+      raw: false });*/
+
+    //console.log(pepe.toJSON(),"***") 
     const sensors = await sensorsService.list();
-    console.log(sensors);
+   // console.log(sensors);
     if (req.query.format === 'json') {
       res.json(sensors);
     } else {

@@ -6,10 +6,8 @@ module.exports = {
         sensorId: 1,
         reportId: 1,
         name: 'Heladera',
-        averageMedition: 2,
-        maximumMedition: 3,
-        consumption: 1,
-        lastPush: 20190921143023
+        averagePower: 2,
+        maximumPower: 3
       }],
     {});
   },

@@ -88,7 +88,7 @@
                                     <%=report.maximumPower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.maximumPower%>A</span>
+                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.maximumCurrent%>A</span>
                             </div>
                         </div>
                     </div>
@@ -140,17 +140,17 @@
                             <tbody>
                                 <% for(medicion of report.meditions){ %>
                                     <tr>
-                                        <td id="medicionNombre-<%-medicion.dispoId%>">
+                                        <td id="medicionNombre-<%-medicion.id%>">
                                             <%=medicion.name%>
                                         </td>
-                                        <td id="medicion-<%-medicion.dispoId%>">
-                                            <%=(medicion.currentPower)%>W <small><%=(medicion.currentCurrent)%>A</small>
+                                        <td >
+                                          <span id="medicion-<%-medicion.id%>"><%=(medicion.currentPower)%>W </span> <small id="current-<%-medicion.id%>"><%=(medicion.currentCurrent)%>A</small>
                                         </td>
-                                        <td id="medicionPromedio-<%-medicion.dispoId%>">
-                                            <%=(medicion.averagePower)%>W <small><%=(medicion.averageCurrent)%>A</small>
+                                        <td>
+                                           <span id="medicionPromedio-<%-medicion.id%>"><%=(medicion.averagePower)%>W </span> <small id="currentPromedio-<%-medicion.id%>"><%=(medicion.averageCurrent)%>A</small>
                                         </td>
-                                        <td id="medicionMaxima-<%-medicion.dispoId%>"> 
-                                            <%=(medicion.maximumPower)%>W <small><%=(medicion.maximumCurrent)%>A</small>
+                                        <td> 
+                                        <span  id="medicionMaxima-<%-medicion.id%>"><%=(medicion.maximumPower)%>W</span> <small id="currentMaxima-<%-medicion.id%>"><%=(medicion.maximumCurrent)%>A</small>
                                         </td>
 
                                     </tr>
@@ -211,11 +211,11 @@
         function getLast(data) {
             last = 0;
             data.forEach(medicion => {
-                if (medicion.data.length == 0) {
+                if (medicion.puntualMeditions.length == 0) {
                     last = 0;
                     return;
                 }
-                if (medicion.data[medicion.data.length - 1].offset > last) last = medicion.data[medicion.data.length - 1].offset;
+                if (medicion.puntualMeditions[medicion.puntualMeditions.length - 1].offset > last) last = medicion.puntualMeditions[medicion.puntualMeditions.length - 1].offset;
             })
             return last;
         }
@@ -223,11 +223,11 @@
         function getFirst(data) {
             first = 90000000000;
             data.forEach(medicion => {
-                if (medicion.data.length == 0) {
+                if (medicion.puntualMeditions.length == 0) {
                     first = 0;
                     return;
                 }
-                if (medicion.data[0].offset < first) first = medicion.data[0].offset;
+                if (medicion.puntualMeditions[0].offset < first) first = medicion.puntualMeditions[0].offset;
             })
             return first;
         }
@@ -235,10 +235,10 @@
         function adaptMedicion(data) {
             return data.map(({
                 offset,
-                consumption
+                value
             }) => ({
                 x: offset,
-                y: consumption
+                y: value
             }));
         }
 
@@ -256,7 +256,7 @@
                     label: dataSet.name,
                     backgroundColor: color2,
                     borderColor: color,
-                    data: adaptMedicion(dataSet.data)
+                    data: adaptMedicion(dataSet.puntualMeditions)
                 }
 
             })
@@ -366,24 +366,27 @@
 
 
             function updateCharts() {
-                $.getJSON("/reportes/<%=report.reportId%>/?format=json", function(data) {
+                $.getJSON("/reportes/temp/?format=json", function(data) {
                     updatePorcentaje(data);
 
-                    for(medicion of data.mediciones){
-                        $("#medicion-"+medicion.dispoId).html(medicion.medicion+" w")
-                        $("#medicionMaxima-"+medicion.dispoId).html(medicion.medicionMaxima+" w")
-                        $("#medicionPromedio-"+medicion.dispoId).html(medicion.medicionPromedio+" w")
+                    for(medicion of data.meditions){
+                        $("#medicion-"+medicion.id).html(medicion.currentPower+"W")
+                        $("#medicionMaxima-"+medicion.id).html(medicion.maximumPower+"W")
+                        $("#medicionPromedio-"+medicion.id).html(medicion.averagePower+"W")
+                        $("#current-"+medicion.id).html(medicion.currentCurrent+"A")
+                        $("#currentMaxima-"+medicion.id).html(medicion.maximumCurrent+"A")
+                        $("#currentPromedio-"+medicion.id).html(medicion.averageCurrent+"A")
                     }
 
 
-                    $("#medicion").html(data.sumatoriaMedicion+" w")
-                    $("#maxima").html(data.medicionMaxima+" w");
-                    $("#promedio").html(data.medicionPromedio+" w")
+                    $("#medicion").html(data.currentPower+"W")
+                    $("#maxima").html(data.maximumPower+"W");
+                    $("#promedio").html(data.averagePower+"W")
 
 
-                    powerChart.data.datasets = adaptDatasets(data.mediciones);
-                    powerChart.options.scales.xAxes[0].ticks.min = getFirst(data.mediciones)
-                    powerChart.options.scales.xAxes[0].ticks.max = getLast(data.mediciones)
+                    powerChart.data.datasets = adaptDatasets(data.meditions);
+                    powerChart.options.scales.xAxes[0].ticks.min = getFirst(data.meditions)
+                    powerChart.options.scales.xAxes[0].ticks.max = getLast(data.meditions)
                     powerChart.update();
                 });
             }

@@ -19,19 +19,18 @@ module.exports = function reportsController(
 
     if (typeof req.body.nombreMedicion === 'string') {
       meditions.push({
-        id: req.body.dispoId,
+        dispoId: req.body.dispoId,
         name: req.body.nombreMedicion,
-        data: []
+        puntualMeditions: []
       });
     } else {
       const medicion = 0;
       req.body.dispoId.forEach((dispoId, index) => {
         meditions.push({
-          index,
           medicion,
           name: req.body.nombreMedicion[index],
-          id: dispoId,
-          data: []
+          dispoId,
+          puntualMeditions: []
         });
       });
     }
@@ -51,7 +50,7 @@ module.exports = function reportsController(
     const report = await reportsService.getReport(reportId);
 
     if (req.query.format === 'json') {
-      res.json({ ...report, mediciones: Object.values(report.mediciones) });
+      res.json(report);
     } else {
       res.render('report', { report });
     }

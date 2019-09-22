@@ -3,13 +3,14 @@ module.exports = {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      autoIncrement: true
     },
     name: Sequelize.STRING,
-    timeStart: Sequelize.DATE,
+    timeStart: Sequelize.BIGINT,
     secondsDuration: Sequelize.INTEGER,
-    averageMedition: Sequelize.FLOAT,
-    maximumMedition: Sequelize.FLOAT
+    averagePower: Sequelize.FLOAT,
+    maximumPower: Sequelize.FLOAT
   }),
 
   down: (queryInterface, _Sequelize) => queryInterface.dropTable('Reports')

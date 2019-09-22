@@ -1,4 +1,4 @@
-module.exports = function reportsRepository() {
+module.exports = function reportsRepository(Report) {
   return {
     list,
     del,
@@ -6,7 +6,9 @@ module.exports = function reportsRepository() {
     getReport
   };
 
-  async function saveReport(report) {}
+  async function saveReport(newReport) {
+   return Report.create(newReport).catch(console.log);
+  }
 
   async function del(reportId) {}
 

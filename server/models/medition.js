@@ -10,10 +10,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       name: DataTypes.STRING,
-      averageMedition: DataTypes.FLOAT,
-      maximumMedition: DataTypes.FLOAT,
-      consumption: DataTypes.FLOAT,
-      lastPush: DataTypes.FLOAT
+      averagePower: DataTypes.FLOAT,
+      maximumPower: DataTypes.FLOAT
     }, {}
   );
 
