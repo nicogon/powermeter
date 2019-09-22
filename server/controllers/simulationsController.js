@@ -45,8 +45,25 @@ module.exports = function simulationsController(reportsService, simulationsServi
       reports: []
     };
 
+    const consumeInHoursOfMeditions = [];
+
+    for (const [key, value] of Object.entries(req.body)) {
+    if(key.startsWith('slider-')) { 
+      var id = key.slice(7);
+
+      const useInHours= {
+        idMedition: id,
+        useInHoursMedition: value
+      }
+      consumeInHoursOfMeditions.push(useInHours) 
+    };
+    }
+
+    console.log(consumeInHoursOfMeditions)
+
     simulation.name = name;
     simulation.duration = durationInHours;
+    simulation.hoursUseMeditions = consumeInHoursOfMeditions;
     simulation.kwCost = 30; // TODO: Ponerlo en el form
     if (typeof req.body.reportId === 'string') {
       simulation.reports.push(req.body.reportId);
