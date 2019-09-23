@@ -6,21 +6,20 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     getReport
   };
 
-  function createPuntualMeditions(puntualMeditions, MeditionId) {
-    puntualMeditions.forEach((element) => {
-      // eslint-disable-next-line no-param-reassign
-      console.log(MeditionId)
-      PuntualMedition.create({ ...element, MeditionId });
-    });
+  async function createPuntualMeditions(puntualMeditions, MeditionId) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const element of puntualMeditions) {
+      await PuntualMedition.create({ ...element, MeditionId });
+    }
   }
 
   async function createMeditions(newReport, idReport) {
     // eslint-disable-next-line no-restricted-syntax
     for (const medition of newReport.meditions) {
       // eslint-disable-next-line no-await-in-loop
-      const createdMedition = await Medition.create({ ...medition, ReportId:idReport }, {});
-      console.log('id medicion:', createdMedition.toJSON().id);
-      createPuntualMeditions(medition.puntualMeditions, parseInt(createdMedition.toJSON().id));
+      const createdMedition = await Medition.create({ ...medition, ReportId: idReport }, {});
+      // console.log('id medicion:', createdMedition.toJSON().id);
+      await createPuntualMeditions(medition.puntualMeditions, parseInt(createdMedition.toJSON().id));
     }
   }
 
@@ -36,6 +35,20 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
   //  console.log('sss');
     // å   console.log(pepe, 'asdasd');
   }
+
+  /*
+
+    async function saveReport(newReport) {
+    return Report.create(newReport, {
+      include: [{
+        model: Medition,
+        as: 'meditions',
+        include: [{ model: PuntualMedition, as: 'puntualMeditions' }]
+      }]
+    }).catch(console.log);
+  }
+
+  */
 
   async function del(reportId) {}
 

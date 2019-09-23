@@ -45,7 +45,7 @@ class Lock {
   }
 }
 
-const tempReport = {
+let tempReport = {
   name: 'casa',
   secondsDuration: 86400000,
   meditions:
@@ -69,6 +69,9 @@ const tempReport = {
   averagePower: 0,
   meditionCounter: 0
 };
+
+tempReport = null;
+
 async function createContainer() {
   const sessionId = Math.random().toString(36).substring(7);
 
