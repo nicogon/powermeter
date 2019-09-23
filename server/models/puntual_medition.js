@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   const PuntualMedition = sequelize.define('PuntualMedition',
     {
       id: {
-        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER

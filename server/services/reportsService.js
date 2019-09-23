@@ -84,7 +84,7 @@ module.exports = function reportsService(
 
   function modifyMedition(medicionAMofidicar, value) {
     medicionAMofidicar = calculateMeditions(medicionAMofidicar, value);
-    medicionAMofidicar.puntualMeditions.push({ offset: parseInt(Date.now() - tempReport.timeStart, _), value });
+    medicionAMofidicar.puntualMedition.push({ offset: parseInt(Date.now() - tempReport.timeStart, _), value });
     return medicionAMofidicar;
   }
 

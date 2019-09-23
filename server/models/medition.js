@@ -23,10 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id'
     });
 
-    models.Medition.belongsTo(models.Sensor, {
-      as: 'sensor',
-      foreignKey: 'id'
-    });
 
     models.Medition.belongsTo(models.Report, {
       as: 'report',

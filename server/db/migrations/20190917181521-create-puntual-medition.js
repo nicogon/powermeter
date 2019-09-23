@@ -1,7 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('PuntualMeditions', {
     id: {
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER

@@ -6,11 +6,6 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    sensorId: {
-      type: Sequelize.INTEGER,
-      model: 'Sensors', // <<< Note, its table's name, not object name
-      key: 'id' // <<< Note, its a column name
-    },
     reportId: {
       type: Sequelize.INTEGER,
       model: 'Reports', // <<< Note, its table's name, not object name
