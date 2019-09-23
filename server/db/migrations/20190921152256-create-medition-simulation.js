@@ -3,7 +3,8 @@ module.exports = {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      autoIncrement: true
     },
     meditionId: {
       primaryKey: true,
