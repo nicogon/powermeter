@@ -19,14 +19,11 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   Report.associate = (models) => {
-  
- // creo que no va
+    // creo que no va
     models.Report.hasMany(models.Medition, {
       as: 'meditions',
       foreignKey: 'id'
     });
-
-    
   };
 
   return Report;

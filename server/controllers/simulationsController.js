@@ -48,18 +48,18 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const consumeInHoursOfMeditions = [];
 
     for (const [key, value] of Object.entries(req.body)) {
-    if(key.startsWith('slider-')) { 
-      var id = key.slice(7);
+      if (key.startsWith('slider-')) {
+        const id = key.slice(7);
 
-      const useInHours= {
-        idMedition: id,
-        useInHoursMedition: value
+        const useInHours = {
+          idMedition: id,
+          useInHoursMedition: value
+        };
+        consumeInHoursOfMeditions.push(useInHours);
       }
-      consumeInHoursOfMeditions.push(useInHours) 
-    };
     }
 
-    //console.log(consumeInHoursOfMeditions)
+    // console.log(consumeInHoursOfMeditions)
 
     simulation.name = name;
     simulation.duration = durationInHours;

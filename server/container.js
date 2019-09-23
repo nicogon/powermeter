@@ -46,32 +46,33 @@ class Lock {
 }
 
 const tempReport = {
-   name: 'casa',
+  name: 'casa',
   secondsDuration: 86400000,
   meditions:
-   [ 
-  
-    { dispoId: '2',
+   [
+
+     {
+       dispoId: '2',
        name: 'heladera',
-       puntualMedition: [{value:1,offset:2},{value:2,offset:3}],
+       puntualMedition: [{ value: 1, offset: 2 }, { value: 2, offset: 3 }],
        currentPower: 0,
        maximumPower: 0,
        averagePower: 0,
-       meditionCounter: 0 } 
-      
-      ],
+       meditionCounter: 0
+     }
+
+   ],
   timeStart: Date.now(),
-  timeEnd: Date.now()+8000,
+  timeEnd: Date.now() + 8000,
   currentPower: 0,
   maximumPower: 0,
   averagePower: 0,
-  meditionCounter: 0 }
-;
-
+  meditionCounter: 0
+};
 async function createContainer() {
   const sessionId = Math.random().toString(36).substring(7);
 
-  let dispoMem = [];
+  const dispoMem = [];
 
   const container = dependable.container();
   const entries = ['services', 'controllers', 'repositories', 'routes.js', 'models'];

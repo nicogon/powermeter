@@ -13,7 +13,7 @@ module.exports = {
     },
     name: Sequelize.STRING,
     averagePower: Sequelize.FLOAT,
-    maximumPower: Sequelize.FLOAT,
+    maximumPower: Sequelize.FLOAT
   }),
   down: (queryInterface, _Sequelize) => queryInterface.dropTable('Meditions')
 };

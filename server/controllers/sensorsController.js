@@ -48,11 +48,11 @@ module.exports = function sensorsController(sensorsService, Report, Medition, Pu
     //  required: false
        }],
 
-      raw: false });*/
+      raw: false }); */
 
-    //console.log(pepe.toJSON(),"***") 
+    // console.log(pepe.toJSON(),"***")
     const sensors = await sensorsService.list();
-   // console.log(sensors);
+    // console.log(sensors);
     if (req.query.format === 'json') {
       res.json(sensors);
     } else {
