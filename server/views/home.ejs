@@ -13,7 +13,7 @@
     <!-- Small Stats Blocks -->
     <div class="row">
       <%for (var report of reports){%>
-      <div class="col-lg col-md-4 col-sm-12 mb-4">
+      <div class="col-lg col-md-6 col-sm-6 mb-4"> 
         <div class="stats-small stats-small--1 card card-small">
           <div class="card-body p-0 d-flex">
             <div class="chartjs-size-monitor"
@@ -42,6 +42,19 @@
         </div>
       </div>
       <%}%>
+
+      <div class="col-lg col-md-12 col-sm-12 mb-4">
+          <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+                <!-- <a href="/reportes/nuevo" class="btn btn-large btn-primary">
+                    <i class="icon-apple icon-3x pull-left"></i>
+                        <span style="font-size:plus;">Crear Reporte</span>
+                    App Store
+                </a> -->
+              <button type="button" href="/reportes/nuevo" class="btn btn-sm btn-primary flex-fill">Crear Reporte</button>
+            </div>
+          </div>
+        </div>
         <!-- End Small Stats Blocks -->
         <!-- End Top Referrals Component -->
     </div>
