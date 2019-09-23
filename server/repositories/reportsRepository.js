@@ -6,15 +6,21 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     getReport
   };
 
+  function createPuntualMeditions(newReport) {
+    const puntualMeditions = newReport.meditions[0].puntualMedition.map((element) => {
+      // eslint-disable-next-line no-param-reassign
+      element.meditionId = newReport.meditions[0].dispoId;
+      PuntualMedition.create(element);
+    });
+  }
+
   async function saveReport(newReport) {
-  //  console.log(JSON.stringify(newReport))
-  console.log("\n\n\n\n\n\n\n ************************")
  try{
 
+  createPuntualMeditions(newReport);
   const pepe =  Report.create(newReport,{  include: [{
     model: Medition,
-     as: 'meditions',
-     include:[{model:PuntualMedition, as: 'puntualMedition'}]
+     as: 'meditions'
  //    attributes: ['id']
 //  required: false
    }]}).catch(console.log).then(() => console.log('All Done :)'));
