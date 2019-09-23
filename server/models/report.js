@@ -21,8 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   Report.associate = (models) => {
     // creo que no va
     models.Report.hasMany(models.Medition, {
-      as: 'meditions',
-      foreignKey: 'id'
+      as: 'meditions'
     });
   };
 

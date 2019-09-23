@@ -19,14 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Medition.associate = (models) => {
     models.Medition.hasMany(models.PuntualMedition, {
       onDelete: 'CASCADE',
-      as: 'puntualMedition',
-      foreignKey: 'id'
-    });
-
-
-    models.Medition.belongsTo(models.Report, {
-      as: 'report',
-      foreignKey: 'id'
+      as: 'puntualMeditions'
     });
   };
 

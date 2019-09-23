@@ -6,30 +6,35 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     getReport
   };
 
-  function createPuntualMeditions(newReport) {
-    const firstMedition = newReport.meditions[0];
-    firstMedition.puntualMedition.forEach((element) => {
+  function createPuntualMeditions(puntualMeditions, MeditionId) {
+    puntualMeditions.forEach((element) => {
       // eslint-disable-next-line no-param-reassign
-      element.meditionId = firstMedition.dispoId;
-      PuntualMedition.create(element);
+      console.log(MeditionId)
+      PuntualMedition.create({ ...element, MeditionId });
     });
+  }
+
+  async function createMeditions(newReport, idReport) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const medition of newReport.meditions) {
+      // eslint-disable-next-line no-await-in-loop
+      const createdMedition = await Medition.create({ ...medition, ReportId:idReport }, {});
+      console.log('id medicion:', createdMedition.toJSON().id);
+      createPuntualMeditions(medition.puntualMeditions, parseInt(createdMedition.toJSON().id));
+    }
   }
 
   async function saveReport(newReport) {
     try {
-      createPuntualMeditions(newReport);
-      const pepe = Report.create(newReport, {
-        include: [{
-          model: Medition,
-          as: 'meditions'
-        //    attributes: ['id']
-        //  required: false
-        }]
-      }).catch(console.log).then(() => console.log('All Done :)'));
+      const createdReport = await Report.create(newReport, {}).catch(console.log);
+      const idReport = createdReport.toJSON().id;
+      await createMeditions(newReport, parseInt(idReport));
+
+      //   createPuntualMeditions(newReport,idReport);
     } catch (e) { console.log(e); }
 
-    console.log('sss');
-    console.log(pepe, 'asdasd');
+  //  console.log('sss');
+    // å   console.log(pepe, 'asdasd');
   }
 
   async function del(reportId) {}

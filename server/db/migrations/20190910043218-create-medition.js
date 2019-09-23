@@ -1,4 +1,4 @@
-module.exports = {
+  module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Meditions', {
     id: {
       allowNull: false,
@@ -6,7 +6,7 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    reportId: {
+    ReportId: {
       type: Sequelize.INTEGER,
       model: 'Reports', // <<< Note, its table's name, not object name
       key: 'id' // <<< Note, its a column name

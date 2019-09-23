@@ -54,7 +54,7 @@ const tempReport = {
      {
        dispoId: '2',
        name: 'heladera',
-       puntualMedition: [{ value: 1, offset: 2 }, { value: 2, offset: 3 }],
+       puntualMeditions: [{ value: 1, offset: 2 }, { value: 2, offset: 3 }],
        currentPower: 0,
        maximumPower: 0,
        averagePower: 0,
