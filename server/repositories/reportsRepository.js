@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable radix */
 module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
   return {
     list,
@@ -18,7 +20,6 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     for (const medition of newReport.meditions) {
       // eslint-disable-next-line no-await-in-loop
       const createdMedition = await Medition.create({ ...medition, ReportId: idReport }, {});
-      // console.log('id medicion:', createdMedition.toJSON().id);
       await createPuntualMeditions(medition.puntualMeditions, parseInt(createdMedition.toJSON().id));
     }
   }
@@ -28,12 +29,7 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
       const createdReport = await Report.create(newReport, {}).catch(console.log);
       const idReport = createdReport.toJSON().id;
       await createMeditions(newReport, parseInt(idReport));
-
-      //   createPuntualMeditions(newReport,idReport);
     } catch (e) { console.log(e); }
-
-  //  console.log('sss');
-    // å   console.log(pepe, 'asdasd');
   }
 
   /*

@@ -3,7 +3,8 @@ module.exports = {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      autoIncrement: true
     },
     name: Sequelize.STRING,
     totalCost: Sequelize.FLOAT,
