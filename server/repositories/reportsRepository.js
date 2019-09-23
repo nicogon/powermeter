@@ -7,9 +7,10 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
   };
 
   function createPuntualMeditions(newReport) {
-    const puntualMeditions = newReport.meditions[0].puntualMedition.map((element) => {
+    const firstMedition = newReport.meditions[0];
+    firstMedition.puntualMedition.forEach((element) => {
       // eslint-disable-next-line no-param-reassign
-      element.meditionId = newReport.meditions[0].dispoId;
+      element.meditionId = firstMedition.dispoId;
       PuntualMedition.create(element);
     });
   }
