@@ -20,3 +20,5 @@ creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte.
 
 
  que desaparezca el consumo actual del reporte una vez finalizado
+
+ que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
