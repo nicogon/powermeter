@@ -16,8 +16,11 @@ module.exports = function reportsService(
     list
   };
 
-  function getReport(reportId) {
-    return { now: Date.now(), ...tempReport };// reportsRepository.getReport(reportId);
+  async function getReport(reportId) {
+    if(reportId =='temp') return { now: Date.now(), ...tempReport };// reportsRepository.getReport(reportId);
+    const report = await reportsRepository.getReport(reportId)
+//    console.log(JSON.stringify(report))
+    return report;
   }
 
   async function notify(sensorId, meditionValue) {
@@ -47,7 +50,7 @@ module.exports = function reportsService(
   }
 
   async function saveReport() {
-    console.log(tempReport)
+    //console.log(tempReport)
     const storedReport = await reportsRepository.saveReport(tempReport).catch(()=>tempReport = null);
     tempReport = null;
   }
@@ -121,7 +124,12 @@ module.exports = function reportsService(
     };
   }
 
-  async function list() {
+
+  async function list(){
+    return reportsRepository.list();
+
+  }
+  async function list2() {
     mock = [
       {
         reportId: '123',

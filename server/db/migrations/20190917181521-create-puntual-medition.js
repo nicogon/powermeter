@@ -7,9 +7,9 @@ module.exports = {
       type: Sequelize.INTEGER
     },
     meditionId: {
-      primaryKey: true,
       type: Sequelize.INTEGER,
-      references: { model: 'Meditions', key: 'id' }
+      model: 'Meditions', // <<< Note, its table's name, not object name
+      key: 'id' // <<< Note, its a column name
     },
     value: Sequelize.FLOAT,
     offset: Sequelize.INTEGER

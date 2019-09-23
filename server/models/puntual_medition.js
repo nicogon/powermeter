@@ -2,11 +2,12 @@ module.exports = (sequelize, DataTypes) => {
   // Attributes
   const PuntualMedition = sequelize.define('PuntualMedition',
     {
-      meditionId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
+      id: {
         allowNull: false,
-        notEmpty: true
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+
       },
       value: DataTypes.FLOAT,
       offset: DataTypes.INTEGER

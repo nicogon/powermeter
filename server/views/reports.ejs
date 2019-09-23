@@ -35,7 +35,7 @@
                         <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">Nombre</th>
-                                <th scope="col" class="border-0">Consumo Actual</th>
+                                <th scope="col" class="border-0">Fecha</th>
                                 <th scope="col" class="border-0">Consumo Promedio</th>
                                 <th scope="col" class="border-0">Consumo Maximo</th>
                                 <th scope="col" class="border-0"></th>
@@ -45,10 +45,10 @@
                                 <%for (var report of reports){%>
                                     <tr>
                                       <td>
-                                        <%=report.nombre%>
+                                        <%=report.name%>
                                       </td>
                                       <td>
-                                        <%=report.currentPower%>
+                                        <%=report.date%>
                                       </td>
                                       <td>
                                         <%=report.averagePower%>

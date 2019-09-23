@@ -59,7 +59,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
     };
     }
 
-    console.log(consumeInHoursOfMeditions)
+    //console.log(consumeInHoursOfMeditions)
 
     simulation.name = name;
     simulation.duration = durationInHours;
