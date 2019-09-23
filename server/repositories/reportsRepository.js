@@ -7,14 +7,17 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
   };
 
   async function saveReport(newReport) {
-    console.log(JSON.stringify(newReport))
-   return Report.create(newReport,{  include: [{
+  //  console.log(JSON.stringify(newReport))
+  console.log("\n\n\n\n\n\n\n ************************")
+   const pepe = await Report.create(newReport,{  include: [{
     model: Medition,
      as: 'meditions',
      include:[{model:PuntualMedition, as: 'puntualMeditions'}]
  //    attributes: ['id']
 //  required: false
-   }]}).catch(console.log);
+   }]}).catch(console.log).then(() => console.log('All Done :)'));
+
+   console.log(pepe,"asdasd")
   }
 
   async function del(reportId) {}

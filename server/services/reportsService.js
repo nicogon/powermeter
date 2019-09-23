@@ -34,7 +34,7 @@ module.exports = function reportsService(
     // Si la medicion finalizo, borrar el objeto temporal de la memoria
     if (hasFinish()) {
       console.log("TERMINO")
-     await saveReport(tempReport);
+      await saveReport(tempReport);
       
     }
 
