@@ -72,7 +72,7 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     const response = await Report.findAll({
       include: [{
         model: Medition,
-        as: 'meditions',
+        as: 'meditions'
       }]
     });
     return response.map(a => a.toJSON());

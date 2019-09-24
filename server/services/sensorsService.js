@@ -3,6 +3,10 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
     list, report, update, borrar
   };
 
+  function fixed(num, e = 2) {
+    return +(`${Math.round(`${num}e+${e}`)}e-${e}`);
+  }
+
   function isOnline(dispo) {
     // const isSameSession = sessionId === dispo.sessionId;
     const isSameSession = true;
@@ -11,7 +15,11 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
   }
 
   function adaptMeditions(dispo) {
-    return { ...dispo, isOnline: isOnline(dispo), name: dispo.name ? dispo.name : `Sensor ${dispo.id}` };
+    const currentMedition = isOnline(dispo) && dispo.currentMedition ? dispo.currentMedition : 0;
+    const currentCurrent = fixed(currentMedition / 220);
+    return {
+      ...dispo, currentCurrent, isOnline: isOnline(dispo), currentMedition, name: dispo.name ? dispo.name : `Sensor ${dispo.id}`
+    };
   }
 
   async function generateListLastConsumptions(dispoId, consumo) {
