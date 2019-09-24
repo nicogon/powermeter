@@ -13,7 +13,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
   }
 
   async function createNewSimulation(req, res) {
-    const reports = (await reportsService.list());
+    const reports = (await reportsService.listForSimulations());
     res.render('newSimulation', { reports });
   }
 
@@ -32,6 +32,9 @@ module.exports = function simulationsController(reportsService, simulationsServi
   async function newSimulation(req, res) {
     const name = req.body.name;
     const duration = parseInt(req.body.duration);
+    const kwCost = parseInt(req.body.kwCost);
+    console.log(kwCost)
+
     let durationInHours;
     switch (duration) {
       case 1: durationInHours = 24 * 7;
@@ -46,6 +49,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
     };
 
     const consumeInHoursOfMeditions = [];
+
 
     for (const [key, value] of Object.entries(req.body)) {
       if (key.startsWith('slider-')) {
@@ -64,7 +68,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
     simulation.name = name;
     simulation.duration = durationInHours;
     simulation.hoursUseMeditions = consumeInHoursOfMeditions;
-    simulation.kwCost = 30; // TODO: Ponerlo en el form
+    simulation.kwCost = kwCost;
     if (typeof req.body.reportId === 'string') {
       simulation.reports.push(req.body.reportId);
     } else {

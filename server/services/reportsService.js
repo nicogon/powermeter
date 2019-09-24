@@ -15,7 +15,8 @@ module.exports = function reportsService(
     nuevo,
     notify,
     getReport,
-    list
+    list,
+    listForSimulations
   };
 
   async function getReport(reportId) {
@@ -128,6 +129,11 @@ module.exports = function reportsService(
   async function list() {
     return reportsRepository.list();
   }
+
+  async function listForSimulations() {
+    return reportsRepository.listForSimulations();
+  }
+
   async function list2() {
     mock = [
       {

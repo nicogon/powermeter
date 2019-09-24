@@ -36,25 +36,28 @@ module.exports = function simulationsService(reportsService, simulationRepositor
   }
 
   async function create(simulation) {
-    simulation.averageConsumptions = [];
+    simulation.averagePower = [];
 
     for (reportId of simulation.reports) {
-      const report = (await reportsService.list()).find(report => report.reportId == reportId);
+      
+      const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
+      console.log(simulation)
+      console.log(report)
 
-      for (medicion of report.mediciones) {
+      for (medition of report.meditions) {
         const simulationItem = {
-          name: medicion.nombreMedicion,
-          totalConsumption: medicion.averageConsumption * simulation.duration,
-          totalCostConsumption: medicion.averageConsumption * simulation.duration * simulation.kwCost // La idea es que el costo se ponga en el formulario de la simulacio
+          name: medition.name,
+          totalConsumption: medition.averagePower * simulation.duration,
+          totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost // La idea es que el costo se ponga en el formulario de la simulacio
         };
 
-        simulation.averageConsumptions.push(simulationItem);
+        simulation.averagePower.push(simulationItem);
       }
     }
-    simulation.totalKw = _.sum(simulation.averageConsumptions.map(item => item.totalCostConsumption));
+    simulation.totalKw = _.sum(simulation.averagePower.map(item => item.totalCostConsumption));
     simulation.totalCost = simulation.totalKw * simulation.kwCost;
 
-    for (item of simulation.averageConsumptions) {
+    for (item of simulation.averagePower) {
       const total = parseInt(simulation.totalKw);
       // TODO: Ver de aproximar bien estos porcentajes, para arriba o abajo
       item.percentage = parseInt(100 * item.totalCostConsumption / total, 10);

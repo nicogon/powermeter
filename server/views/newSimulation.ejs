@@ -39,6 +39,12 @@
                             <option value='5'>1 mes</option>
                         </select>
                     </div>
+
+                    <div class="form-group ">
+                            <label for="feFirstName">Costo del Kw</label>
+                            <input type="text" class="form-control" pattern="[0-9.,]" placeholder="$" name="kwCost">
+                        </div>
+
                     <div id="slider"></div>
                 </li>
                 <li class="list-group-item p-3" id="reportMenu">
@@ -86,8 +92,8 @@
 
                         console.log(reportId)
                         console.log(reportName)
-                        console.log(report.mediciones)
-                        function generateCard(medicion) {
+                        console.log(report.meditions)
+                        function generateCard(medition) {
 
                             return ` 
                             <div class="col-md-6 col-xl-3 mb-4">
@@ -95,9 +101,9 @@
                                     <div class="card-body p-0 d-flex">
                                         <div class="d-flex flex-column m-auto">
                                             <div class="stats-small__data text-center">
-                                                <span class="stats-small__label mb-2 text-uppercase">${medicion.name}</span>
+                                                <span class="stats-small__label mb-2 text-uppercase">${medition.name}</span>
                                             </div>
-                                            <div id="slider-${medicion.id}"></div> 
+                                            <div id="slider-${medition.id}"></div> 
                                             <div class="stats-small__data text-center">
                                                     <span class="page-subtitle">Horas</span>
                                             </div>                                            
@@ -111,8 +117,8 @@
 
 
                         reportElement = '';
-                        for (medicion of report.mediciones) {
-                            reportElement += generateCard(medicion);
+                        for (medition of report.meditions) {
+                            reportElement += generateCard(medition);
                         }
 
                         reportElement = `<li id="card-${reportId}"><div class="col-lg-12">
@@ -128,8 +134,8 @@
                             $("#card-" + reportId).remove();
                         });
 
-                        for (medicion of report.mediciones) {
-                            $(`#slider-${medicion.idMedicion}`).roundSlider({
+                        for (medition of report.meditions) {
+                            $(`#slider-${medition.id}`).roundSlider({
                             sliderType: "min-range",
                             width: 22,
                             radius: 100,

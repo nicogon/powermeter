@@ -5,7 +5,8 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     list,
     del,
     saveReport,
-    getReport
+    getReport,
+    listForSimulations
   };
 
   async function createPuntualMeditions(puntualMeditions, MeditionId) {
@@ -64,6 +65,16 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
 
   async function list() {
     const response = await Report.findAll({});
+    return response.map(a => a.toJSON());
+  }
+
+  async function listForSimulations() {
+    const response = await Report.findAll({
+      include: [{
+        model: Medition,
+        as: 'meditions',
+      }]
+    });
     return response.map(a => a.toJSON());
   }
 };
