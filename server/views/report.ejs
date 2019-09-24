@@ -29,6 +29,7 @@
         </div>
         <div class='row'>
 
+            <% if(report.timeEnd){ %>
             <div class='col-md-12 mb-4'>
                 <div class="card card-small">
                     <div class="card-body px-4 row">
@@ -43,7 +44,7 @@
                 </div>
             </div>
 
-
+          
             <div class="col-lg col-md-12  mb-4">
                 <div class="stats-small stats-small--1 card card-small">
                     <div class="card-body p-0 d-flex">
@@ -54,13 +55,14 @@
                                     <%=report.currentPower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.currentCurrent%>A</span>
+                                <span id="currentMedicion" class="stats-small__percentage stats-small__percentage--increase"><%=report.currentCurrent%>A</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <% } %>
             <div class="col-lg col-md-12  mb-4">
                 <div class="stats-small stats-small--1 card card-small">
                     <div class="card-body p-0 d-flex">
@@ -71,7 +73,7 @@
                                     <%=report.averagePower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.averageCurrent%>A</span>
+                                <span id="currentPromedio" class="stats-small__percentage stats-small__percentage--increase"><%=report.averageCurrent%>A</span>
                             </div>
                         </div>
                     </div>
@@ -88,7 +90,7 @@
                                     <%=report.maximumPower%>w</h6>
                             </div>
                             <div class="stats-small__data">
-                                <span class="stats-small__percentage stats-small__percentage--increase"><%=report.maximumCurrent%>A</span>
+                                <span id="currentMaxima" class="stats-small__percentage stats-small__percentage--increase"><%=report.maximumCurrent%>A</span>
                             </div>
                         </div>
                     </div>
@@ -132,7 +134,7 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th scope="col" class="border-0">Dispositivo</th>
-                                    <th scope="col" class="border-0">Consumo Actual</th>
+                                    <% if(report.timeEnd){ %>   <th scope="col" class="border-0">Consumo Actual</th> <% } %>
                                     <th scope="col" class="border-0">Consumo Promedio</th>
                                     <th scope="col" class="border-0">Consumo Maximo</th>
                                 </tr>
@@ -140,17 +142,19 @@
                             <tbody>
                                 <% for(medicion of report.meditions){ %>
                                     <tr>
-                                        <td id="medicionNombre-<%-medicion.id%>">
+                                        <td id="medicionNombre-<%-medicion.dispoId%>">
                                             <%=medicion.name%>
                                         </td>
+                                        <% if(report.timeEnd){ %>
                                         <td >
-                                          <span id="medicion-<%-medicion.id%>"><%=(medicion.currentPower)%>W </span> <small id="current-<%-medicion.id%>"><%=(medicion.currentCurrent)%>A</small>
+                                          <span id="medicion-<%-medicion.dispoId%>"><%=(medicion.currentPower)%>W </span> <small id="current-<%-medicion.dispoId%>"><%=(medicion.currentCurrent)%>A</small>
                                         </td>
+                                        <% } %>
                                         <td>
-                                           <span id="medicionPromedio-<%-medicion.id%>"><%=(medicion.averagePower)%>W </span> <small id="currentPromedio-<%-medicion.id%>"><%=(medicion.averageCurrent)%>A</small>
+                                           <span id="medicionPromedio-<%-medicion.dispoId%>"><%=(medicion.averagePower)%>W </span> <small id="currentPromedio-<%-medicion.dispoId%>"><%=(medicion.averageCurrent)%>A</small>
                                         </td>
                                         <td> 
-                                        <span  id="medicionMaxima-<%-medicion.id%>"><%=(medicion.maximumPower)%>W</span> <small id="currentMaxima-<%-medicion.id%>"><%=(medicion.maximumCurrent)%>A</small>
+                                        <span  id="medicionMaxima-<%-medicion.dispoId%>"><%=(medicion.maximumPower)%>W</span> <small id="currentMaxima-<%-medicion.dispoId%>"><%=(medicion.maximumCurrent)%>A</small>
                                         </td>
 
                                     </tr>
@@ -275,7 +279,7 @@
 
 
         function calcularPorcentajes(data) {
-            let maximo = 0;
+            let maximo = 0.0001;
             for (const medicion of data) {
                 maximo += medicion.averagePower;
             }
@@ -356,10 +360,10 @@
 
         $(document).ready(function() {
 
-            function updatePorcentaje(data) {
-                porcentaje = calcularPorcentaje(data);
-                $("#porcentaje").width(porcentaje + "%");
-                $("#porcentaje-txt").html(porcentaje == 100 ? "Reporte Finalizado" : porcentaje + "% reporte en progreso");
+            function updatePorcentaje(data, finished=false) {
+                porcentaje = finished ? 100 : calcularPorcentaje(data);
+                $("#porcentaje").width(porcentaje >= 100 ? 100 : porcentaje + "%");
+                $("#porcentaje-txt").html(porcentaje >= 100 ? "Reporte Finalizado" : porcentaje + "% reporte en progreso");
             }
 
             updatePorcentaje(report)
@@ -367,21 +371,42 @@
 
             function updateCharts() {
                 $.getJSON("/reportes/temp/?format=json", function(data) {
+
+                    if(!data.timeEnd) {
+                        updatePorcentaje(data,true);
+                        return;
+
+                    }
+
+                    console.log(data)
                     updatePorcentaje(data);
 
+                    myDoughnutChart.data.datasets[0].data= calcularPorcentajes(data.meditions);
+
+                myDoughnutChart.update();
+
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+           
+
                     for(medicion of data.meditions){
-                        $("#medicion-"+medicion.id).html(medicion.currentPower+"W")
-                        $("#medicionMaxima-"+medicion.id).html(medicion.maximumPower+"W")
-                        $("#medicionPromedio-"+medicion.id).html(medicion.averagePower+"W")
-                        $("#current-"+medicion.id).html(medicion.currentCurrent+"A")
-                        $("#currentMaxima-"+medicion.id).html(medicion.maximumCurrent+"A")
-                        $("#currentPromedio-"+medicion.id).html(medicion.averageCurrent+"A")
+                        $("#medicion-"+medicion.dispoId).html(medicion.currentPower+"W")
+                        $("#medicionMaxima-"+medicion.dispoId).html(medicion.maximumPower+"W")
+                        $("#medicionPromedio-"+medicion.dispoId).html(medicion.averagePower+"W")
+                        $("#current-"+medicion.dispoId).html(medicion.currentCurrent+"A")
+                        $("#currentMaxima-"+medicion.dispoId).html(medicion.maximumCurrent+"A")
+                        $("#currentPromedio-"+medicion.dispoId).html(medicion.averageCurrent+"A")
                     }
 
 
                     $("#medicion").html(data.currentPower+"W")
                     $("#maxima").html(data.maximumPower+"W");
                     $("#promedio").html(data.averagePower+"W")
+
+
+                    $("#currentMedicion").html(data.currentCurrent+"A")
+                    $("#currentMaxima").html(data.maximumCurrent+"A");
+                    $("#currentPromedio").html(data.averageCurrent+"A")
 
 
                     powerChart.data.datasets = adaptDatasets(data.meditions);
@@ -392,12 +417,15 @@
             }
 
             setInterval(function() {
+                <% if(report.timeEnd){ %>
                 updateCharts()
-            }, 1000);
+                <% } %>
+            }, 5000);
 
         });
 
         let powerChart;
+        let myDoughnutChart;
         let pieChart;
 
         window.onload = function() {
@@ -413,14 +441,14 @@
                     backgroundColor: calcularColores(graphData),
                     backgroundColor: calcularColores(graphData)
                 }],
-
                 // These labels appear in the legend and in the tooltips when hovering different arcs
                 labels: calcularNombres(graphData)
             };
-
-            var myDoughnutChart = new Chart(ctx2, {
+            console.log(calcularPorcentajes(graphData))
+         myDoughnutChart = new Chart(ctx2, {
                 type: 'doughnut',
                 data: data,
+                options:{animation: false}
             });
 
         };
