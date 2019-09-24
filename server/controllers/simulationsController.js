@@ -33,7 +33,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const name = req.body.name;
     const duration = parseInt(req.body.duration);
     const kwCost = parseInt(req.body.kwCost);
-    console.log(kwCost)
+    // console.log(kwCost)
 
     let durationInHours;
     switch (duration) {

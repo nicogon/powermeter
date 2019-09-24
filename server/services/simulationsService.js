@@ -41,21 +41,21 @@ module.exports = function simulationsService(reportsService, simulationRepositor
     for (reportId of simulation.reports) {
       
       const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
-      console.log(simulation)
-      console.log(report)
+      // console.log(simulation)
+      // console.log(report)
 
       for (medition of report.meditions) {
         const simulationItem = {
           name: medition.name,
-          totalConsumption: medition.averagePower * simulation.duration,
-          totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost // La idea es que el costo se ponga en el formulario de la simulacio
+          totalConsumption: medition.averagePower * simulation.duration /100, //el /100 es para q se vea lindo
+          totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost /100//el /100 es para q se vea lindo
         };
 
         simulation.averagePower.push(simulationItem);
       }
     }
     simulation.totalKw = _.sum(simulation.averagePower.map(item => item.totalCostConsumption));
-    simulation.totalCost = simulation.totalKw * simulation.kwCost;
+    simulation.totalCost = simulation.totalKw * simulation.kwCost /100;//el /100 es para q se vea lindo
 
     for (item of simulation.averagePower) {
       const total = parseInt(simulation.totalKw);
@@ -68,7 +68,9 @@ module.exports = function simulationsService(reportsService, simulationRepositor
 
     // TODO: Al save le tengo que pasar como duración dia, semana, quincena, mes.
     const simulationId = '1234';
-    // console.log(simulation)
+    console.log("Ahora")
+
+    console.log(simulation)
     // const simulationId = simulationRepository.save(simulacion);
     return simulationId;
   }
@@ -76,38 +78,44 @@ module.exports = function simulationsService(reportsService, simulationRepositor
 
   async function getSimulation(simulationId) {
     return {
-      reports: ['12345', '123'],
-      name: 'Ivan',
+      reports: [ '2', '3' ],
+      name: 'Nueva simu',
       duration: 720,
-      kwCost: 30,
-      averageConsumptions: [
+      hoursUseMeditions: [
+        { idMedition: '2', useInHoursMedition: '18' },
+        { idMedition: '3', useInHoursMedition: '12' },
+        { idMedition: '4', useInHoursMedition: '3' },
+        { idMedition: '5', useInHoursMedition: '1' }
+      ],
+      kwCost: 20,
+      averagePower: [
         {
-          name: 'Lampara',
-          totalConsumption: 36000,
-          totalCostConsumption: 1080000,
-          percentage: 12
+          name: 'Luz',
+          totalConsumption: 97.2,
+          totalCostConsumption: 1944,
+          percentage: 28
         },
         {
-          name: 'Televisor',
-          totalConsumption: 129600,
-          totalCostConsumption: 3888000,
-          percentage: 43
+          name: 'Tele',
+          totalConsumption: 111.6,
+          totalCostConsumption: 2232,
+          percentage: 32
+        },
+        {
+          name: 'Pava eléctrica',
+          totalConsumption: 44.64,
+          totalCostConsumption: 892.8,
+          percentage: 13
         },
         {
           name: 'Microondas',
-          totalConsumption: 57600,
-          totalCostConsumption: 1728000,
-          percentage: 19
-        },
-        {
-          name: 'Heladera',
-          totalConsumption: 72000,
-          totalCostConsumption: 2160000,
-          percentage: 24
+          totalConsumption: 89.28,
+          totalCostConsumption: 1785.6,
+          percentage: 26
         }
       ],
-      totalKw: 8856000,
-      totalCost: 265680000,
+      totalKw: 685.44,
+      totalCost: 137.088,
       id: '1234'
     };
     // TODO: EN un futuro se usara la de abajo.
