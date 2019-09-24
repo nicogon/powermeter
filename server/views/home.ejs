@@ -33,7 +33,7 @@
                 <h6 class="stats-small__value count my-3"><%=report.averagePower%> Kw</h6>
               </div>
               <div class="stats-small__data">
-                <span class="card-post__category badge badge-pill badge-primary"><%=report.secondsDuration / 60%> Minutos </span>
+                <span class="card-post__category badge badge-pill badge-primary"><%=Math.round((report.secondsDuration / 60))%> Minutos </span>
                   <!-- <span class="stats-small__percentage stats-small__percentage"><%=report.duracion%> Minutos</span> -->
               </div>
             </div>
