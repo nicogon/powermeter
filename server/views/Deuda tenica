@@ -27,3 +27,7 @@ que cuando no hay sensores en nuevo reporte aparezca aunquesea una notificacion.
 
 
  si entro a un reporte y hay un temporal ejecutando, se  actualiza el reporte con ldata del temporal.
+
+ Costo fijo en simulacion
+
+ minutos en medicion.
