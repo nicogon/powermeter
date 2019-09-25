@@ -379,7 +379,7 @@
 
             function updatePorcentaje(data, finished = false) {
                 porcentaje = finished ? 100 : calcularPorcentaje(data);
-                $("#porcentaje").width(porcentaje >= 100 ? 100 : porcentaje + "%");
+                $("#porcentaje").width(porcentaje >= 100 ? '100%' : porcentaje + "%");
                 $("#porcentaje-txt").html(porcentaje >= 100 ? "Reporte Finalizado" : porcentaje + "% reporte en progreso");
             }
 
