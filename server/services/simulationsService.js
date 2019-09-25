@@ -36,22 +36,21 @@ module.exports = function simulationsService(reportsService, simulationRepositor
   }
 
   async function create(simulation) {
-    // simulation.averagePower = [];
     simulation.simulationItems = [];
 
     for (medition of simulation.hoursUseMeditions) {
-      const fullMedition = reportsService.getMeditionById(medition.id)//medition
+      const fullMedition = await reportsService.getMedition(medition.id)
 
+      const totalConsumption = fullMedition.averagePower * (medition.hours / 24 ) * simulation.duration
       const simulationItem = {
         name: fullMedition.name,
-        totalConsumption: fullMedition.averagePower * (medition.hours / 24 ) * simulation.duration,
+        totalConsumption,
         totalCostConsumption: totalConsumption * simulation.kwCost,
       };
       simulation.simulationItems.push(simulationItem);
     }
     simulation.totalKw = _.sum(simulation.simulationItems.map(item => item.totalConsumption));
     simulation.totalCost = _.sum(simulation.simulationItems.map(item => item.totalCostConsumption));
-     //simulation.totalKw * simulation.kwCost /100;//el /100 es para q se vea lindo
 
     for (item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKw);
@@ -59,11 +58,8 @@ module.exports = function simulationsService(reportsService, simulationRepositor
       item.percentage = parseInt(100 * item.totalCostConsumption / total, 10);
     }
 
-    // 
-
     simulation.id = '1234';
 
-    // TODO: Al save le tengo que pasar como duración dia, semana, quincena, mes.
     const simulationId = '1234';
     console.log("Ahora")
 
@@ -80,7 +76,7 @@ module.exports = function simulationsService(reportsService, simulationRepositor
       durationInHours: 720,
       kwhCost: 20,
       simulationItems: [
-        {
+       {
           name: 'Luz',
           totalConsumption: 97.2,
           totalCostConsumption: 1944,
@@ -109,8 +105,6 @@ module.exports = function simulationsService(reportsService, simulationRepositor
       totalCost: 137.088,
       id: '1234'
     };
-    // TODO: EN un futuro se usara la de abajo.
-    // return simulationRepository.getSimulation(simulationId)// reportsRepository.getReport(reportId);
   }
 };
 

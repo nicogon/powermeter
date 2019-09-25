@@ -19,8 +19,8 @@ module.exports = function routes(sensorsController, reportsController, homeContr
   // TODO: Borrar? editar?
 
   // Simulaciones
-    .get('/simulations', simulationsController.simulations)
-    .get('/simulations/new', simulationsController.createNewSimulation)
-    .post('/simulations/', simulationsController.newSimulation)
-    .get('/simulations/:simulationId', simulationsController.simulationDetails);
+    .get('/simulaciones', simulationsController.simulations)
+    .get('/simulaciones/new', simulationsController.createNewSimulation)
+    .post('/simulaciones/', simulationsController.newSimulation)
+    .get('/simulaciones/:simulationId', simulationsController.simulationDetails);
 };

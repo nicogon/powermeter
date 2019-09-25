@@ -16,7 +16,8 @@ module.exports = function reportsService(
     notify,
     getReport,
     list,
-    listForSimulations
+    listForSimulations,
+    getMedition
   };
 
   async function getReport(reportId) {
@@ -132,6 +133,10 @@ module.exports = function reportsService(
 
   async function listForSimulations() {
     return reportsRepository.listForSimulations();
+  }
+
+  async function getMedition(meditionId) {
+    return reportsRepository.getMedition(meditionId);
   }
 
 };

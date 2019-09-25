@@ -6,7 +6,8 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     del,
     saveReport,
     getReport,
-    listForSimulations
+    listForSimulations,
+    getMedition
   };
 
   async function createPuntualMeditions(puntualMeditions, MeditionId) {
@@ -77,4 +78,12 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     });
     return response.map(a => a.toJSON());
   }
+
+  async function getMedition(meditionId) {
+    const medition = await Medition.findByPk(parseInt(meditionId), {
+      raw: false
+    });
+    return medition.toJSON();
+  }
+  
 };
