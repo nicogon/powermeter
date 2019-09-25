@@ -36,33 +36,30 @@ module.exports = function simulationsService(reportsService, simulationRepositor
   }
 
   async function create(simulation) {
-    simulation.averagePower = [];
+    // simulation.averagePower = [];
+    simulation.simulationItems = [];
 
-    for (reportId of simulation.reports) {
-      
-      const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
-      // console.log(simulation)
-      // console.log(report)
+    for (medition of simulation.hoursUseMeditions) {
+      const fullMedition = reportsService.getMeditionById(medition.id)//medition
 
-      for (medition of report.meditions) {
-        const simulationItem = {
-          name: medition.name,
-          totalConsumption: medition.averagePower * simulation.duration /100, //el /100 es para q se vea lindo
-          totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost /100//el /100 es para q se vea lindo
-        };
-
-        simulation.averagePower.push(simulationItem);
-      }
+      const simulationItem = {
+        name: fullMedition.name,
+        totalConsumption: fullMedition.averagePower * (medition.hours / 24 ) * simulation.duration,
+        totalCostConsumption: totalConsumption * simulation.kwCost,
+      };
+      simulation.simulationItems.push(simulationItem);
     }
-    simulation.totalKw = _.sum(simulation.averagePower.map(item => item.totalCostConsumption));
-    simulation.totalCost = simulation.totalKw * simulation.kwCost /100;//el /100 es para q se vea lindo
+    simulation.totalKw = _.sum(simulation.simulationItems.map(item => item.totalConsumption));
+    simulation.totalCost = _.sum(simulation.simulationItems.map(item => item.totalCostConsumption));
+     //simulation.totalKw * simulation.kwCost /100;//el /100 es para q se vea lindo
 
-    for (item of simulation.averagePower) {
+    for (item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKw);
       // TODO: Ver de aproximar bien estos porcentajes, para arriba o abajo
       item.percentage = parseInt(100 * item.totalCostConsumption / total, 10);
     }
 
+    // 
 
     simulation.id = '1234';
 
@@ -78,17 +75,11 @@ module.exports = function simulationsService(reportsService, simulationRepositor
 
   async function getSimulation(simulationId) {
     return {
-      reports: [ '2', '3' ],
+      // reports: [ '2', '3' ], ver si hacer un reportItems
       name: 'Nueva simu',
-      duration: 720,
-      hoursUseMeditions: [
-        { idMedition: '2', useInHoursMedition: '18' },
-        { idMedition: '3', useInHoursMedition: '12' },
-        { idMedition: '4', useInHoursMedition: '3' },
-        { idMedition: '5', useInHoursMedition: '1' }
-      ],
-      kwCost: 20,
-      averagePower: [
+      durationInHours: 720,
+      kwhCost: 20,
+      simulationItems: [
         {
           name: 'Luz',
           totalConsumption: 97.2,
@@ -122,3 +113,20 @@ module.exports = function simulationsService(reportsService, simulationRepositor
     // return simulationRepository.getSimulation(simulationId)// reportsRepository.getReport(reportId);
   }
 };
+
+    // for (reportId of simulation.reports) {
+      
+    //   const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
+    //   // console.log(simulation)
+    //   // console.log(report)
+
+    //   // for (medition of report.meditions) {
+    //   //   // const simulationItem = {
+    //   //   //   name: medition.name,
+    //   //   //   totalConsumption: medition.averagePower * simulation.duration /100, //el /100 es para q se vea lindo
+    //   //   //   totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost /100//el /100 es para q se vea lindo
+    //   //   // };
+
+    //   //   // simulation.averagePower.push(simulationItem);
+    //   // }
+    // }

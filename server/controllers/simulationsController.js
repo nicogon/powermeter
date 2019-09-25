@@ -56,8 +56,8 @@ module.exports = function simulationsController(reportsService, simulationsServi
         const id = key.slice(7);
 
         const useInHours = {
-          idMedition: id,
-          useInHoursMedition: value
+          id,
+          hours: value
         };
         consumeInHoursOfMeditions.push(useInHours);
       }
@@ -66,9 +66,9 @@ module.exports = function simulationsController(reportsService, simulationsServi
     // console.log(consumeInHoursOfMeditions)
 
     simulation.name = name;
-    simulation.duration = durationInHours;
+    simulation.durationInHours = durationInHours;
     simulation.hoursUseMeditions = consumeInHoursOfMeditions;
-    simulation.kwCost = kwCost;
+    simulation.kwhCost = kwCost;
     if (typeof req.body.reportId === 'string') {
       simulation.reports.push(req.body.reportId);
     } else {
