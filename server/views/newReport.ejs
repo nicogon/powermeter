@@ -1,55 +1,52 @@
 <%- include("header",{mode:'reports'}) %>
 
-<div class="col-lg-12">
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Reportes</span>
-            <h3 class="page-title">Nuevo Reporte</h3>
-        </div>
-    </div>
-
-    <div class="card card-small mb-4">
-        <div class="card-header border-bottom">
-            <h6 class="m-0">Crear nuevo reporte</h6>
+    <div class="col-lg-12">
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Reportes</span>
+                <h3 class="page-title">Nuevo Reporte</h3>
+            </div>
         </div>
 
-        <form action="/reportes/" method="post">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item p-3">
+        <div class="card card-small mb-4">
+            <div class="card-header border-bottom">
+                <h6 class="m-0">Crear nuevo reporte</h6>
+            </div>
 
-                    <div class="form-group ">
-                        <label for="feFirstName">Nombre del reporte</label>
-                        <input required type="text" class="form-control" placeholder="Nombre del reporte" name="name">
-                    </div>
+            <form action="/reportes/" method="post">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-3">
 
-                    <div class="form-group">
-                        <label for="feInputState">Duracion del reporte</label>
-                        <select required name="duracion" id="feInputState" class="form-control">
-                            <option selected="">Duracion...</option>
-                            <option value='8000'>5 seg</option>
-                            <option value='60000'>1 minuto</option>
-                            <option value='300000'>5 minutos</option>
-                            <option value='900000'>15 minutos</option>
-                            <option value='3600000'>1 hora</option>
-                            <option value='14400000'>4 horas</option>
-                            <option value='86400000'>24 horas</option>
-                        </select>
-                    </div>
-
-                </li>
-                <li class="list-group-item p-3" id="dispoMenu">
-                    <label for="feInputState">Sensores</label>
-
-                    <div class="form-group">
-                        <label for="feInputState">Agregar sensores</label>
-                        <%for (var sensor of sensors){%>
-                        <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox" class="custom-control-input" id="<%=sensor.id%>"
-                                data-name="<%=sensor.name%>" value="<%=sensor.id%>">
-                            <label class="custom-control-label" for=<%=sensor.id%>><%=sensor.name%></label>
+                        <div class="form-group ">
+                            <label for="feFirstName">Nombre del reporte</label>
+                            <input required type="text" class="form-control" placeholder="Nombre del reporte" name="name">
                         </div>
-                        <!-- <option value="<%=sensor.id%>"><%=sensor.name%></option> -->
-                        <%}%>
+
+                        <div class="form-group mb-0">
+                            <label for="feInputState">Duracion del reporte</label><br>
+                            <button type="button" val="10000" class="duration mb-2 btn btn-sm btn-primary mr-1">10s</button>
+                            <button type="button" val="60000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">1min</button>
+                            <button type="button" val="300000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">5min</button>
+                            <button type="button" val="1800000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">30min</button>
+                            <button type="button" val="3600000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">1hr</button>
+                            <button type="button" val="14400000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">4hs</button>
+                            <button type="button" val="86400000" class="duration  mb-2 btn btn-sm btn-outline-primary mr-1">24hs</button>
+                            <input type="hidden" name="duracion" id="duracion" value="10000">
+                        </div>
+
+                    </li>
+                    <li class="list-group-item p-3" id="dispoMenu">
+                        <label for="feInputState">Sensores</label>
+
+                        <div class="form-group">
+                            <label for="feInputState">Agregar sensores</label>
+                            <%for (var sensor of sensors){%>
+                                <div class="custom-control custom-checkbox mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>">
+                                    <label class="custom-control-label" for=<%=sensor.id%>><%=sensor.name%></label>
+                                </div>
+                                <!-- <option value="<%=sensor.id%>"><%=sensor.name%></option> -->
+                                <%}%>
                         </div>
 
 
@@ -67,11 +64,19 @@
     </div>
 
     <script>
+        $(document).ready(function() {
 
 
-        $(document).ready(function () {
+            $(".duration").click(function() {
+                $(".duration").removeClass("btn-primary");
+                $(".duration").addClass("btn-outline-primary");
+                $(this).removeClass("btn-outline-primary ");
+                $(this).addClass("btn-primary");
+                $("#duracion").val($(this).attr('val'))
 
-            $("input").change(function () {
+            })
+
+            $("input").change(function() {
                 var $input = $(this);
 
                 const dispoId = $input.val();
@@ -116,12 +121,10 @@
                             'max': 100
                         }
                     });
-                }
-                else {
+                } else {
                     $("#card-" + dispoId).remove();
                 }
             });
         });
-
     </script>
     <% include footer.ejs %>
