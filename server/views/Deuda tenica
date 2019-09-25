@@ -23,4 +23,7 @@ creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte.
 
  que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
 
+que cuando no hay sensores en nuevo reporte aparezca aunquesea una notificacion.
+
+
  si entro a un reporte y hay un temporal ejecutando, se  actualiza el reporte con ldata del temporal.
