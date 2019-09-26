@@ -21,15 +21,19 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const name = req.body.name;
     const duration = parseInt(req.body.duration);
     const kwCost = parseInt(req.body.kwCost);
-    // console.log(kwCost)
+
+    console.log(duration)
+    console.log(req.body)
+
 
     let durationInHours;
     switch (duration) {
-      case 1: durationInHours = 24 * 7;
-      case 2: durationInHours = 24 * 14;
-      case 3: durationInHours = 24 * 21;
-      case 4: durationInHours = 24 * 28;
-      case 5: durationInHours = 24 * 30;
+      case 1: durationInHours = 24;
+      case 2: durationInHours = 24 * 7;
+      case 3: durationInHours = 24 * 14;
+      case 4: durationInHours = 24 * 21;
+      case 5: durationInHours = 24 * 28;
+      case 6: durationInHours = 24 * 30;
         break;
     }
     const simulation = {

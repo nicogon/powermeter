@@ -36,16 +36,20 @@ module.exports = function simulationsService(reportsService, simulationRepositor
   }
 
   async function create(simulation) {
-    simulation.simulationItems = [];
+    simulation.simulationItems = [];    
 
     for (medition of simulation.hoursUseMeditions) {
       const fullMedition = await reportsService.getMedition(medition.id)
 
-      const totalConsumption = fullMedition.averagePower * (medition.hours / 24 ) * simulation.duration
+      const totalConsumption = fullMedition.averagePower * (medition.hours / 24 ) * simulation.durationInHours
+
+      console.log("totalConsumption")
+      console.log(totalConsumption)
+
       const simulationItem = {
         name: fullMedition.name,
         totalConsumption,
-        totalCostConsumption: totalConsumption * simulation.kwCost,
+        totalCostConsumption: totalConsumption * simulation.kwhCost,
       };
       simulation.simulationItems.push(simulationItem);
     }
@@ -54,8 +58,7 @@ module.exports = function simulationsService(reportsService, simulationRepositor
 
     for (item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKw);
-      // TODO: Ver de aproximar bien estos porcentajes, para arriba o abajo
-      item.percentage = parseInt(100 * item.totalCostConsumption / total, 10);
+      item.percentage = Math.round(parseInt(100 * item.totalConsumption / total));
     }
 
     simulation.id = '1234';
