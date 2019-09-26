@@ -1,11 +1,10 @@
 const _ = require('lodash');
 
-module.exports = function simulationsService(reportsService, simulationRepository) {
-  return {
-    list,
-    create,
-    getSimulation
-  };
+module.exports = function simulationsService(
+  reportsService, simulationsRepository, meditionSimulationsRepository, Simulation) {
+
+  return { list, create, getSimulation, createSimulation };
+
   async function list() {
     mock = [
       {
@@ -36,7 +35,7 @@ module.exports = function simulationsService(reportsService, simulationRepositor
   }
 
   async function create(simulation) {
-    simulation.simulationItems = [];    
+    simulation.simulationItems = [];
 
     for (medition of simulation.hoursUseMeditions) {
       const fullMedition = await reportsService.getMedition(medition.id)
@@ -64,13 +63,33 @@ module.exports = function simulationsService(reportsService, simulationRepositor
     simulation.id = '1234';
 
     const simulationId = '1234';
-    console.log("Ahora")
+    console.log('Ahora');
 
-    console.log(simulation)
+    console.log(simulation);
     // const simulationId = simulationRepository.save(simulacion);
     return simulationId;
   }
 
+  async function createSimulation({ name, kwCost, durationInHours, sliders }) {
+    const simulation = await Simulation.create({ name, durationInHours, kwhCost: kwCost });
+    // TODO: Todavia no anda
+    // await meditionSimulationsRepository.saveMeditionSimulation(simulation, sliders);
+
+    return simulation;
+
+    /*
+      // TODO: Esto ni idea que es
+
+      if (typeof requestBody.reportId === 'string') {
+        simulation.reports.push(req.body.reportId);
+      }
+      else {
+        req.body.reportId.forEach((reportId, index) => {
+          simulation.reports.push(reportId);
+        });
+      }
+    */
+  }
 
   async function getSimulation(simulationId) {
     return {
@@ -112,7 +131,7 @@ module.exports = function simulationsService(reportsService, simulationRepositor
 };
 
     // for (reportId of simulation.reports) {
-      
+
     //   const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
     //   // console.log(simulation)
     //   // console.log(report)

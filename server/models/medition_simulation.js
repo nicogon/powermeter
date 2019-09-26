@@ -8,23 +8,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         notEmpty: true,
         autoIncrement: true
-      }
+      },
+      useInHoursMedition: DataTypes.FLOAT
     }, {}
   );
 
   // Associations
   MeditionSimulation.associate = (models) => {
-    models.MeditionSimulation.belongsTo(models.Medition, {
-      as: 'medition',
-      foreignKey: 'id'
-    });
+    models.MeditionSimulation.belongsTo(models.Medition, { as: 'medition' });
   };
 
   MeditionSimulation.associate = (models) => {
-    models.MeditionSimulation.belongsTo(models.Simulation, {
-      as: 'simulation',
-      foreignKey: 'id'
-    });
+    models.MeditionSimulation.belongsTo(models.Simulation, { as: 'simulation' });
   };
 
   return MeditionSimulation;

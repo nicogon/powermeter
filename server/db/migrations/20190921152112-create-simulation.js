@@ -10,10 +10,7 @@ module.exports = {
     totalCost: Sequelize.FLOAT,
     fixedCost: Sequelize.FLOAT,
     kwhCost: Sequelize.FLOAT,
-    duration: {
-      type: Sequelize.ENUM,
-      values: ['dia', 'semana', 'quincena', 'mes']
-    }
+    durationInHours: Sequelize.FLOAT
   }),
 
   down: (queryInterface, _Sequelize) => queryInterface.dropTable('Simulations')
