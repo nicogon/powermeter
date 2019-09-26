@@ -1,11 +1,20 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-undef */
+/* eslint-disable no-param-reassign */
 const _ = require('lodash');
 
 module.exports = function simulationsService(
-  reportsService, simulationsRepository, meditionSimulationsRepository, Simulation) {
-
+  reportsService,
+  simulationsRepository,
+  Simulation
+) {
   return { list, create, getSimulation, createSimulation };
 
   async function list() {
+    const pepe = await simulationsRepository.saveSimulation(await getSimulation());
+
+  //  console.log(pepe);
+
     mock = [
       {
         simulationId: '123',
@@ -30,34 +39,46 @@ module.exports = function simulationsService(
         fixedCost: 200,
         kwCost: 20,
         totalCost: 10000
-      }];
+      }
+    ];
     return mock;
   }
 
   async function create(simulation) {
     simulation.simulationItems = [];
 
-    for (medition of simulation.hoursUseMeditions) {
-      const fullMedition = await reportsService.getMedition(medition.id)
+    // eslint-disable-next-line no-restricted-syntax
+    for (const medition of simulation.hoursUseMeditions) {
+      // eslint-disable-next-line no-await-in-loop
+      const fullMedition = await reportsService.getMedition(medition.id);
 
-      const totalConsumption = fullMedition.averagePower * (medition.hours / 24 ) * simulation.durationInHours
+      const totalConsumption =
+        fullMedition.averagePower *
+        (medition.hours / 24) *
+        simulation.durationInHours;
 
-      console.log("totalConsumption")
-      console.log(totalConsumption)
+      console.log('totalConsumption');
+      console.log(totalConsumption);
 
       const simulationItem = {
         name: fullMedition.name,
         totalConsumption,
-        totalCostConsumption: totalConsumption * simulation.kwhCost,
+        totalCostConsumption: totalConsumption * simulation.kwhCost
       };
       simulation.simulationItems.push(simulationItem);
     }
-    simulation.totalKw = _.sum(simulation.simulationItems.map(item => item.totalConsumption));
-    simulation.totalCost = _.sum(simulation.simulationItems.map(item => item.totalCostConsumption));
+    simulation.totalKw = _.sum(
+      simulation.simulationItems.map((item) => item.totalConsumption)
+    );
+    simulation.totalCost = _.sum(
+      simulation.simulationItems.map((item) => item.totalCostConsumption)
+    );
 
-    for (item of simulation.simulationItems) {
+    for (const item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKw);
-      item.percentage = Math.round(parseInt(100 * item.totalConsumption / total));
+      item.percentage = Math.round(
+        parseInt((100 * item.totalConsumption) / total)
+      );
     }
 
     simulation.id = '1234';
@@ -71,7 +92,11 @@ module.exports = function simulationsService(
   }
 
   async function createSimulation({ name, kwCost, durationInHours, sliders }) {
-    const simulation = await Simulation.create({ name, durationInHours, kwhCost: kwCost });
+    const simulation = await Simulation.create({
+      name,
+      durationInHours,
+      kwhCost: kwCost
+    });
     // TODO: Todavia no anda
     // await meditionSimulationsRepository.saveMeditionSimulation(simulation, sliders);
 
@@ -98,7 +123,7 @@ module.exports = function simulationsService(
       durationInHours: 720,
       kwhCost: 20,
       simulationItems: [
-       {
+        {
           name: 'Luz',
           totalConsumption: 97.2,
           totalCostConsumption: 1944,
@@ -130,19 +155,19 @@ module.exports = function simulationsService(
   }
 };
 
-    // for (reportId of simulation.reports) {
+// for (reportId of simulation.reports) {
 
-    //   const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
-    //   // console.log(simulation)
-    //   // console.log(report)
+//   const report = (await reportsService.listForSimulations()).find(report => report.id == reportId);
+//   // console.log(simulation)
+//   // console.log(report)
 
-    //   // for (medition of report.meditions) {
-    //   //   // const simulationItem = {
-    //   //   //   name: medition.name,
-    //   //   //   totalConsumption: medition.averagePower * simulation.duration /100, //el /100 es para q se vea lindo
-    //   //   //   totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost /100//el /100 es para q se vea lindo
-    //   //   // };
+//   // for (medition of report.meditions) {
+//   //   // const simulationItem = {
+//   //   //   name: medition.name,
+//   //   //   totalConsumption: medition.averagePower * simulation.duration /100, //el /100 es para q se vea lindo
+//   //   //   totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost /100//el /100 es para q se vea lindo
+//   //   // };
 
-    //   //   // simulation.averagePower.push(simulationItem);
-    //   // }
-    // }
+//   //   // simulation.averagePower.push(simulationItem);
+//   // }
+// }

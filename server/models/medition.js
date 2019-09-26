@@ -23,9 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  Medition.associate = (models) => {
-    models.Medition.hasMany(models.MeditionSimulation, { as: 'meditionSimulations' });
-  };
 
   // Instance methods
   Medition.prototype.isOnline = () => true; // lastPush in (Date.now-5.segs..Date.now)

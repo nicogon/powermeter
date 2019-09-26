@@ -1,15 +1,10 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('MeditionSimulations', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('SimulationElements', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.INTEGER,
       autoIncrement: true
-    },
-    MeditionId: {
-      primaryKey: true,
-      type: Sequelize.INTEGER,
-      references: { model: 'Meditions', key: 'id' }
     },
     SimulationId: {
       primaryKey: true,
@@ -19,5 +14,5 @@ module.exports = {
     useInHoursMedition: Sequelize.FLOAT
   }),
 
-  down: (queryInterface, _Sequelize) => queryInterface.dropTable('MeditionSimulations')
+  down: (queryInterface, _Sequelize) => queryInterface.dropTable('SimulationElements')
 };

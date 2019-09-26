@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   // Attributes
-  const Simulation = sequelize.define('Simulation',
+  const Simulation = sequelize.define(
+    'Simulation',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -14,12 +15,15 @@ module.exports = (sequelize, DataTypes) => {
       fixedCost: DataTypes.FLOAT,
       kwhCost: DataTypes.FLOAT,
       durationInHours: DataTypes.FLOAT
-    }, {}
+    },
+    {}
   );
 
   // Associations
   Simulation.associate = (models) => {
-    models.Simulation.hasMany(models.MeditionSimulation, { as: 'meditionSimulations' });
+    models.Simulation.hasMany(models.SimulationElements, {
+      as: 'simulationItems'
+    });
   };
 
   return Simulation;
