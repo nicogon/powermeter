@@ -22,5 +22,7 @@ module.exports = function routes(sensorsController, reportsController, homeContr
     .get('/simulaciones', simulationsController.simulations)
     .get('/simulaciones/new', simulationsController.createNewSimulation)
     .post('/simulaciones/', simulationsController.newSimulation)
-    .get('/simulaciones/:simulationId', simulationsController.simulationDetails);
+    .get('/simulaciones/:simulationId', simulationsController.simulationDetails)
+    .get('/simulaciones/:simulationId/deleteConfirmation', simulationsController.deleteConfirmation)
+    .get('/simulaciones/:simulationId/destroy', simulationsController.destroy);
 };

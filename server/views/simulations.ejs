@@ -1,24 +1,29 @@
 <%- include("header",{mode:'simulations'}) %>
 
 <div class="main-content-container container-fluid">
-
   <div class="d-flex justify-content-between">
-
     <div class="page-header no-gutters py-4">
       <div class="">
-        <span class="text-uppercase page-subtitle">Listado de Simulaciones</span>
+        <span class="text-uppercase page-subtitle"
+          >Listado de Simulaciones</span
+        >
         <h3 class="page-title">
           Simulaciones
         </h3>
       </div>
     </div>
-    <div class="page-header py-4"><a href='/simulaciones/new' class="btn btn-sm btn-primary" style='color:white'>+ Nueva
-        Simulación</a></div>
+    <div class="page-header py-4">
+      <a
+        href="/simulaciones/new"
+        class="btn btn-sm btn-primary"
+        style="color:white"
+        >+ Nueva Simulación</a
+      >
+    </div>
   </div>
 
-
-  <div class='row'>
-    <div class='col-md-12'>
+  <div class="row">
+    <div class="col-md-12">
       <div class="card card-small">
         <div class="card-header border-bottom">
           <h6 class="m-0">Listado de Simulaciones</h6>
@@ -36,36 +41,30 @@
               </tr>
             </thead>
             <tbody>
-              <%for (var simulation of simulations){%>
+              <%for (var simulation of simulationList){%>
               <tr>
+                <td><%=simulation.name%></td>
+                <td><%=simulation.durationInHours%></td>
+                <td><%=simulation.kwhCost%></td>
+                <td><%=simulation.fixedCost%></td>
+                <td><%=simulation.totalCost%></td>
                 <td>
-                  <%=simulation.name%>
-                </td>
-                <td>
-                  <%=simulation.duration%>
-                </td>
-                <td>
-                  <%=simulation.kwhCost%>
-                </td>
-                <td>
-                  <%=simulation.fixedCost%>
-                </td>
-                <td>
-                  <%=simulation.totalCost%>
-                </td>
-                <td>
-                  <button type="button" class=""><i class="material-icons">delete</i></button>
+                  <button type="button" class="">
+                    <a
+                      href="/simulaciones/<%=simulation.id%>/deleteConfirmation"
+                      class="material-icons"
+                      >delete</a
+                    >
+                  </button>
                 </td>
               </tr>
-              <%}%> 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       
-
+              <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <% include footer.ejs %>
+<% include footer.ejs %>

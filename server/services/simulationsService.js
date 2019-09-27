@@ -8,40 +8,11 @@ module.exports = function simulationsService(
   simulationsRepository,
   Simulation
 ) {
-  return { list, create, getSimulation, createSimulation };
+  return { list, create, getSimulation, createSimulation, destroySimulation };
 
   async function list() {
-    const pepe = await simulationsRepository.saveSimulation(await getSimulation());
-
-  //  console.log(pepe);
-
-    mock = [
-      {
-        simulationId: '123',
-        name: 'Casa Hector',
-        duration: 900000,
-        fixedCost: 1000,
-        kwCost: 40,
-        totalCost: 14000
-      },
-      {
-        simulationId: '1234',
-        name: 'Casa Nico',
-        duration: 1800000,
-        fixedCost: 500,
-        kwCost: 30,
-        totalCost: 12000
-      },
-      {
-        simulationId: '1235',
-        name: 'Casa Lucas',
-        duration: 450000,
-        fixedCost: 200,
-        kwCost: 20,
-        totalCost: 10000
-      }
-    ];
-    return mock;
+    const simulations = await simulationsRepository.index();
+    return simulations;
   }
 
   async function create(simulation) {
@@ -114,43 +85,53 @@ module.exports = function simulationsService(
   */
 
   async function getSimulation(simulationId) {
-    return {
-      // reports: [ '2', '3' ], ver si hacer un reportItems
-      name: 'Nueva simu',
-      durationInHours: 720,
-      kwhCost: 20,
-      simulationItems: [
-        {
-          name: 'Luz',
-          totalConsumption: 97.2,
-          totalCostConsumption: 1944,
-          percentage: 28
-        },
-        {
-          name: 'Tele',
-          totalConsumption: 111.6,
-          totalCostConsumption: 2232,
-          percentage: 32
-        },
-        {
-          name: 'Pava eléctrica',
-          totalConsumption: 44.64,
-          totalCostConsumption: 892.8,
-          percentage: 13
-        },
-        {
-          name: 'Microondas',
-          totalConsumption: 89.28,
-          totalCostConsumption: 1785.6,
-          percentage: 26
-        }
-      ],
-      totalKw: 685.44,
-      totalCost: 137.088,
-      id: '1234'
-    };
+    const simulation = simulationsRepository.show(simulationId);
+    return simulation;
+  }
+
+  async function destroySimulation(simulationId) {
+    simulationsRepository.destroy(simulationId);
   }
 };
+
+/*
+  // Se espera que #getSimulation tenga simulationItems
+  return {
+    // reports: [ '2', '3' ], ver si hacer un reportItems
+    name: 'Nueva simu',
+    durationInHours: 720,
+    kwhCost: 20,
+    simulationItems: [
+      {
+        name: 'Luz',
+        totalConsumption: 97.2,
+        totalCostConsumption: 1944,
+        percentage: 28
+      },
+      {
+        name: 'Tele',
+        totalConsumption: 111.6,
+        totalCostConsumption: 2232,
+        percentage: 32
+      },
+      {
+        name: 'Pava eléctrica',
+        totalConsumption: 44.64,
+        totalCostConsumption: 892.8,
+        percentage: 13
+      },
+      {
+        name: 'Microondas',
+        totalConsumption: 89.28,
+        totalCostConsumption: 1785.6,
+        percentage: 26
+      }
+    ],
+    totalKw: 685.44,
+    totalCost: 137.088,
+    id: '1234'
+  };
+*/
 
 // for (reportId of simulation.reports) {
 
