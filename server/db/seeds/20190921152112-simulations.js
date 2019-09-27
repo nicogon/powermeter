@@ -6,7 +6,7 @@ module.exports = {
         totalCost: 1000,
         fixedCost: 800,
         kwhCost: 750,
-        duration: 'dia'
+        durationInHours: 24
       }
     ], {});
   },

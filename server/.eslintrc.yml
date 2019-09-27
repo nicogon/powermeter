@@ -15,3 +15,7 @@ rules:
   no-console: "off"
   no-unused-vars: "off"
   function-paren-newline: "off"
+  array-callback-return: "off"
+  radix: "off"
+  object-curly-newline: "off"
+  padded-blocks: "off"

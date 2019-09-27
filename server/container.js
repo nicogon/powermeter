@@ -3,7 +3,7 @@ const { EventEmitter } = require('events');
 const dependable = require('dependable');
 const sequelize = require('sequelize');
 
-const MeditionSimulation = require('./models').MeditionSimulation;
+const SimulationElements = require('./models').SimulationElements;
 const Medition = require('./models').Medition;
 const PuntualMedition = require('./models').PuntualMedition;
 const Report = require('./models').Report;
@@ -94,7 +94,7 @@ async function createContainer() {
     return new Lock();
   });
   // Models
-  container.register('MeditionSimulation', function meditionFn() { return MeditionSimulation; });
+  container.register('SimulationElements', function meditionFn() { return SimulationElements; });
   container.register('Medition', function sensorFn() { return Medition; });
   container.register('PuntualMedition', function sensorFn() { return PuntualMedition; });
   container.register('Report', function sensorFn() { return Report; });

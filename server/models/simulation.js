@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   // Attributes
-  const Simulation = sequelize.define('Simulation',
+  const Simulation = sequelize.define(
+    'Simulation',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -13,18 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       totalCost: DataTypes.FLOAT,
       fixedCost: DataTypes.FLOAT,
       kwhCost: DataTypes.FLOAT,
-      duration: {
-        type: DataTypes.ENUM,
-        values: ['dia', 'semana', 'quincena', 'mes']
-      }
-    }, {}
+      durationInHours: DataTypes.FLOAT
+    },
+    {}
   );
 
   // Associations
   Simulation.associate = (models) => {
-    models.Simulation.hasMany(models.MeditionSimulation, {
-      as: 'meditionSimulation',
-      foreignKey: 'id'
+    models.Simulation.hasMany(models.SimulationElements, {
+      as: 'simulationItems'
     });
   };
 
