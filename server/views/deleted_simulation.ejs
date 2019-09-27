@@ -4,23 +4,25 @@
   <div class="d-flex justify-content-between">
     <div class="page-header no-gutters py-4">
       <div class="">
-        <span class="text-uppercase page-subtitle">Detalle Simulación</span>
+        <span class="text-uppercase page-subtitle"
+          >Acción finalizada con éxito</span
+        >
+        <br />
+        <br />
         <h3 class="page-title">
-          Simulación
+          Simulación eliminada
         </h3>
       </div>
-    </div>
-    <div class="page-header py-4">
-      <a
-        href="/simulaciones/new"
-        class="btn btn-sm btn-primary"
-        style="color:white"
-        >+ Nueva Simulación</a
-      >
     </div>
   </div>
 
   <%- include("simulation_detail",{mode:''}) %>
+
+  <div id="cancel-button" class="page-header py-4">
+    <a href="/simulaciones" class="btn btn-sm btn-primary" style="color:white"
+      >Listado de simulaciones</a
+    >
+  </div>
 </div>
 
 <% include footer.ejs %>

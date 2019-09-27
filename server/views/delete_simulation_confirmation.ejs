@@ -1,0 +1,45 @@
+<%- include("header",{mode:''}) %>
+
+<div class="main-content-container container-fluid">
+  <div class="d-flex justify-content-between">
+    <div class="page-header no-gutters py-4">
+      <div class="">
+        <span class="text-uppercase page-subtitle">Aviso de confirmación</span>
+        <br />
+        <br />
+        <h3 class="page-title">
+          ¿Realmente desea eliminar la siguiente simulación?
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <%- include("simulation_detail",{mode:''}) %>
+
+  <table>
+    <tr>
+      <td>
+        <div id="delete-button" class="page-header py-4">
+          <a
+            href="/simulaciones/<%=simulation.id%>/destroy"
+            class="btn btn-sm btn-primary"
+            style="color:white"
+            >Eliminar</a
+          >
+        </div>
+      </td>
+      <td>
+        <div id="cancel-button" class="page-header py-4">
+          <a
+            href="/simulaciones"
+            class="btn btn-sm btn-secondary"
+            style="color:white"
+            >Cancelar</a
+          >
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<% include footer.ejs %>

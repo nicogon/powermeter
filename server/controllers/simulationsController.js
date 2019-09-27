@@ -1,6 +1,11 @@
 module.exports = function simulationsController(reportsService, simulationsService) {
   return {
-    simulations, createNewSimulation, newSimulation, simulationDetails
+    simulations,
+    createNewSimulation,
+    newSimulation,
+    simulationDetails,
+    deleteConfirmation,
+    destroy
   };
 
   async function simulations(_req, res) {
@@ -24,7 +29,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
       name, kwCost, durationInHours, sliders
     });
 
-    res.redirect(`/simulations/${simulation.id}/`);
+    res.redirect(`/simulaciones/${simulation.id}/`);
 
     function sliderList(requestBody) {
       return Object.entries(requestBody)
@@ -39,5 +44,20 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const simulation = await simulationsService.getSimulation(simulationId);
 
     res.render('simulation', { simulation });
+  }
+
+  async function deleteConfirmation(req, res) {
+    const simulationId = req.params.simulationId;
+    const simulation = await simulationsService.getSimulation(simulationId);
+
+    res.render('delete_simulation_confirmation', { simulation });
+  }
+
+  async function destroy(req, res) {
+    const simulationId = req.params.simulationId;
+    const simulation = await simulationsService.getSimulation(simulationId);
+
+    await simulationsService.destroySimulation(simulationId);
+    res.render('deleted_simulation', { simulation });
   }
 };
