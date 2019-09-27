@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-
   // Instance methods
   Medition.prototype.isOnline = () => true; // lastPush in (Date.now-5.segs..Date.now)
 

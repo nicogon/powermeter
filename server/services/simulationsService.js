@@ -97,24 +97,21 @@ module.exports = function simulationsService(
       durationInHours,
       kwhCost: kwCost
     });
-    // TODO: Todavia no anda
-    // await meditionSimulationsRepository.saveMeditionSimulation(simulation, sliders);
 
     return simulation;
-
-    /*
-      // TODO: Esto ni idea que es
-
-      if (typeof requestBody.reportId === 'string') {
-        simulation.reports.push(req.body.reportId);
-      }
-      else {
-        req.body.reportId.forEach((reportId, index) => {
-          simulation.reports.push(reportId);
-        });
-      }
-    */
   }
+  /*
+    // TODO: Esto ni idea que es. Estaba en createSimulation
+
+    if (typeof requestBody.reportId === 'string') {
+      simulation.reports.push(req.body.reportId);
+    }
+    else {
+      req.body.reportId.forEach((reportId, index) => {
+        simulation.reports.push(reportId);
+      });
+    }
+  */
 
   async function getSimulation(simulationId) {
     return {
