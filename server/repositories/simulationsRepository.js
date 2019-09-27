@@ -5,7 +5,6 @@ module.exports = function simulationsRepository(
   return { saveSimulation, index, show, destroy };
 
   async function saveSimulation(simulation) {
-    console.log(simulation)
     return Simulation.create(simulation, {
       include: [
         {

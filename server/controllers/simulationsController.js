@@ -22,7 +22,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
   async function newSimulation(req, res) {
     const name = req.body.name;
     const kwCost = parseInt(req.body.kwCost);
-    const durationInHours = 24 * [7, 14, 21, 28, 30][parseInt(req.body.duration) - 1];
+    const durationInHours = 24 * [1, 7, 14, 21, 28, 30][parseInt(req.body.duration) - 1];
     const sliders = sliderList(req.body);
 
     const simulation = await simulationsService.createSimulation({

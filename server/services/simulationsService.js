@@ -6,7 +6,8 @@ const _ = require('lodash');
 module.exports = function simulationsService(
   reportsService,
   simulationsRepository,
-  Simulation
+  Simulation,
+  SimulationElements
 ) {
   return { list, create, getSimulation, createSimulation, destroySimulation };
 
@@ -66,8 +67,9 @@ module.exports = function simulationsService(
     const simulation = await Simulation.create({
       name,
       durationInHours,
-      kwhCost: kwCost
-    });
+      kwhCost: kwCost,
+      simulationItems: sliders
+    }, { include: [{ model: SimulationElements, as: 'simulationItems' }] });
 
     return simulation;
   }
