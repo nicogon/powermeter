@@ -35,6 +35,7 @@ module.exports = function simulationsService(
         parseInt((100 * item.totalConsumption) / total)
       );
     }
+    console.log(simulation)
     const persisted = await simulationsRepository.saveSimulation(simulation)
 
     return persisted.id;
@@ -56,8 +57,9 @@ module.exports = function simulationsService(
           useInHoursMedition: item.useInHoursMedition,
           name: medition.name,
           totalConsumption,
-          totalCostConsumption: totalConsumption * simulation.kwCost
+          totalCostConsumption: totalConsumption * simulation.kwhCost
         };
+
 
         editedItems.push(simulationItem);
       }
@@ -125,7 +127,7 @@ module.exports = function simulationsService(
 //   //   // const simulationItem = {
 //   //   //   name: medition.name,
 //   //   //   totalConsumption: medition.averagePower * simulation.duration /100, //el /100 es para q se vea lindo
-//   //   //   totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwCost /100//el /100 es para q se vea lindo
+//   //   //   totalCostConsumption: medition.averagePower * simulation.duration * simulation.kwhCost /100//el /100 es para q se vea lindo
 //   //   // };
 
 //   //   // simulation.averagePower.push(simulationItem);
