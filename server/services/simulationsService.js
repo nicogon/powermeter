@@ -55,14 +55,13 @@ module.exports = function simulationsService(
 
     simulation.id = '1234';
 
-    const simulationId = '1234';
-    console.log('Ahora');
-
-    console.log(simulation);
+    // console.log(simulation);
+    //ESTA ES LA LLAMADA A LA BASE DE DATOS CON LA QUE TENES QUE GUARDAR LA SIMULACION
     // const simulationId = simulationRepository.save(simulacion);
     return simulationId;
   }
 
+  //ESTA FUNCION NO DEBERÏA ESTAR ACA, LO QUE HAY QUE HACER ACA ES simulationRepository.save(simulacion); dentro de la otra fucion
   async function createSimulation({ name, kwCost, durationInHours, sliders }) {
     const simulation = await Simulation.create({
       name,
@@ -73,18 +72,6 @@ module.exports = function simulationsService(
 
     return simulation;
   }
-  /*
-    // TODO: Esto ni idea que es. Estaba en createSimulation
-
-    if (typeof requestBody.reportId === 'string') {
-      simulation.reports.push(req.body.reportId);
-    }
-    else {
-      req.body.reportId.forEach((reportId, index) => {
-        simulation.reports.push(reportId);
-      });
-    }
-  */
 
   async function getSimulation(simulationId) {
     const simulation = simulationsRepository.show(simulationId);
