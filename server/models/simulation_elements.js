@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
         autoIncrement: true
       },
-      useInHoursMedition: DataTypes.FLOAT
+      useInHoursMedition: DataTypes.FLOAT,
+      name: DataTypes.STRING,
+      totalConsumption: DataTypes.FLOAT,
+      totalCostConsumption: DataTypes.FLOAT,
+      percentage: DataTypes.FLOAT
     }, {}
   );
 

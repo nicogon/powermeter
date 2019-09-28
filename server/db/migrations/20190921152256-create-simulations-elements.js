@@ -11,7 +11,11 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: { model: 'Simulations', key: 'id' }
     },
-    useInHoursMedition: Sequelize.FLOAT
+    useInHoursMedition: Sequelize.FLOAT,
+    name: Sequelize.STRING,
+    totalConsumption: Sequelize.FLOAT,
+    totalCostConsumption: Sequelize.FLOAT,
+    percentage: Sequelize.FLOAT
   }),
 
   down: (queryInterface, _Sequelize) => queryInterface.dropTable('SimulationElements')
