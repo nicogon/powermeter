@@ -23,11 +23,23 @@ module.exports = function simulationsRepository(
        percentage: 100 } ] // Nola
 */
   async function index() {
-    return Simulation.findAll({ raw: true }).catch(console.log);
+    return Simulation.findAll({ raw: false,
+      include: [{
+        model: SimulationElements,
+        as: 'simulationItems'
+      }]
+    
+    }).catch(console.log);
   }
 
   async function show(simulationId) {
-    return Simulation.findByPk(simulationId, { raw: true }).catch(console.log);
+    return Simulation.findByPk(simulationId, { 
+      raw: false,
+      include: [{
+        model: SimulationElements,
+        as: 'simulationItems'
+      }]
+    }).catch(console.log);
   }
 
   async function destroy(simulationId) {
