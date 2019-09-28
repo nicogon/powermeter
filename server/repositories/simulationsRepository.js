@@ -14,7 +14,14 @@ module.exports = function simulationsRepository(
       ]
     }).catch(console.log);
   }
-
+/*
+   [ { MeditionId: '1', // Late
+       useInHoursMedition: '10', // Late
+       name: 'Heladera', // Nola
+       totalConsumption: 20, // Nola
+       totalCostConsumption: 2000, // Nola
+       percentage: 100 } ] // Nola
+*/
   async function index() {
     return Simulation.findAll({ raw: true }).catch(console.log);
   }
