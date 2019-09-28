@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
   SimulationElements.associate = (models) => {
-    models.SimulationElements.belongsTo(models.Simulation, { as: 'simulation' });
+    models.SimulationElements.belongsTo(models.Simulation, { as: 'Simulation' });
   };
 
   return SimulationElements;
