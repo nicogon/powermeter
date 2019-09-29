@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       totalCost: DataTypes.FLOAT,
+      totalKwh: DataTypes.FLOAT,
       fixedCost: DataTypes.FLOAT,
       kwhCost: DataTypes.FLOAT,
       durationInHours: DataTypes.FLOAT

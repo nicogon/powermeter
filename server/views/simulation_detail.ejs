@@ -10,24 +10,38 @@
           <thead class="bg-light">
             <tr>
               <th scope="col" class="border-0">Nombre</th>
-              <th scope="col" class="border-0">Porcentaje</th>
+              <th scope="col" class="border-0">Porcentaje de Uso</th>
+              <th scope="col" class="border-0">Uso estimado por día</th>
               <th scope="col" class="border-0">Consumo</th>
               <th scope="col" class="border-0">Costo Consumo Total</th>
-              <th scope="col" class="border-0">Duración</th>
               <th scope="col" class="border-0"></th>
             </tr>
           </thead>
           <tbody>
             <!-- <tfoot> -->
             <thead class="bg-light">
+
+              <%for (var simulationItem of simulation.simulationItems){%>
               <tr>
-                <td><b><%=simulation.name%></b></td>
-                <td><b>94,3%</b></td>
-                <td><b><%=simulation.kwhCost%> Kw</b></td>
-                <td><b>$<%=simulation.totalCost%></b></td>
-                <td><b><%=simulation.durationInHours / 24%> días</b></td>
+                <td> <%=simulationItem.name%> </td>
+                <td> <%=simulationItem.percentage%> </td>
+                <td> <%=simulationItem.useInHoursMedition%> Horas
+                <td> <%=simulationItem.totalConsumption%>W </td>
+                <td> <%=simulationItem.totalCostConsumption%>W </td>
+                </td>
               </tr>
-              <!-- </tfoot> -->
+              <%}%>
+              
+              <tfoot>
+                <thead class="bg-light">
+                  <tr>
+                    <td> <b>TOTALES</b> </td>
+                    <td> <b>100%</b> </td>
+                    <td> <b>-</b> </td>
+                    <td> <b><%=simulation.totalKwh%> W</b> </td>
+                    <td> <b>$<%=simulation.totalCost%></b> </td>
+                  </tr>
+              </tfoot>
             </thead>
           </tbody>
         </table>

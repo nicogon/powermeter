@@ -8,6 +8,7 @@ module.exports = {
     },
     name: Sequelize.STRING,
     totalCost: Sequelize.FLOAT,
+    totalKwh: Sequelize.FLOAT,
     fixedCost: Sequelize.FLOAT,
     kwhCost: Sequelize.FLOAT,
     durationInHours: Sequelize.FLOAT

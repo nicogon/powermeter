@@ -43,7 +43,8 @@
             <tbody>
               <%for (var simulation of simulationList){%>
               <tr>
-                <td><%=simulation.name%></td>
+                
+                <td><a href="/simulaciones/<%=simulation.id%>/"><%=simulation.name%></a></td>
                 <td><%=simulation.durationInHours%> horas</td>
                 <td>$ <%=simulation.kwhCost%></td>
                 <td>$ <%=simulation.fixedCost%></td>

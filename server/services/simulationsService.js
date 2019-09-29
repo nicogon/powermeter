@@ -20,7 +20,7 @@ module.exports = function simulationsService(
     // eslint-disable-next-line no-restricted-syntax
     simulation.simulationItems = await calcSimulationItems(simulation.simulationItems);
 
-    simulation.totalKw = _.sum(
+    simulation.totalKwh = _.sum(
       simulation.simulationItems.map((item) => item.totalConsumption)
     );
 
@@ -30,10 +30,8 @@ module.exports = function simulationsService(
 
 
     for (const item of simulation.simulationItems) {
-      const total = parseInt(simulation.totalKw);
-      item.percentage = Math.round(
-        parseInt((100 * item.totalConsumption) / total)
-      );
+      const total = parseInt(simulation.totalKwh);
+      item.percentage = parseInt((100 * item.totalConsumption) / total, 10);
     }
     console.log(simulation)
     const persisted = await simulationsRepository.saveSimulation(simulation)
@@ -111,7 +109,7 @@ module.exports = function simulationsService(
         percentage: 26
       }
     ],
-    totalKw: 685.44,
+    totalKwh: 685.44,
     totalCost: 137.088,
     id: '1234'
   };
