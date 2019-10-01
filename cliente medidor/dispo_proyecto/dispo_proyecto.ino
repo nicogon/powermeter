@@ -163,11 +163,14 @@ void continuousAlert() {
 
 void reportar(float potenciaEficaz) {
   Serial.println("about to fetch");
-  http.begin("http://192.168.0.33:3000/devices/1234/report");
+  http.begin("http://192.168.4.1:3000/sensores/1234/report");
+  http.setTimeout(500);
   http.addHeader("Content-Type", "application/json");
-  int code = http.POST("{\"medicion\":" + String(potenciaEficaz, 1) + ",\"pinza\":35,\"dispoId\":\"" + dispoId + "\"}");
+  int code = http.POST("{\"currentMedition\":" + String(potenciaEficaz, 1) + ",\"sensibility\":35,\"dispoId\":\"" + dispoId + "\"}");
   http.writeToStream(&Serial);
   http.end();
+  if(code == HTTPC_ERROR_CONNECTION_REFUSED) 
+    Serial.println("Server offline :(");
   Serial.println("fetched");
 
 }
