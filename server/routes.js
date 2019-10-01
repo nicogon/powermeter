@@ -16,6 +16,8 @@ module.exports = function routes(sensorsController, reportsController, homeContr
     .get('/reportes', reportsController.toList)
     .get('/reportes/new', reportsController.createNewReport)
     .get('/reportes/:reportId', reportsController.reportDetails)
+    .delete('/reportes/:reportId', reportsController.deleteReport)
+
   // TODO: Borrar? editar?
 
   // Simulaciones

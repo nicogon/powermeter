@@ -45,30 +45,7 @@ class Lock {
   }
 }
 
-let tempReport = {
-  name: 'casa',
-  secondsDuration: 86400000,
-  meditions:
-   [
-
-     {
-       dispoId: '2',
-       name: 'heladera',
-       puntualMeditions: [{ value: 1, offset: 2 }, { value: 2, offset: 3 }],
-       currentPower: 0,
-       maximumPower: 0,
-       averagePower: 0,
-       meditionCounter: 0
-     }
-
-   ],
-  timeStart: Date.now(),
-  timeEnd: Date.now() + 8000,
-  currentPower: 0,
-  maximumPower: 0,
-  averagePower: 0,
-  meditionCounter: 0
-};
+let tempReport = null;
 
 tempReport = null;
 

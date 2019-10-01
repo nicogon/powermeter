@@ -1,13 +1,17 @@
-module.exports = function reportsController(
-  sensorsService,
-  reportsService
-) {
+module.exports = function reportsController(sensorsService, reportsService) {
   return {
     toList,
     createNewReport,
     reportDetails,
-    newReport
+    newReport,
+    deleteReport
   };
+
+  async function deleteReport(req, res) {
+    const reportId = req.params.reportId;
+    await reportsService.del(reportId);
+    res.status(200).send();
+  }
 
   async function newReport(req, res) {
     // TODO
@@ -66,7 +70,7 @@ module.exports = function reportsController(
 */
 
     const sensors = (await sensorsService.list()).filter(
-      sensor => sensor.isOnline
+      (sensor) => sensor.isOnline
     );
 
     res.render('newReport', { sensors });
@@ -74,7 +78,10 @@ module.exports = function reportsController(
 
   async function toList(req, res) {
     let reports = await reportsService.list();
-    reports = reports.map(report => ({ ...report, date: calculateDate(report) }));
+    reports = reports.map((report) => ({
+      ...report,
+      date: calculateDate(report)
+    }));
     //  console.log(reports)
     res.render('reports', { reports });
   }
@@ -82,6 +89,6 @@ module.exports = function reportsController(
   function calculateDate(report) {
     const f = new Date(report.timeStart - 0);
     return f.toLocaleString('es-ES');
-  //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
+    //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
   }
 };

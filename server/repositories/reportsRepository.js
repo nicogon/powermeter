@@ -10,6 +10,14 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     getMedition
   };
 
+  async function del(reportId) {
+    return Report.destroy({
+      where: {
+        id: reportId
+      }
+    });
+  }
+
   async function createPuntualMeditions(puntualMeditions, MeditionId) {
     // eslint-disable-next-line no-restricted-syntax
     for (const element of puntualMeditions) {
@@ -21,42 +29,38 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     // eslint-disable-next-line no-restricted-syntax
     for (const medition of newReport.meditions) {
       // eslint-disable-next-line no-await-in-loop
-      const createdMedition = await Medition.create({ ...medition, ReportId: idReport }, {});
-      await createPuntualMeditions(medition.puntualMeditions, parseInt(createdMedition.toJSON().id));
+      const createdMedition = await Medition.create(
+        { ...medition, ReportId: idReport },
+        {}
+      );
+      await createPuntualMeditions(
+        medition.puntualMeditions,
+        parseInt(createdMedition.toJSON().id)
+      );
     }
   }
 
   async function saveReport(newReport) {
     try {
-      const createdReport = await Report.create(newReport, {}).catch(console.log);
+      const createdReport = await Report.create(newReport, {}).catch(
+        console.log
+      );
       const idReport = createdReport.toJSON().id;
       await createMeditions(newReport, parseInt(idReport));
-    } catch (e) { console.log(e); }
+    } catch (e) {
+      console.log(e);
+    }
   }
-
-  /*
-
-    async function saveReport(newReport) {
-    return Report.create(newReport, {
-      include: [{
-        model: Medition,
-        as: 'meditions',
-        include: [{ model: PuntualMedition, as: 'puntualMeditions' }]
-      }]
-    }).catch(console.log);
-  }
-
-  */
-
-  async function del(reportId) {}
 
   async function getReport(reportId) {
     const report = await Report.findByPk(parseInt(reportId), {
-      include: [{
-        model: Medition,
-        as: 'meditions',
-        include: [{ model: PuntualMedition, as: 'puntualMeditions' }]
-      }],
+      include: [
+        {
+          model: Medition,
+          as: 'meditions',
+          include: [{ model: PuntualMedition, as: 'puntualMeditions' }]
+        }
+      ],
 
       raw: false
     });
@@ -66,17 +70,19 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
 
   async function list() {
     const response = await Report.findAll({});
-    return response.map(a => a.toJSON());
+    return response.map((a) => a.toJSON());
   }
 
   async function listForSimulations() {
     const response = await Report.findAll({
-      include: [{
-        model: Medition,
-        as: 'meditions'
-      }]
+      include: [
+        {
+          model: Medition,
+          as: 'meditions'
+        }
+      ]
     });
-    return response.map(a => a.toJSON());
+    return response.map((a) => a.toJSON());
   }
 
   async function getMedition(meditionId) {
@@ -85,5 +91,4 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     });
     return medition.toJSON();
   }
-  
 };

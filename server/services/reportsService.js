@@ -17,11 +17,16 @@ module.exports = function reportsService(
     getReport,
     list,
     listForSimulations,
-    getMedition
+    getMedition,
+    del
   };
 
+  async function del(dispoId) {
+    return reportsRepository.del(dispoId);
+  }
+
   async function getReport(reportId) {
-    if (reportId == 'temp') return { now: Date.now(), ...tempReport };// reportsRepository.getReport(reportId);
+    if (reportId == 'temp') return { now: Date.now(), ...tempReport }; // reportsRepository.getReport(reportId);
     const report = await reportsRepository.getReport(reportId);
     //    console.log(JSON.stringify(report))
     return report;
@@ -33,7 +38,9 @@ module.exports = function reportsService(
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
     // Buscar si existe una medicion asociada a un sensor
-    const activeMedition = tempReport && tempReport.meditions.find(medition => medition.dispoId === sensorId);
+    const activeMedition =
+      tempReport &&
+      tempReport.meditions.find((medition) => medition.dispoId === sensorId);
 
     // Si la medicion finalizo, borrar el objeto temporal de la memoria
     if (hasFinish()) {
@@ -54,7 +61,9 @@ module.exports = function reportsService(
 
   async function saveReport() {
     // console.log(tempReport)
-    const storedReport = await reportsRepository.saveReport(tempReport).catch(() => tempReport = null);
+    const storedReport = await reportsRepository
+      .saveReport(tempReport)
+      .catch(() => (tempReport = null));
     tempReport = null;
   }
 
@@ -65,20 +74,28 @@ module.exports = function reportsService(
   }
 
   function fixed(num, e = 2) {
-    return +(`${Math.round(`${num}e+${e}`)}e-${e}`);
+    return +`${Math.round(`${num}e+${e}`)}e-${e}`;
   }
 
   function calculateMeditions(medition, currentPower) {
-    medition.maximumPower = fixed(Math.max(medition.maximumPower, currentPower), 1);
+    medition.maximumPower = fixed(
+      Math.max(medition.maximumPower, currentPower),
+      1
+    );
     medition.currentPower = fixed(currentPower, 1);
     medition.meditionCounter++;
-    medition.averagePower = fixed((medition.averagePower * (medition.meditionCounter - 1) + currentPower) / medition.meditionCounter, 1);
+    medition.averagePower = fixed(
+      (medition.averagePower * (medition.meditionCounter - 1) + currentPower) /
+        medition.meditionCounter,
+      1
+    );
     return medition;
   }
 
-
   function updateTemporalReport() {
-    const currentPower = _.sum(tempReport.meditions.map(medicionInt => (medicionInt.currentPower)));
+    const currentPower = _.sum(
+      tempReport.meditions.map((medicionInt) => medicionInt.currentPower)
+    );
     tempReport = calculateMeditions(tempReport, currentPower);
     tempReport = populateCurrent(tempReport);
     return tempReport;
@@ -86,7 +103,10 @@ module.exports = function reportsService(
 
   function modifyMedition(medicionAMofidicar, value) {
     medicionAMofidicar = calculateMeditions(medicionAMofidicar, value);
-    medicionAMofidicar.puntualMeditions.push({ offset: parseInt(Date.now() - tempReport.timeStart, _), value });
+    medicionAMofidicar.puntualMeditions.push({
+      offset: parseInt(Date.now() - tempReport.timeStart, _),
+      value
+    });
     return medicionAMofidicar;
   }
 
@@ -101,13 +121,12 @@ module.exports = function reportsService(
     medition.currentCurrent = fixed(medition.currentPower / 220);
     medition.averageCurrent = fixed(medition.averagePower / 220);
     medition.maximumCurrent = fixed(medition.maximumPower / 220);
-    if (medition.meditions) medition.meditions = medition.meditions.map(populateCurrent);
+    if (medition.meditions)
+      medition.meditions = medition.meditions.map(populateCurrent);
     return medition;
   }
 
-  async function nuevo({
-    name, secondsDuration, meditions
-  }) {
+  async function nuevo({ name, secondsDuration, meditions }) {
     tempReport = {
       name,
       secondsDuration,
@@ -122,10 +141,13 @@ module.exports = function reportsService(
 
   function initializateMeditions(medition) {
     return {
-      ...medition, currentPower: 0, maximumPower: 0, averagePower: 0, meditionCounter: 0
+      ...medition,
+      currentPower: 0,
+      maximumPower: 0,
+      averagePower: 0,
+      meditionCounter: 0
     };
   }
-
 
   async function list() {
     return reportsRepository.list();
@@ -138,5 +160,4 @@ module.exports = function reportsService(
   async function getMedition(meditionId) {
     return reportsRepository.getMedition(meditionId);
   }
-
 };
