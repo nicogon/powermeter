@@ -5,7 +5,7 @@
     
     <style>
         .hidden {
-            width: 40%;
+           padding-right: 100px; 
             display: none;
             margin-bottom: 5px!important;
         }
@@ -102,10 +102,32 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
+                    <!-- Modal -->
+<div class="modal fade" id="delete-modal-<%=sensor.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Borrar sensor</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Seguro quieres borrar el sensor <%=sensor.name%>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" onClick="$('#delete-modal-<%=sensor.id%>').modal('toggle')" class="btn btn-primary">Borrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
                     <div style="position:absolute;right:15px;top:3px">
 
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-white borrar" data-id="<%=sensor.id%>"><i class="material-icons">delete</i> </button>
+                            <button type="button" class="btn btn-white"  data-toggle="modal" data-target="#delete-modal-<%=sensor.id%>" data-id="<%=sensor.id%>"><i class="material-icons">delete</i> </button>
                             <button type="button" class="btn btn-white showEdit" data-id="<%=sensor.id%>"><i class="material-icons">edit</i></button>
                         </div>
 
