@@ -4,8 +4,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
     createNewSimulation,
     newSimulation,
     simulationDetails,
-    deleteConfirmation,
-    destroy
+    deleteSimulation
   };
 
   async function simulations(_req, res) {
@@ -50,22 +49,13 @@ module.exports = function simulationsController(reportsService, simulationsServi
   async function simulationDetails(req, res) {
     const simulationId = req.params.simulationId;
     const simulation = await simulationsService.getSimulation(simulationId);
-    
+
     res.render('simulation', { simulation });
   }
 
-  async function deleteConfirmation(req, res) {
+  async function deleteSimulation(req, res) {
     const simulationId = req.params.simulationId;
-    const simulation = await simulationsService.getSimulation(simulationId);
-
-    res.render('delete_simulation_confirmation', { simulation });
-  }
-
-  async function destroy(req, res) {
-    const simulationId = req.params.simulationId;
-    const simulation = await simulationsService.getSimulation(simulationId);
-
     await simulationsService.destroySimulation(simulationId);
-    res.render('deleted_simulation', { simulation });
+    res.status(200).send();
   }
 };

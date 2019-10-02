@@ -72,7 +72,7 @@ module.exports = function simulationsService(
   }
 
   async function destroySimulation(simulationId) {
-    simulationsRepository.destroy(simulationId);
+    return simulationsRepository.destroy(simulationId);
   }
 };
 
