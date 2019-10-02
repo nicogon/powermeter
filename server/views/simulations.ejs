@@ -42,20 +42,25 @@
             </thead>
             <tbody>
               <%for (var simulation of simulationList){%>
-              <tr>
-                
-                <td><a href="/simulaciones/<%=simulation.id%>/"><%=simulation.name%></a></td>
+              <tr id="simulation-line-<%=simulation.id%>">
+                <td>
+                  <a href="/simulaciones/<%=simulation.id%>/"
+                    ><%=simulation.name%></a
+                  >
+                </td>
                 <td><%=simulation.durationInHours%> horas</td>
                 <td>$ <%=simulation.kwhCost%></td>
                 <td>$ <%=simulation.fixedCost%></td>
                 <td>$ <%=simulation.totalCost%></td>
                 <td>
-                  <button type="button" class="">
-                    <a
-                      href="/simulaciones/<%=simulation.id%>/deleteConfirmation"
-                      class="material-icons"
-                      >delete</a
-                    >
+                  <button
+                    data-toggle="modal"
+                    data-target="#delete-modal-<%=simulation.id%>"
+                    id="delete-<%=simulation.id%>"
+                    type="button"
+                    class="rounded"
+                  >
+                    <i class="material-icons">delete</i>
                   </button>
                 </td>
               </tr>
@@ -68,4 +73,61 @@
   </div>
 </div>
 
-<% include footer.ejs %>
+<script>
+  function deleteSimulation(simulationId) {
+    $('#delete-modal-' + simulationId).modal('toggle');
+    $.ajax({
+      url: `/simulaciones/${simulationId}/`,
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
+      type: 'DELETE',
+      success: function(response) { console.log(`Simulation ${simulationId} deleted`); }
+    });
+    $('#simulation-line-' + simulationId).hide();
+  }
+</script>
+
+<%for (var simulation of simulationList){%>
+  <!-- Modal -->
+<div
+  class="modal fade"
+  id="delete-modal-<%=simulation.id%>"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar simulación</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Seguro quieres borrar la simulación? <br />
+        <b> <%=simulation.name%></b>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          onClick="deleteSimulation(<%=simulation.id%>)"
+          class="btn btn-primary"
+        >
+          Borrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%}%> <% include footer.ejs %>

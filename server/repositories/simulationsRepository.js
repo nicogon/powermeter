@@ -28,12 +28,12 @@ module.exports = function simulationsRepository(
         model: SimulationElements,
         as: 'simulationItems'
       }]
-    
+
     }).catch(console.log);
   }
 
   async function show(simulationId) {
-    return Simulation.findByPk(simulationId, { 
+    return Simulation.findByPk(simulationId, {
       raw: false,
       include: [{
         model: SimulationElements,
@@ -45,6 +45,6 @@ module.exports = function simulationsRepository(
   async function destroy(simulationId) {
     return Simulation.destroy(
       { where: { id: simulationId } }
-    ).catch(console.log);
+    );
   }
 };
