@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports = function simulationsController(reportsService, simulationsService) {
   return {
     simulations,
@@ -15,7 +17,13 @@ module.exports = function simulationsController(reportsService, simulationsServi
 
   async function createNewSimulation(_req, res) {
     const reports = (await reportsService.listForSimulations());
-    res.render('newSimulation', { reports });
+    const simulations = (await simulationsService.list());
+    const lastSimulation = _.last(simulations);
+    var lastKwhCost = 0
+    if (!(typeof lastSimulation === 'undefined')) {
+      lastKwhCost = lastSimulation.kwhCost
+    }
+    res.render('newSimulation', { reports, lastKwhCost });
   }
 
   async function newSimulation(req, res) {
