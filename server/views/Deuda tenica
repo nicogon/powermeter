@@ -3,6 +3,9 @@ Deuda tecnica:
 TODO IMPORTANT!
 Agregar la fecha que la saque del navegador
 
+
+No anda bien en mobile
+
 WONT DO
 Que en la pagina de dispositivos, si se agrega un nuevo dispositivo, lo cargue en la lista sin tener que refrescar
 
@@ -63,3 +66,9 @@ Agragar en el meun de la izqueirda pagina principal
 
 Agregar Iva y aportes patronales como un item en la simulacion que se puede elegir.
 
+
+TODO:
+mejorar los tiempos del reporte que esta lento 
+
+TODO:
+merjorar la variacion del sensor, tira muchos valores. hacer un valor mas integrado
