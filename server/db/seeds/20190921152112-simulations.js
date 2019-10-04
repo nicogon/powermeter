@@ -3,7 +3,7 @@ module.exports = {
     return queryInterface.bulkInsert('Simulations', [
       {
         name: 'Casa de Ivan',
-        totalCost: 2664,
+        totalCost: 4219,
         totalKwh: 703,
         fixedCost: 1555,
         kwhCost: 3.7950,

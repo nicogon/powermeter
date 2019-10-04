@@ -28,10 +28,11 @@ module.exports = function simulationsController(reportsService, simulationsServi
 
   async function newSimulation(req, res) {
     const name = req.body.name;
-    const kwhCost = parseInt(req.body.kwhCost);
+    const kwhCost = parseFloat(req.body.kwhCost);
     const durationInHours = 24 * [1, 7, 14, 21, 28, 30][parseInt(req.body.duration) - 1];
     const sliders = sliderList(req.body);
-    const simulation = { name, kwhCost, durationInHours, simulationItems: sliders };
+    const fixedCost = parseFloat(req.body.fixedCost)
+    const simulation = { name, kwhCost, durationInHours, simulationItems: sliders, fixedCost };
 
     // ESTO POR AHORA NO LO USAMOS, DEJEMOSLO POR LAS DUDAS, DE ULTIMA LO BORRAMOS.
     // if (typeof req.body.reportId === 'string') {

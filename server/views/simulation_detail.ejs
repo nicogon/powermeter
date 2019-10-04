@@ -29,6 +29,13 @@
                 </td>
               </tr>
               <%}%>
+              <tr>
+                  <td> <b>Costo fijo</b> </td>
+                  <td> <b>-----------</b> </td>
+                  <td> <b>-----------</b> </td>
+                  <td> <b>-----------</b> </td>
+                  <td> <b>$<%=simulation.fixedCost%></b> </td>
+            </tr>
           </tbody>
           <tfoot>
                 <tr>
@@ -38,7 +45,7 @@
                     <td> <b><%=simulation.totalKwh%> kW</b> </td>
               <td> <b>$<%=simulation.totalCost%></b> </td>
               </tr>
-              </tfoot>
+            </tfoot>
           </table>
         </div>
       </div>

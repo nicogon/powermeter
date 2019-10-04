@@ -26,8 +26,7 @@ module.exports = function simulationsService(
 
     simulation.totalCost = _.sum(
       simulation.simulationItems.map((item) => item.totalCostConsumption)
-    );
-
+    ) + simulation.fixedCost;
 
     for (const item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKwh);
