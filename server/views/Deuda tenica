@@ -29,7 +29,7 @@ que el reporte deje de hacer el llamado al back cuando esta completo
 
 Que pasa si se desconecta un dispositivo.
 
-TODO: Pulpo 
+DONE
 Cuando entras a una nueva simulacion te autollene el costo de KW con algo del pasado
 
 
@@ -45,7 +45,7 @@ que cuando no hay sensores en nuevo reporte aparezca aunquesea una notificacion 
 CREO QUE ESTA, VERIFICAR
 si entro a un reporte y hay un temporal ejecutando, se  actualiza el reporte con ldata del temporal.
 
-? Pulpo
+DONE
 Costo fijo en simulacion
 
 WONT DO
