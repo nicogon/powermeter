@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Reports', [
       {
         name: 'Cocina',
-        timeStart: 123,
+        timeStart: 1570288394060,
         secondsDuration: 60 * 60,
         averagePower: 2,
         maximumPower: 3

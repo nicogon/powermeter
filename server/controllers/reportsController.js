@@ -100,7 +100,7 @@ module.exports = function reportsController(sensorsService, reportsService, temp
 
   function calculateDate(report) {
     const f = new Date(report.timeStart - 0);
-    return f.toLocaleString('es-ES');
+    return f.toLocaleString('es-ES',{timeZone: "America/Argentina/Buenos_Aires"});
     //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
   }
 };
