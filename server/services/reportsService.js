@@ -35,38 +35,27 @@ module.exports = function reportsService(
     return reportsRepository.del(dispoId);
   }
 
+  function sample(elements,sampleCount){
+    let response = [];
+    const elementsCount = elements.length;
+    const interval = sampleCount / elementsCount;
+    if(elementsCount<500){return elements;}
+    let sampleOffset = 0;
+    for(i=0;i<elementsCount;i++){
+      sampleOffset +=interval;
+      if(sampleOffset>response.length){
+        response.push(elements[i]);
+      }
+    }
+    return response;
+  }
+
   async function getReport(reportId) {
     if (reportId == 'temp') return { now: Date.now(), ...tempReport }; // reportsRepository.getReport(reportId);
        const report = await reportsRepository.getReport(reportId);
-    //    console.log(JSON.stringify(report))
-
-    /*
-    meditions = reportwacho.meditions[0].puntualMeditions;
-
-    a = 0;
-
-    b = [];
-
-    for (puntual of meditions) {
-      if (a < puntual.offset) {
-        a = puntual.offset;
-        b.push({ offset: puntual.offset, value: puntual.value });
-
-      }
-    }
-    reportwacho.meditions[0].puntualMeditions = b;
-
-
-    console.log(JSON.stringify(reportwacho.meditions[0]));
-
-
-    //   tempReport =reportwacho;
-    //  await saveReport();
-
-    // console.log(meditions.length)
-    return reportwacho;
-*/
-
+       for(meditionId in report.meditions){
+        report.meditions[meditionId].puntualMeditions = sample(report.meditions[meditionId].puntualMeditions,500)
+       }
     return report;
   }
 
