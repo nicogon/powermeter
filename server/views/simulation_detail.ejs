@@ -25,7 +25,7 @@
                 <td> <%=simulationItem.percentage.toFixed(2)%>%</td>
                 <td> <%=simulationItem.useInHoursMedition%> Horas </td>
                 <td> <%=simulationItem.totalConsumption%>kW </td>
-                <td> $<%=simulationItem.totalCostConsumption%></td>
+                <td> $<%=simulationItem.totalCostConsumption.toFixed(2)%></td>
                 </td>
               </tr>
               <%}%>
@@ -43,7 +43,7 @@
                     <td> <b>100%</b> </td>
                     <td> <b>-----------</b> </td>
                     <td> <b><%=simulation.totalKwh%> kW</b> </td>
-              <td> <b>$<%=simulation.totalCost%></b> </td>
+              <td> <b>$<%=simulation.totalCost.toFixed(2)%></b> </td>
               </tr>
             </tfoot>
           </table>
