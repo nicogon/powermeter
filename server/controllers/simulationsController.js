@@ -20,10 +20,13 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const simulations = (await simulationsService.list());
     const lastSimulation = _.last(simulations);
     let lastKwhCost = 0;
+    let lastFixedCost = 0;
+
     if (!(typeof lastSimulation === 'undefined')) {
       lastKwhCost = lastSimulation.kwhCost;
+      lastFixedCost = lastSimulation.fixedCost;
     }
-    res.render('newSimulation', { reports, lastKwhCost });
+    res.render('newSimulation', { reports, lastKwhCost, lastFixedCost });
   }
 
   async function newSimulation(req, res) {
