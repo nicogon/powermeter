@@ -104,7 +104,7 @@ module.exports = function reportsService(
   function modifyMedition(medicionAMofidicar, value) {
     medicionAMofidicar = calculateMeditions(medicionAMofidicar, value);
     medicionAMofidicar.puntualMeditions.push({
-      offset: parseInt(Date.now() - tempReport.timeStart, _),
+      offset: parseInt(Date.now() - tempReport.realTimeStart, _),
       value
     });
     return medicionAMofidicar;
@@ -126,12 +126,13 @@ module.exports = function reportsService(
     return medition;
   }
 
-  async function nuevo({ name, secondsDuration, meditions }) {
+  async function nuevo({ name, secondsDuration, meditions, timeStart }) {
     tempReport = {
       name,
       secondsDuration,
       meditions: meditions.map(initializateMeditions),
-      timeStart: Date.now(),
+      timeStart,
+      realTimeStart: Date.now(),
       timeEnd: Date.now() + secondsDuration
     };
 
