@@ -35,6 +35,7 @@
                 <th scope="col" class="border-0">Nombre</th>
                 <th scope="col" class="border-0">Duración</th>
                 <th scope="col" class="border-0">Costo Kw/h</th>
+                <th scope="col" class="border-0">Consumo en Kw</th>
                 <th scope="col" class="border-0">Costo Fijo</th>
                 <th scope="col" class="border-0">Costo total</th>
                 <th scope="col" class="border-0"></th>
@@ -48,8 +49,9 @@
                     ><%=simulation.name%></a
                   >
                 </td>
-                <td><%=simulation.durationInHours%> horas</td>
+                <td><%=(simulation.durationInHours / 24)%> Días</td>
                 <td>$ <%=simulation.kwhCost%></td>
+                <td>$ <%=simulation.totalKwh%></td>
                 <td>$ <%=simulation.fixedCost%></td>
                 <td>$ <%=simulation.totalCost%></td>
                 <td>
