@@ -56,7 +56,7 @@ module.exports = function reportsController(sensorsService, reportsService, temp
     const reportId = req.params.reportId;
     const report = await reportsService.getReport(reportId);
 
-  
+
     if (req.query.format === 'json') {
       res.json(report);
     } else {

@@ -21,33 +21,33 @@ module.exports = function simulationsService(
     simulation.simulationItems = await calcSimulationItems(simulation.simulationItems);
 
     simulation.totalKwh = _.sum(
-      simulation.simulationItems.map((item) => item.totalConsumption)
+      simulation.simulationItems.map(item => item.totalConsumption)
     );
 
     simulation.totalCost = _.sum(
-      simulation.simulationItems.map((item) => item.totalCostConsumption)
+      simulation.simulationItems.map(item => item.totalCostConsumption)
     ) + simulation.fixedCost;
 
     for (const item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKwh);
       item.percentage = parseInt((100 * item.totalConsumption) / total, 10);
     }
-    console.log(simulation)
-    const persisted = await simulationsRepository.saveSimulation(simulation)
+    console.log(simulation);
+    const persisted = await simulationsRepository.saveSimulation(simulation);
 
     return persisted.id;
 
     async function calcSimulationItems(simulationItems) {
-      let editedItems = [];
+      const editedItems = [];
 
       // eslint-disable-next-line no-restricted-syntax
       for (const item of simulationItems) {
         // eslint-disable-next-line no-await-in-loop
         const medition = await reportsService.getMedition(item.MeditionId);
 
-        const totalConsumption = medition.averagePower *
-          (item.useInHoursMedition / 24) *
-          simulation.durationInHours;
+        const totalConsumption = medition.averagePower
+          * (item.useInHoursMedition / 24)
+          * simulation.durationInHours;
 
         const simulationItem = {
           MeditionId: item.MeditionId,

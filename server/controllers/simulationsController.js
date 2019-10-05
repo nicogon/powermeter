@@ -19,9 +19,9 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const reports = (await reportsService.listForSimulations());
     const simulations = (await simulationsService.list());
     const lastSimulation = _.last(simulations);
-    var lastKwhCost = 0
+    let lastKwhCost = 0;
     if (!(typeof lastSimulation === 'undefined')) {
-      lastKwhCost = lastSimulation.kwhCost
+      lastKwhCost = lastSimulation.kwhCost;
     }
     res.render('newSimulation', { reports, lastKwhCost });
   }
@@ -31,7 +31,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const kwhCost = parseFloat(req.body.kwhCost);
     const durationInHours = 24 * [1, 7, 14, 21, 28, 30][parseInt(req.body.duration) - 1];
     const sliders = sliderList(req.body);
-    const fixedCost = parseFloat(req.body.fixedCost)
+    const fixedCost = parseFloat(req.body.fixedCost);
     const simulation = { name, kwhCost, durationInHours, simulationItems: sliders, fixedCost };
 
     // ESTO POR AHORA NO LO USAMOS, DEJEMOSLO POR LAS DUDAS, DE ULTIMA LO BORRAMOS.
