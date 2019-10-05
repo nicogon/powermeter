@@ -26,12 +26,14 @@ module.exports = function simulationsService(
 
     simulation.totalCost = _.sum(
       simulation.simulationItems.map(item => item.totalCostConsumption)
-    ) + simulation.fixedCost;
+    );
 
     for (const item of simulation.simulationItems) {
-      const total = parseInt(simulation.totalKwh);
-      item.percentage = parseInt((100 * item.totalConsumption) / total, 10);
+      const total = parseFloat(simulation.totalKwh);
+      item.percentage = parseFloat((100 * item.totalConsumption) / total);
     }
+
+    simulation.totalCost += simulation.fixedCost
     console.log(simulation);
     const persisted = await simulationsRepository.saveSimulation(simulation);
 
