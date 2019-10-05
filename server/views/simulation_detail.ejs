@@ -22,7 +22,7 @@
               <%for (var simulationItem of simulation.simulationItems){%>
               <tr>
                 <td> <%=simulationItem.name%> </td>
-                <td> <%=simulationItem.percentage%>%</td>
+                <td> <%=simulationItem.percentage.toFixed(2)%>%</td>
                 <td> <%=simulationItem.useInHoursMedition%> Horas </td>
                 <td> <%=simulationItem.totalConsumption%>kW </td>
                 <td> $<%=simulationItem.totalCostConsumption%></td>

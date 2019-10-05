@@ -30,7 +30,7 @@ module.exports = function simulationsService(
 
     for (const item of simulation.simulationItems) {
       const total = parseInt(simulation.totalKwh);
-      item.percentage = parseInt((100 * item.totalConsumption) / total, 10);
+      item.percentage = parseFloat((100 * item.totalConsumption) / total);
     }
     console.log(simulation)
     const persisted = await simulationsRepository.saveSimulation(simulation)
