@@ -73,8 +73,8 @@ module.exports = function reportsController(sensorsService, reportsService, temp
     const meditions = req.body.medition((medition) => {});
 */
 
-    if (tempReport) {
-      res.redirect('reportes/temp');
+    if (reportsService.isTemp()) {
+      res.redirect('/reportes/temp');
       return;
     }
 
@@ -88,8 +88,7 @@ module.exports = function reportsController(sensorsService, reportsService, temp
   async function toList(req, res) {
     let reports = await reportsService.list();
     if (req.query.abort === 'true') {
-      // eslint-disable-next-line no-param-reassign
-      tempReport = null;
+      reportsService.eraseTemp();
     }
     reports = reports.map(report => ({
       ...report,

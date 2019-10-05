@@ -18,9 +18,19 @@ module.exports = function reportsService(
     list,
     listForSimulations,
     getMedition,
-    del
+    del,
+    eraseTemp,
+    isTemp
   };
 
+
+  function eraseTemp() {
+    tempReport = null;
+  }
+
+  function isTemp() {
+    return !!tempReport;
+  }
   async function del(dispoId) {
     return reportsRepository.del(dispoId);
   }
@@ -38,9 +48,8 @@ module.exports = function reportsService(
     if (process.env.SHOW_CONSOLE_LOGS === true) console.log(tempReport);
 
     // Buscar si existe una medicion asociada a un sensor
-    const activeMedition =
-      tempReport &&
-      tempReport.meditions.find((medition) => medition.dispoId === sensorId);
+    const activeMedition = tempReport
+      && tempReport.meditions.find(medition => medition.dispoId === sensorId);
 
     // Si la medicion finalizo, borrar el objeto temporal de la memoria
     if (hasFinish()) {
@@ -85,8 +94,8 @@ module.exports = function reportsService(
     medition.currentPower = fixed(currentPower, 1);
     medition.meditionCounter++;
     medition.averagePower = fixed(
-      (medition.averagePower * (medition.meditionCounter - 1) + currentPower) /
-        medition.meditionCounter,
+      (medition.averagePower * (medition.meditionCounter - 1) + currentPower)
+        / medition.meditionCounter,
       1
     );
     return medition;
@@ -94,7 +103,7 @@ module.exports = function reportsService(
 
   function updateTemporalReport() {
     const currentPower = _.sum(
-      tempReport.meditions.map((medicionInt) => medicionInt.currentPower)
+      tempReport.meditions.map(medicionInt => medicionInt.currentPower)
     );
     tempReport = calculateMeditions(tempReport, currentPower);
     tempReport = populateCurrent(tempReport);
@@ -121,8 +130,7 @@ module.exports = function reportsService(
     medition.currentCurrent = fixed(medition.currentPower / 220);
     medition.averageCurrent = fixed(medition.averagePower / 220);
     medition.maximumCurrent = fixed(medition.maximumPower / 220);
-    if (medition.meditions)
-      medition.meditions = medition.meditions.map(populateCurrent);
+    if (medition.meditions) { medition.meditions = medition.meditions.map(populateCurrent); }
     return medition;
   }
 
