@@ -12,6 +12,7 @@
       key: 'id' // <<< Note, its a column name
     },
     name: Sequelize.STRING,
+    puntualMeditions: Sequelize.JSONB,
     averagePower: Sequelize.FLOAT,
     maximumPower: Sequelize.FLOAT
   }),

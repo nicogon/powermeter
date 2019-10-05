@@ -5,7 +5,6 @@ const sequelize = require('sequelize');
 
 const SimulationElements = require('./models').SimulationElements;
 const Medition = require('./models').Medition;
-const PuntualMedition = require('./models').PuntualMedition;
 const Report = require('./models').Report;
 const Sensor = require('./models').Sensor;
 const Simulation = require('./models').Simulation;
@@ -73,7 +72,6 @@ async function createContainer() {
   // Models
   container.register('SimulationElements', function meditionFn() { return SimulationElements; });
   container.register('Medition', function sensorFn() { return Medition; });
-  container.register('PuntualMedition', function sensorFn() { return PuntualMedition; });
   container.register('Report', function sensorFn() { return Report; });
   container.register('Sensor', function sensorFn() { return Sensor; });
   container.register('Simulation', function sensorFn() { return Simulation; });

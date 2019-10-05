@@ -1,4 +1,4 @@
-module.exports = function reportsController(sensorsService, reportsService) {
+module.exports = function reportsController(sensorsService, reportsService, tempReport) {
   return {
     toList,
     createNewReport,
@@ -21,6 +21,8 @@ module.exports = function reportsController(sensorsService, reportsService) {
     const secondsDuration = parseInt(req.body.duracion);
     const meditions = [];
 
+    const timeStart = req.body.timeStart;
+
     if (typeof req.body.nombreMedicion === 'string') {
       meditions.push({
         dispoId: req.body.dispoId,
@@ -42,7 +44,8 @@ module.exports = function reportsController(sensorsService, reportsService) {
     const reportId = await reportsService.nuevo({
       name,
       secondsDuration,
-      meditions
+      meditions,
+      timeStart
     });
 
     res.redirect(`/reportes/${reportId}/`);
@@ -52,6 +55,7 @@ module.exports = function reportsController(sensorsService, reportsService) {
     // TODO
     const reportId = req.params.reportId;
     const report = await reportsService.getReport(reportId);
+
 
     if (req.query.format === 'json') {
       res.json(report);
@@ -69,8 +73,13 @@ module.exports = function reportsController(sensorsService, reportsService) {
     const meditions = req.body.medition((medition) => {});
 */
 
+    if (reportsService.isTemp()) {
+      res.redirect('/reportes/temp');
+      return;
+    }
+
     const sensors = (await sensorsService.list()).filter(
-      (sensor) => sensor.isOnline
+      sensor => sensor.isOnline
     );
 
     res.render('newReport', { sensors });
@@ -78,7 +87,10 @@ module.exports = function reportsController(sensorsService, reportsService) {
 
   async function toList(req, res) {
     let reports = await reportsService.list();
-    reports = reports.map((report) => ({
+    if (req.query.abort === 'true') {
+      reportsService.eraseTemp();
+    }
+    reports = reports.map(report => ({
       ...report,
       date: calculateDate(report)
     }));
@@ -88,7 +100,7 @@ module.exports = function reportsController(sensorsService, reportsService) {
 
   function calculateDate(report) {
     const f = new Date(report.timeStart - 0);
-    return f.toLocaleString('es-ES');
+    return f.toLocaleString('es-ES',{timeZone: "America/Argentina/Buenos_Aires"});
     //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
   }
 };

@@ -1,40 +1,21 @@
 Deuda tecnica:
 
-TODO IMPORTANT!
-Agregar la fecha que la saque del navegador
-
 
 No anda bien en mobile
-
-WONT DO
-Que en la pagina de dispositivos, si se agrega un nuevo dispositivo, lo cargue en la lista sin tener que refrescar
 
 
 creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte. 
 
 
-WONT DO -> si sobra tiempo una compactacion
 no pushear data cada 1 segudo, en casos de largo reporte, pushear cada menos tiempo.
  
-
-DONE
-meter en dispositivos un toque de padding con px-4
-
-DONE
-que la primera vez q reporta medidor, que el dispoid sea el nombre
-
-DONE
-que el reporte deje de hacer el llamado al back cuando esta completo
-  
-
 Que pasa si se desconecta un dispositivo.
 
 DONE
 Cuando entras a una nueva simulacion te autollene el costo de KW con algo del pasado
 
+coso fijo auto rellenar
 
-DONE
-que desaparezca el consumo actual del reporte una vez finalizado
 
 TODO/WONT DO
 que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
@@ -44,31 +25,7 @@ que cuando no hay sensores en nuevo reporte aparezca aunquesea una notificacion 
 
 CREO QUE ESTA, VERIFICAR
 si entro a un reporte y hay un temporal ejecutando, se  actualiza el reporte con ldata del temporal.
-
-DONE
-Costo fijo en simulacion
-
-WONT DO
-minutos en medicion(eje x)
-  
-TODO: nico
-Cuando estas haciendo el reporte, que si te vas, podes volver facilmente
-
-TODO
-ver iconos que andan mal --> Sin internet
-
-?VERIFICAR --> No se queda sombreado el azul
-El menu de la izquierda no fucniona la seleccion de sensores ni sumulaciones
-
-NO ENTENDER --> Agregar un ícono que sea página principal en el menu de la izqueirda, arriba de reportes y que te lleve a la home
-Agragar en el meun de la izqueirda pagina principal
-
-
 Agregar Iva y aportes patronales como un item en la simulacion que se puede elegir.
-
-
-TODO:
-mejorar los tiempos del reporte que esta lento 
 
 TODO:
 merjorar la variacion del sensor, tira muchos valores. hacer un valor mas integrado

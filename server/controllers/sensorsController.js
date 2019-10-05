@@ -1,4 +1,4 @@
-module.exports = function sensorsController(sensorsService, Report, Medition, PuntualMedition, Sensor) {
+module.exports = function sensorsController(sensorsService) {
   return {
     report, toList, update, borrar
   };

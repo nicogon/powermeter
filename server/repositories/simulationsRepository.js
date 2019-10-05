@@ -14,7 +14,7 @@ module.exports = function simulationsRepository(
       ]
     }).catch(console.log);
   }
-/*
+  /*
    [ { MeditionId: '1', // Late
        useInHoursMedition: '10', // Late
        name: 'Heladera', // Nola

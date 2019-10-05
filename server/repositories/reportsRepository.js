@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable radix */
-module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
+module.exports = function reportsRepository(Report, Medition) {
   return {
     list,
     del,
@@ -18,24 +18,13 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
     });
   }
 
-  async function createPuntualMeditions(puntualMeditions, MeditionId) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const element of puntualMeditions) {
-      await PuntualMedition.create({ ...element, MeditionId });
-    }
-  }
-
   async function createMeditions(newReport, idReport) {
     // eslint-disable-next-line no-restricted-syntax
     for (const medition of newReport.meditions) {
       // eslint-disable-next-line no-await-in-loop
-      const createdMedition = await Medition.create(
+      await Medition.create(
         { ...medition, ReportId: idReport },
         {}
-      );
-      await createPuntualMeditions(
-        medition.puntualMeditions,
-        parseInt(createdMedition.toJSON().id)
       );
     }
   }
@@ -57,8 +46,7 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
       include: [
         {
           model: Medition,
-          as: 'meditions',
-          include: [{ model: PuntualMedition, as: 'puntualMeditions' }]
+          as: 'meditions'
         }
       ],
 
@@ -70,7 +58,7 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
 
   async function list() {
     const response = await Report.findAll({});
-    return response.map((a) => a.toJSON());
+    return response.map(a => a.toJSON());
   }
 
   async function listForSimulations() {
@@ -82,7 +70,7 @@ module.exports = function reportsRepository(Report, Medition, PuntualMedition) {
         }
       ]
     });
-    return response.map((a) => a.toJSON());
+    return response.map(a => a.toJSON());
   }
 
   async function getMedition(meditionId) {
