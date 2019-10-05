@@ -7,8 +7,8 @@ module.exports = {
         name: 'Cocina',
         timeStart: 1570288394060,
         secondsDuration: 60 * 60,
-        averagePower: 2,
-        maximumPower: 3
+        averagePower: 62,
+        maximumPower: 1786
       }
     ], {});
   },

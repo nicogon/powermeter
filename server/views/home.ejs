@@ -114,10 +114,9 @@
                 <div class="card-footer border-bottom">
                         <div class="row">
                           <div class="col">
-                            <select name="simulations" id="feInputState" class="custom-select custom-select-sm">
-                                    <option selected="">Simulaciones...</option>
-                                    <%for (var simulation of simulations){%>
-      <option value=<%=simulation.id%>><%=simulation.name%></option>
+                            <select id="simulations"  class="custom-select custom-select-sm">
+                                    <%for (var simulationId in simulations){%>
+      <option value=<%=simulationId%>><%=simulations[simulationId].name%></option>
       <%}%>
                             </select>
                           </div>
@@ -137,7 +136,72 @@
 
               </div>
             </div>
-                  <canvas height="420" class="blog-users-by-medition m-auto chartjs-render-monitor" width="574" style="display: block; height: 210px; width: 287px;"></canvas>
+            
+            <%for (var simulationId in simulations){%>
+              <canvas id='canvas<%-simulationId%>' height="420" class="grafico blog-users-by-medition m-auto chartjs-render-monitor" style="<%if(simulationId!=0){%>display: none;<%}%> height: 210px; width: 287px;"></canvas>
+              <%}%>
+                
+              
+              
+              <script>
+              
+              $(document).ready(function() {
+              
+
+              $("#simulations").change(function(){
+
+                valor =  $("#simulations").val();
+
+                $(".grafico").hide();
+                $("#canvas"+valor).show();
+
+
+              })
+            
+              function calcularColores(data) {
+                return data.map((valor, index) => (index)).map((a) => randomHSL(a));
+              }
+
+
+              function randomHSL(i, transparent = false) {
+                return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
+              }
+
+              <%for (var simulationId in simulations){%>
+      
+      
+                var ctx<%-simulationId%> = document.getElementById('canvas<%-simulationId%>').getContext('2d');
+
+              porcentajes<%-simulationId%> = <%-JSON.stringify(simulations[simulationId].simulationItems.map(elem=>elem.totalCostConsumption))%>;
+              labels<%-simulationId%> =  <%-JSON.stringify(simulations[simulationId].simulationItems.map(elem=>elem.name))%>;
+
+            data<%-simulationId%> = {
+              datasets: [{
+                data: porcentajes<%-simulationId%>,
+                backgroundColor: calcularColores(porcentajes<%-simulationId%>),
+              }],
+              labels:labels<%-simulationId%>
+            };
+
+            myDoughnutChart = new Chart(ctx<%-simulationId%>, {
+              type: 'doughnut',
+              data: data<%-simulationId%>,
+              options: {
+                maintainAspectRatio: true,
+                  responsive: true,
+                  animation: false
+                }
+        });
+
+                 <%}%>
+                
+
+      });
+              
+              </script>
+              
+              
+              
                 </div>
               </div>
 
