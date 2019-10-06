@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   // Associations
   Simulation.associate = (models) => {
     models.Simulation.hasMany(models.SimulationElements, {
-      as: 'simulationItems'
+      as: 'simulationItems',
+      onDelete: 'CASCADE'
     });
   };
 
