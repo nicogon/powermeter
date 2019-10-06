@@ -7,9 +7,9 @@ module.exports = {
       autoIncrement: true
     },
     SimulationId: {
-      primaryKey: true,
       type: Sequelize.INTEGER,
-      references: { model: 'Simulations', key: 'id' }
+      references: { model: 'Simulations', key: 'id' },
+      onDelete: 'CASCADE'
     },
     useInHoursMedition: Sequelize.FLOAT,
     name: Sequelize.STRING,
