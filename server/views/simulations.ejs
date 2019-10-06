@@ -49,7 +49,12 @@
                     ><%=simulation.name%></a
                   >
                 </td>
+                <% if((simulation.durationInHours / 24) > 1){ %>
                 <td><%=(simulation.durationInHours / 24)%> Días</td>
+                <% }else{ %>
+                  <td><%=(simulation.durationInHours / 24)%> Día</td>
+                  <% } %>
+
                 <td>$ <%=simulation.kwhCost%></td>
                 <td><%=simulation.totalKwh%> Kw</td>
                 <td>$ <%=simulation.fixedCost%></td>
