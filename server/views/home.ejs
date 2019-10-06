@@ -78,37 +78,29 @@
                     <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                       <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
 
-
-
-                  <table class="table mb-0">
-                      <thead class="bg-light">
-                        <tr>
-                          <th scope="col" class="border-0">Nombre</th>
-                          <th scope="col" class="border-0">Duración</th>
-                          <th scope="col" class="border-0">Costo Kw/h</th>
-                          <th scope="col" class="border-0">Costo Fijo</th>
-                          <th scope="col" class="border-0">Costo total</th>
-                          <th scope="col" class="border-0"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <%for (var simulation of simulations){%>
-                        <tr id="simulation-line-<%=simulation.id%>">
-                          <td>
-                            <a href="/simulaciones/<%=simulation.id%>/"
-                              ><%=simulation.name%></a
-                            >
-                          </td>
-                          <td><%=simulation.durationInHours%> horas</td>
-                          <td>$ <%=simulation.kwhCost%></td>
-                          <td>$ <%=simulation.fixedCost%></td>
-                          <td>$ <%=simulation.totalCost%></td>
-                          <td>
-                          </td>
-                        </tr>
-                        <%}%>
-                      </tbody>
-                    </table>
+                      <table class="table mb-0">
+                          <thead class="bg-light">
+                            <tr>
+                              <th scope="col" class="border-0">Nombre</th>
+                              <th scope="col" class="border-0">Duración</th>
+                              <th scope="col" class="border-0">Consumo en Kw</th>
+                              <th scope="col" class="border-0">Costo total</th>
+                              <th scope="col" class="border-0"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <%for (var simulation of simulations){%>
+                            <tr id="simulation-line-<%=simulation.id%>">
+                              <td>
+                                <a href="/simulaciones/<%=simulation.id%>/"><%=simulation.name%></a>
+                              </td>
+                              <td><%=(simulation.durationInHours / 24)%> Días</td>
+                              <td><%=simulation.totalKwh%> Kw</td>
+                              <td>$ <%=simulation.totalCost.toFixed(2)%></td>
+                            </tr>
+                            <%}%>
+                          </tbody>
+                        </table>
 
                     <div class="row border-bottom py-2 bg-light">
                         <div class="col-12 col-sm-6">
