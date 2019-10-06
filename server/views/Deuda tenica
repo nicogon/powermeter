@@ -1,17 +1,8 @@
 Deuda tecnica:
 
-
-SIMULACIONES
-agregar columna de kw/h consumidos
-que la duracion sea en dias
-
-
 que la duracion de los reportes en la home tambien sea variable
 
-
-
 No anda bien en mobile
-
 
 creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte. 
 
@@ -19,12 +10,6 @@ creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte.
 no pushear data cada 1 segudo, en casos de largo reporte, pushear cada menos tiempo.
  
 Que pasa si se desconecta un dispositivo.
-
-DONE
-Cuando entras a una nueva simulacion te autollene el costo de KW con algo del pasado
-
-coso fijo auto rellenar
-
 
 TODO/WONT DO
 que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
@@ -38,3 +23,6 @@ Agregar Iva y aportes patronales como un item en la simulacion que se puede eleg
 
 TODO:
 merjorar la variacion del sensor, tira muchos valores. hacer un valor mas integrado
+
+TODO: 
+Mejorar las tablas, ponerles colores, sombreado (por ejemplo al header y footer), etc
