@@ -41,4 +41,4 @@ function report() {
   */
 }
 
-setInterval(() => { report(); }, 1000);
+setInterval(() => { report(); }, 500);
