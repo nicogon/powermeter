@@ -35,23 +35,31 @@
                             <button type="button" val="86400000" class="duration  mb-2 btn btn-sm btn-outline-primary mr-1">24hs</button>
                             <input type="hidden" name="duracion" id="duracion" value="10000">
                         </div>
-                        <div class="form-group">
+                    </li>
+
+                        <div class="form-group p-2 mt-3">
                             <label for="feInputState"><b>Agregar sensores</b></label>
+                            <div class="row">
                             <%for (var sensor of sensors){%>
+                                <div class="col-md border">
+                                    
+                                <li class="list-group-item p-2 border-0" id="sensorMenu-<%=sensor.id%>">
+
                                 <div class="custom-control custom-checkbox mb-1">
                                     <input type="checkbox" class="custom-control-input" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>">
                                     <label class="custom-control-label" for=<%=sensor.id%>><%=sensor.name%></label>
                                 </div>
                                 <!-- <option value="<%=sensor.id%>"><%=sensor.name%></option> -->
+                            </li>
+                        </div>
                                 <%}%>
                         </div>
 
+                    </div>
 
                     </li>
 
-
-
-                    <li class="list-group-item p-3">
+                    <li class="list-group-item border-top-0 p-3">
                         <button type="submit" class="btn btn-accent">Crear reporte</button>
                     </li>
                 </ul>
@@ -85,20 +93,17 @@
                 if (isChecked) {
 
                     const dispoElement = `
-                    <li class="list-group-item p-3" id="card-${dispoId}">
+                    <li class="list-group-item p-3 border-0" id="card-${dispoId}">
                         <div class='d-flex'>
-                            <label for="feInputState">Dispositivo</label>
-                            <a class="ml-auto" href="#" id="borrar-${dispoId}" dispo-id="${dispoId}">Borrar</a>
+                            <label for="feInputState">¿Donde está el sensor?</label>
                         </div>
-                        <h5>${dispoName}</h5>
                         <div class="form-group ">
-                            <label for="feFirstName">Nombre de la medicion</label>
                             <input type="hidden" name="dispoId" value="${dispoId}">
-                            <input type="text" required class="form-control" placeholder="Nombre del reporte" name="nombreMedicion">
+                            <input type="text" required class="form-control" placeholder="Escriba aquí" name="nombreMedicion">
                         </div>
                     </li>`;
 
-                    $("#dispoMenu").after(dispoElement);
+                    $("#sensorMenu-" + dispoId).after(dispoElement);
 
                     $("#borrar-" + dispoId).click(() => {
                         $("#card-" + dispoId).remove();
