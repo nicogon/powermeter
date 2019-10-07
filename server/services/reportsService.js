@@ -5,6 +5,7 @@
 const _ = require('lodash');
 
 module.exports = function reportsService(
+  Report,
   sensorsRepository,
   reportsRepository,
   sessionId,
@@ -109,7 +110,7 @@ module.exports = function reportsService(
   }
 
   function significantChange(currentValue, previousMeditionValue) {
-    const correctionFactor = 0.01;
+    const correctionFactor = Report.SIMILAR_VALUES_ON_REPORTS;
     const minValue = (1 - correctionFactor) * currentValue;
     const maxValue = (1 + correctionFactor) * currentValue;
 
