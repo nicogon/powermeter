@@ -16,7 +16,12 @@ module.exports = function simulationsController(reportsService, simulationsServi
   }
 
   async function createNewSimulation(_req, res) {
-    const reports = (await reportsService.listForSimulations());
+    let reports = (await reportsService.listForSimulations());
+    reports = reports.map(report => ({
+      ...report,
+      date: calculateDate(report)
+    }));
+
     const simulations = (await simulationsService.list());
     const lastSimulation = _.last(simulations);
     let lastKwhCost = 0;
@@ -32,7 +37,7 @@ module.exports = function simulationsController(reportsService, simulationsServi
   async function newSimulation(req, res) {
     const name = req.body.name;
     const kwhCost = parseFloat(req.body.kwhCost);
-    const durationInHours = 24 * [1, 7, 14, 21, 28, 30][parseInt(req.body.duration) - 1];
+    const durationInHours = 24 * [1, 7, 15, 30][parseInt(req.body.duration) - 1];
     const sliders = sliderList(req.body);
     const fixedCost = parseFloat(req.body.fixedCost);
     const simulation = { name, kwhCost, durationInHours, simulationItems: sliders, fixedCost };
@@ -69,5 +74,10 @@ module.exports = function simulationsController(reportsService, simulationsServi
     const simulationId = req.params.simulationId;
     await simulationsService.destroySimulation(simulationId);
     res.status(200).send();
+  }
+
+  function calculateDate(report) {
+    const f = new Date(report.timeStart - 0);
+    return f.toLocaleString('es-ES',{timeZone: "America/Argentina/Buenos_Aires"});
   }
 };

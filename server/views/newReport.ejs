@@ -17,15 +17,15 @@
                 <input type="hidden" name="timeStart" id="timeStart" value="10000">
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item p-3">
+                    <li class="list-group-item p-3" id="dispoMenu">
 
                         <div class="form-group ">
-                            <label for="feFirstName">Nombre del reporte</label>
-                            <input required type="text" class="form-control" placeholder="Nombre del reporte" name="name">
+                            <label for="feFirstName"><b>Nombre del reporte</b></label>
+                            <input required type="text" class="form-control" placeholder="Escriba aquí" name="name">
                         </div>
 
                         <div class="form-group mb-0">
-                            <label for="feInputState">Duracion del reporte</label><br>
+                            <label for="feInputState"><b>Duracion del reporte</b></label><br>
                             <button type="button" val="10000" class="duration mb-2 btn btn-sm btn-primary mr-1">10s</button>
                             <button type="button" val="60000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">1min</button>
                             <button type="button" val="300000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">5min</button>
@@ -35,13 +35,8 @@
                             <button type="button" val="86400000" class="duration  mb-2 btn btn-sm btn-outline-primary mr-1">24hs</button>
                             <input type="hidden" name="duracion" id="duracion" value="10000">
                         </div>
-
-                    </li>
-                    <li class="list-group-item p-3" id="dispoMenu">
-                        <label for="feInputState">Sensores</label>
-
                         <div class="form-group">
-                            <label for="feInputState">Agregar sensores</label>
+                            <label for="feInputState"><b>Agregar sensores</b></label>
                             <%for (var sensor of sensors){%>
                                 <div class="custom-control custom-checkbox mb-1">
                                     <input type="checkbox" class="custom-control-input" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>">

@@ -21,26 +21,23 @@
 
         <form action="/simulaciones/" method="post">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item p-3">
+                <li class="list-group-item p-3" id="reportMenu">
 
                     <div class="form-group ">
-                        <label for="feFirstName">Nombre de la simulación</label>
-                        <input type="text" class="form-control" placeholder="Nombre de la simulación" name="name">
+                        <label for="feFirstName"><b>Nombre de la simulación</b></label>
+                        <input required type="text" class="form-control" placeholder="Escriba aquí" name="name">
                     </div>
 
                     <div class="form-group mb-0">
-                            <label for="feInputState">Duracion de la simulación</label><br>
+                            <label for="feInputState"> <b>Duración de la simulación</b></label><br>
                             <button type="button" val="1" class="duration mb-2 btn btn-sm btn-primary mr-1">1 dia</button>
-                            <button type="button" val="2" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">1 semana</button>
-                            <button type="button" val="3" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">2 semanas</button>
-                            <button type="button" val="4" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">3 semanas</button>
-                            <button type="button" val="5" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">4 semanas</button>
-                            <button type="button" val="6" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">1 mes</button>
+                            <button type="button" val="2" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">7 días</button>
+                            <button type="button" val="3" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">15 días</button>
+                            <button type="button" val="4" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">30 días</button>
                             <input type="hidden" name="duration" id="duration" value="1">
                     </div>
-                    
                     <div class="form-group ">
-                        <label for="feFirstName">Costo Fijo</label>
+                        <label for="feFirstName"><b>Costo Fijo</b></label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
@@ -50,19 +47,18 @@
                     </div>
 
                     <div class="form-group ">
-                            <label for="feFirstName">Costo del Kw</label>
+                            <label for="feFirstName"><b>Costo del Kw</b></label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>
                                 </div>
-                                <input type="text" class="form-control" pattern="[0-9.,]+" value="<%=lastKwhCost%>" name="kwhCost">
+                                <input required type="text" class="form-control" pattern="[0-9.,]+" value="<%=lastKwhCost%>" name="kwhCost">
                             </div>
                         </div>
 
                     <div id="slider"></div>
-                </li>
-                <li class="list-group-item p-3" id="reportMenu">
-                    <label for="feInputState">Reportes</label>
+
+                    <label for="feInputState"><b>Reportes</b></label>
                     <div class="form-group">
                         <section class="section-preview">
                             <%for (var report of reports){%>
@@ -70,7 +66,7 @@
                             <div class="custom-control custom-checkbox mb-1">
                                 <input type="checkbox" class="custom-control-input" id="<%=report.id%>"
                                     data-name="<%=report.name%>" value="<%=report.id%>">
-                                <label class="custom-control-label" for=<%=report.id%>><%=report.name%></label>
+                                <label class="custom-control-label" for=<%=report.id%>><b><%=report.name%></b> - <%=report.date%></label>
                             </div>
                             <%}%>  
                                     </div>
@@ -146,7 +142,7 @@
                             reportElement += generateCard(medition);
                         }
 
-                        reportElement = `<li id="card-${reportId}"><div class="col-lg-12">
+                        reportElement = `<li id="card-${reportId}"><div class="col-lg-12 p-4">
                                 <input type="hidden" name="reportId" value="${reportId}">
                                 <h4>${report.name}</h4>
                                 <h6>Seleccione la cantidad de horas por día que utiliza cada uno de estos elementos</h6>

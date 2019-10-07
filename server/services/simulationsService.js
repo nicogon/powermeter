@@ -47,7 +47,7 @@ module.exports = function simulationsService(
         // eslint-disable-next-line no-await-in-loop
         const medition = await reportsService.getMedition(item.MeditionId);
 
-        const totalConsumption = medition.averagePower
+        const totalConsumption = (medition.averagePower / 1000)
           * (item.useInHoursMedition / 24)
           * simulation.durationInHours;
 

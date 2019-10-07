@@ -1,4 +1,4 @@
-<%- include("header",{mode:''}) %>
+<%- include("header",{mode:'home'}) %>
 <!-- End Main Sidebar -->
 
   <div class="main-content-container container-fluid px-4">
@@ -6,11 +6,16 @@
     <div class="page-header row no-gutters py-4">
       <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Tablero Principal</span>
-        <h3 class="page-title">Últimos Reportes</h3>
-      </div>
+        <h3 class="page-title">Página Principal</h3>
+        </div>
     </div>
     <!-- End Page Header -->
     <!-- Small Stats Blocks -->
+    <div class="p-3 bg-white text-dark">
+        <h6 class="m-0">Últimos Reportes</h6>
+        
+    </div>
+
     <div class="row">
       <%for (var report of reports){%>
       <div class="col-lg col-md-6 col-sm-6 mb-4"> 
@@ -29,6 +34,11 @@
             </div>
             <div class="d-flex flex-column m-auto">
               <div class="stats-small__data text-center">
+
+                                            <!-- <a href="/reportes/<%=report.id%>/">
+                                                Detalle
+                                            </a> -->
+
                 <span class="stats-small__label text-uppercase"><%=report.name%></span>
                 <h6 class="stats-small__value count my-3"><%=report.averagePower%> Kw</h6>
               </div>
@@ -69,9 +79,22 @@
             <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
               <div class="card card-small">
                 <div class="card-header border-bottom">
+                    <div class="d-flex justify-content-between">
                   <h6 class="m-0">Simulaciones</h6>
-                </div>
+                  <% if(simulations.length > 0){ %>
 
+
+                      <a
+                        href="/simulaciones/new"
+                        class="btn btn-sm btn-primary"
+                        style="color:white"
+                        >+ Nueva Simulación</a
+                      >
+                      <%}%>
+
+
+                </div>
+              </div>
                 <% if(simulations.length > 0){ %>
                 <div class="card-body pt-0">
                   <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
@@ -137,7 +160,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
               <div class="card card-small h-100">
                 <div class="card-header border-bottom">
-                  <h6 class="m-0">Costos</h6>
+                  <h6 class="m-0">Costos Simulación</h6>
                 </div>
                 <div class="card-footer border-bottom">
                         <div class="row">
