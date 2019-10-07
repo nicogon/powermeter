@@ -34,33 +34,9 @@ module.exports = function reportsService(
     return reportsRepository.del(dispoId);
   }
 
-  function sample(elements) {
-    // eslint-disable-next-line prefer-const
-    let response = [];
-
-    const sampleCount = 500;
-    const elementsCount = elements.length;
-    const interval = sampleCount / elementsCount;
-
-    if (elementsCount < sampleCount) { return elements; }
-
-    let sampleOffset = 0;
-
-    for (let i = 0; i < elementsCount; i++) {
-      sampleOffset += interval;
-      if (sampleOffset > response.length) { response.push(elements[i]); }
-    }
-
-    return response;
-  }
-
   async function getReport(reportId) {
     if (reportId == 'temp') return { now: Date.now(), ...tempReport }; // reportsRepository.getReport(reportId);
-    const report = await reportsRepository.getReport(reportId);
-    for (meditionId in report.meditions) {
-      report.meditions[meditionId].puntualMeditions = sample(report.meditions[meditionId].puntualMeditions);
-    }
-    return report;
+    return report = await reportsRepository.getReport(reportId);
   }
 
   async function notify(sensorId, meditionValue) {
