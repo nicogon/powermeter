@@ -25,12 +25,9 @@ TODO:
 merjorar la variacion del sensor, tira muchos valores. hacer un valor mas integrado
 
 TODO: 
-Mejorar las tablas, ponerles colores, sombreado (por ejemplo al header y footer), etc
+Ver si se puede hacer un sort en las cabeceras de las tablas
 
 TODO: 
-Mejorar la forma en el que le pongo el nombre al sensor en los reportes, es muy incomodo como está hoy. Ver que es lo mas facil para aplicar en ese 
 Agregar mas descripción a la hora de elegir un reporte en la simulación (por ejemplo la fecha)
-
-Agregar en el menú de la izquierda uno que sea "Pagina Principal" y te lleve a la HOME.
 
 Identificar a los sensores de manera mas copada (con una cinta de color o algo asi, para que sea mas visual la presentacion)
