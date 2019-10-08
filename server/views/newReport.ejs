@@ -37,22 +37,22 @@
                         </div>
                     </li>
 
-                        <div class="form-group p-2 mt-3">
-                            <label for="feInputState"><b>Agregar sensores</b></label>
-                            <div class="row">
+                    <div class="form-group p-2 mt-3">
+                        <label for="feInputState"><b>Agregar sensores</b></label>
+                        <div class="row">
                             <%for (var sensor of sensors){%>
                                 <div class="col-md border">
-                                    
-                                <li class="list-group-item p-2 border-0" id="sensorMenu-<%=sensor.id%>">
+
+                                    <li class="list-group-item p-2 border-0" id="sensorMenu-<%=sensor.id%>">
 
 
-                        <div class="custom-control custom-toggle m-2">
-                                <input type="checkbox" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>" class="custom-control-input custom-tt">
-                                <label class="custom-control-label titulo-label"  for="customToggle1"><%=sensor.name%></label>
-                              </div>
-                       
-                            </li>
-                        </div>
+                                        <div class="custom-control custom-toggle m-2">
+                                            <input type="checkbox" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>" class="custom-control-input custom-tt">
+                                            <label class="custom-control-label titulo-label" for="customToggle1"><%=sensor.name%></label>
+                                        </div>
+
+                                    </li>
+                                </div>
                                 <%}%>
                         </div>
 
@@ -72,6 +72,17 @@
     <script>
         $(document).ready(function() {
 
+            var contadorSensores = 0;
+
+            $("form").submit(function(e) {
+                if(contadorSensores<=0){
+                    console.log(contadorSensores)
+                    alert("Seleccionar por lo menos un sensor");
+                    e.preventDefault();
+                }
+              
+            });
+
             $("#timeStart").val(Date.now());
 
             $(".duration").click(function() {
@@ -83,7 +94,7 @@
 
             })
 
-            $("input").change(function() {
+            $('input[type="checkbox"]').change(function() {
                 var $input = $(this);
 
                 const dispoId = $input.val();
@@ -92,6 +103,7 @@
                 const isChecked = $input.is(":checked")
 
                 if (isChecked) {
+                    contadorSensores++;
 
                     const dispoElement = `
                     <li class="list-group-item pb-3 pl-3 pr-3 pt-1 border-0" id="card-${dispoId}">
@@ -111,6 +123,7 @@
                     });
 
                 } else {
+                    contadorSensores--;
                     $("#card-" + dispoId).remove();
                 }
             });
