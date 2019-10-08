@@ -45,11 +45,12 @@
                                     
                                 <li class="list-group-item p-2 border-0" id="sensorMenu-<%=sensor.id%>">
 
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>">
-                                    <label class="custom-control-label" for=<%=sensor.id%>><%=sensor.name%></label>
-                                </div>
-                                <!-- <option value="<%=sensor.id%>"><%=sensor.name%></option> -->
+
+                        <div class="custom-control custom-toggle m-2">
+                                <input type="checkbox" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>" class="custom-control-input custom-tt">
+                                <label class="custom-control-label titulo-label"  for="customToggle1"><%=sensor.name%></label>
+                              </div>
+                       
                             </li>
                         </div>
                                 <%}%>
@@ -93,7 +94,7 @@
                 if (isChecked) {
 
                     const dispoElement = `
-                    <li class="list-group-item p-3 border-0" id="card-${dispoId}">
+                    <li class="list-group-item pb-3 pl-3 pr-3 pt-1 border-0" id="card-${dispoId}">
                         <div class='d-flex'>
                             <label for="feInputState">¿Dónde está el sensor?</label>
                         </div>
