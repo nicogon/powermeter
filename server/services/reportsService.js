@@ -19,7 +19,8 @@ module.exports = function reportsService(
     getMedition,
     del,
     eraseTemp,
-    isTemp
+    isTemp,
+    lastReport
   };
 
   function eraseTemp() {
@@ -188,5 +189,9 @@ module.exports = function reportsService(
 
   async function getMedition(meditionId) {
     return reportsRepository.getMedition(meditionId);
+  }
+
+  async function lastReport() {
+    return reportsRepository.last();
   }
 };

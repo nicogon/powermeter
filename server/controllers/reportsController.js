@@ -53,13 +53,14 @@ module.exports = function reportsController(sensorsService, reportsService, temp
 
   async function reportDetails(req, res) {
     // TODO
-    const reportId = req.params.reportId;
-    const report = await reportsService.getReport(reportId);
-
-
-    if (req.query.format === 'json') {
-      res.json(report);
-    } else {
+    try {
+      const reportId = req.params.reportId;
+      const report = await reportsService.getReport(reportId);
+      // raise error if report only has now key and rescrue with catch block
+      (req.query.format === 'json') ? res.json(report) : res.render('report', { report });
+    }
+    catch (e) {
+      const report = await reportsService.lastReport();
       res.render('report', { report });
     }
   }
