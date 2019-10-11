@@ -52,14 +52,13 @@ module.exports = function reportsController(sensorsService, reportsService, temp
   }
 
   async function reportDetails(req, res) {
-    // TODO
     const reportId = req.params.reportId;
-    const report = await reportsService.getReport(reportId);
+    let report = await reportsService.getReport(reportId);
 
-
-    if (req.query.format === 'json') {
-      res.json(report);
+    if(reportsService.tempReportInProgress()) {
+      (req.query.format === 'json') ? res.json(report) : res.render('report', { report });
     } else {
+      report = await reportsService.lastReport();
       res.render('report', { report });
     }
   }
