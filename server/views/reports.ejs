@@ -32,6 +32,10 @@
                                     <th scope="col" class="border-0">Fecha</th>
                                     <th scope="col" class="border-0">Consumo Promedio</th>
                                     <th scope="col" class="border-0">Consumo Maximo</th>
+                                    <th scope="col" class="border-0" style="text-align:center">
+
+                                         <span style="background: #333;border-radius:5px;font-weight: normal;padding:3px;border: 1px solid rgb(248, 228, 228)"> Merge</span> 
+                                    </th>
                                     <th scope="col" class="border-0"></th>
                                 </tr>
                             </thead>
@@ -53,7 +57,9 @@
                                         <td>
                                             <%=report.maximumPower%> W
                                         </td>
+                                        <td style="text-align:center">    <input type="checkbox"></td>
                                         <td>
+                                        
                                             <button  data-toggle="modal" data-target="#delete-modal-<%=report.id%>" id="delete-<%=report.id%>" type="button" class="rounded"><i class="material-icons">delete</i></button>
                                         </td>
                                     </tr>
