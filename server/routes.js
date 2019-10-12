@@ -15,6 +15,7 @@ module.exports = function routes(sensorsController, reportsController, homeContr
     .post('/reportes', reportsController.newReport)
     .get('/reportes', reportsController.toList)
     .get('/reportes/new', reportsController.createNewReport)
+    .post('/reportes/merge', reportsController.mergeReport)
     .get('/reportes/:reportId', reportsController.reportDetails)
     .delete('/reportes/:reportId', reportsController.deleteReport)
 

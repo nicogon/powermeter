@@ -21,7 +21,8 @@ module.exports = function reportsService(
     eraseTemp,
     isTemp,
     lastReport,
-    tempReportInProgress
+    tempReportInProgress,
+    mergeReports
   };
 
   function tempReportInProgress() {
@@ -81,9 +82,10 @@ module.exports = function reportsService(
       report.meditions[meditionId].id=undefined;
     }
     report.id=undefined;
-    await reportsRepository
+   newReport =  await reportsRepository
     .saveReport(report)
-return report;
+    console.log(newReport)
+return newReport;
 
 
   }

@@ -37,6 +37,7 @@ module.exports = function reportsRepository(Report, Medition) {
       );
       const idReport = createdReport.toJSON().id;
       await createMeditions(newReport, parseInt(idReport));
+      return idReport;
     } catch (e) {
       console.log(e);
     }

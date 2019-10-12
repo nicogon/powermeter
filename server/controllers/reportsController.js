@@ -4,8 +4,18 @@ module.exports = function reportsController(sensorsService, reportsService, temp
     createNewReport,
     reportDetails,
     newReport,
-    deleteReport
+    deleteReport,
+    mergeReport
   };
+
+  async function mergeReport(req, res) {
+    const name = req.body.name;
+    const ids = req.body.mergeArray;
+
+    reportId = await reportsService.mergeReports(ids,name);
+    res.send(String(reportId));
+  }
+
 
   async function deleteReport(req, res) {
     const reportId = req.params.reportId;
@@ -91,7 +101,8 @@ module.exports = function reportsController(sensorsService, reportsService, temp
     }
     reports = reports.map(report => ({
       ...report,
-      date: calculateDate(report)
+      date: calculateDate(report),
+      duration:calculateDuration(report)
     }));
     //  console.log(reports)
     res.render('reports', { reports });
@@ -100,6 +111,20 @@ module.exports = function reportsController(sensorsService, reportsService, temp
   function calculateDate(report) {
     const f = new Date(report.timeStart - 0);
     return f.toLocaleString('es-ES',{timeZone: "America/Argentina/Buenos_Aires"});
+    //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
+  }
+  function calculateDuration(report) {
+    const durationInSeconds = (report.secondsDuration);
+   // console.log(durationInSeconds)
+    if(durationInSeconds==10000) return '10 segundos';
+    if(durationInSeconds==60000) return '1 minuto';
+    if(durationInSeconds==300000) return '5 minutos';
+    if(durationInSeconds==1800000) return '30 minutos';
+    if(durationInSeconds==3600000) return '1 hora';
+    if(durationInSeconds==14400000) return '4 horas';
+    if(durationInSeconds==86400000) return '24 horas';
+   return "sin definir"
+
     //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
   }
 };
