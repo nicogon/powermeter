@@ -7,7 +7,8 @@ module.exports = function reportsRepository(Report, Medition) {
     saveReport,
     getReport,
     listForSimulations,
-    getMedition
+    getMedition,
+    last
   };
 
   async function del(reportId) {
@@ -78,5 +79,14 @@ module.exports = function reportsRepository(Report, Medition) {
       raw: false
     });
     return medition.toJSON();
+  }
+
+  async function last() {
+    const lastReport = await Report.findAll({
+      limit: 1,
+      order: [['id', 'DESC']],
+      include: [{ model: Medition, as: 'meditions' }]
+    }).map(report => report.get({ plain: true }));
+    return lastReport[0];
   }
 };

@@ -19,8 +19,14 @@ module.exports = function reportsService(
     getMedition,
     del,
     eraseTemp,
-    isTemp
+    isTemp,
+    lastReport,
+    tempReportInProgress
   };
+
+  function tempReportInProgress() {
+    return tempReport;
+  }
 
   function eraseTemp() {
     tempReport = null;
@@ -37,7 +43,6 @@ module.exports = function reportsService(
     if (reportId === 'temp') return { now: Date.now(), ...tempReport }; // reportsRepository.getReport(reportId);
     const report = await reportsRepository.getReport(reportId);
     return populateCurrent(report);
-
   }
 
   
@@ -91,11 +96,7 @@ return report;
     const activeMedition = tempReport
       && tempReport.meditions.find(medition => medition.dispoId === sensorId);
 
-    // Si la medicion finalizo, borrar el objeto temporal de la memoria
-    if (hasFinish()) {
-      console.log('TERMINO');
-      await saveReport(tempReport);
-    }
+    if (hasFinish()) await saveReport(tempReport).then(() => eraseTemp());
 
     if (tempReport && activeMedition) {
       updateActiveAndMaxMeditions(activeMedition, meditionValue);
@@ -230,5 +231,9 @@ return report;
 
   async function getMedition(meditionId) {
     return reportsRepository.getMedition(meditionId);
+  }
+
+  async function lastReport() {
+    return reportsRepository.last();
   }
 };
