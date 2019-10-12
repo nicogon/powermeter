@@ -40,6 +40,48 @@ module.exports = function reportsService(
 
   }
 
+  
+  async function mergeReports(reportsIds,name){ 
+    let reports = [];
+    for(reportId of reportsIds){
+      reports.push(await  reportsRepository.getReport(reportId))
+    }
+
+    const meditions = _.flatMap((reports.map(report=>report.meditions)))
+    const averagePower = _.sum(meditions.map(medition => medition.averagePower));
+
+    const report = {...reports[0], maximumPower:0, name, meditions, meditions2: _.cloneDeep(meditions), averagePower };
+    temporalMeditions = [];
+
+    do {
+      let temporalPuntualMeditions = [];
+      for (medition of report.meditions2) {
+        if (medition.puntualMeditions.length > 0) {
+          temporalPuntualMeditions.push({ ...medition.puntualMeditions[0], meditionId: medition.id });
+        }
+      }
+      temporalPuntualMeditions = temporalPuntualMeditions.sort((a, b) => (a.offset - b.offset));
+      minorPuntualMedition = temporalPuntualMeditions[0];
+      report.meditions2[report.meditions2.findIndex(medition => medition.id == minorPuntualMedition.meditionId)].puntualMeditions.shift();
+      elem = temporalMeditions.findIndex(elem => elem.meditionId == minorPuntualMedition.meditionId);
+      if (elem != -1) {
+        temporalMeditions[elem] = { ...minorPuntualMedition };
+      } else {
+        temporalMeditions.push({ ...minorPuntualMedition });
+      }
+      report.maximumPower = Math.max(report.maximumPower || 0, _.sum(temporalMeditions.map(elem => elem.value)));
+    } while (_.sum(report.meditions2.map(medition => medition.puntualMeditions.length)));
+
+    for(meditionId in report.meditions){
+      report.meditions[meditionId].id=undefined;
+    }
+    report.id=undefined;
+    await reportsRepository
+    .saveReport(report)
+return report;
+
+
+  }
   async function notify(sensorId, meditionValue) {
     await lock.acquire();
 
