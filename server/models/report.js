@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {}
   );
 
-  Report.SIMILAR_VALUES_ON_REPORTS = 0.01;
+  Report.SIMILAR_VALUES_ON_REPORTS = 0.05;
 
   // Associations
   Report.associate = (models) => {
