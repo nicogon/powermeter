@@ -6,14 +6,19 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-#include <ArduinoOTA.h>
 #include <Bridge.h>
+// include library to read and write from flash memory
+#include "SPIFFS.h"
+
+File file;
 
 
 // HttpClient client;
 
 HTTPClient http;
 
+
+int calibracion;
 
 //#include "SSD1306.h" // alias for `#include "SSD1306Wire.h"'
 
@@ -27,6 +32,13 @@ Adafruit_ADS1115 ads;     // Use this for the 16-bit version
 
 const int alertPin = 13;
 
+int sensibility;
+
+const int buttonPin = 15;
+
+int contadorMedicion = 0;
+
+
 bool disableMediciones = false;
 volatile bool continuousConversionReady = false;
 const char* ssid     = "powermeter";
@@ -34,18 +46,33 @@ const char* password = "powermeter";
 long ant;
 int i = 0;
 int rec = 0; int f;
-float data[1000];
+float data[2001];
 
 
 //tomo 200 mediciones q son como 1/4 de segundo
-int sampleCount = 200;
+int sampleCount = 1500;
+
+float anterior = 0;
 
 
 String dispoId = "1234";
 
 void handleRoot() {
   server.send(200, "It's alive");
-  // server.send(200, "text/plain", "{\"power\":\"" + String(potenciaEficaz, 3) + "\"}");
+}
+
+
+void handleCalibracion() {
+  String factor = server.arg(0);
+  guardar("calibracion", factor.toInt());
+  calibracion = factor.toInt();
+  server.send(200, "text/plain", "Recibi:" + factor);
+}
+
+void handleId() {
+  dispoId = server.arg(0);
+  guardar("id", dispoId.toInt());
+  server.send(200, "text/plain", "Recibi Id:" + dispoId);
 }
 
 
@@ -66,15 +93,51 @@ void handleNotFound() {
 
 
 
+void guardar(String archivo, int valor) {
+  File file = SPIFFS.open("/" + archivo + ".txt", "w");
+  if (!file) {
+    Serial.println("file creation failed");
+  } else {
+    file.println(String(valor));
+    file.flush();
+  }
+  file.close();
+}
+
+int  leer(String archivo) {
+  file = SPIFFS.open("/" + archivo + ".txt", "r");
+  if (!file) {
+    Serial.println("no existe el archivo que queres abrir");
+    file.close();
+    return 30;
+  } else {
+    String temp = file.readStringUntil('\n');
+    file.close();
+    return temp == "\r" ? 99 : temp.toInt(); //aca porque archivo vacio devuelve \r
+  }
+}
+
+
+void IRAM_ATTR continuousAlert() {
+  continuousConversionReady = true;
+}
 
 void setup(void)
 {
   pinMode(alertPin, INPUT);
+  pinMode(buttonPin, INPUT);
   Serial.begin(115200);
+  // Initialize SPIFFS
+  if (!SPIFFS.begin(true)) {
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
+  }
+
+  sensibility = leer("sensor");
+  calibracion = leer("calibracion");
+  dispoId = String(leer("id"));
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  WiFi.setHostname(("cliente-medidor-" + dispoId).c_str());
-
   display.init();
   display.flipScreenVertically();
   display.setFont(ArialMT_Plain_16);
@@ -102,74 +165,38 @@ void setup(void)
     display.drawString(64, 15 + 11, WiFi.localIP().toString());
     display.display();
 
-    if (MDNS.begin(("cliente-medidor-" + dispoId).c_str())) {
-      Serial.println("MDNS responder started");
-    }
-
-    //update via wifi
-
-    ArduinoOTA.onStart([]() {
-      disableMediciones = true;
-      Serial.println("Start");
-    });
-    ArduinoOTA.onEnd([]() {
-      Serial.println("\nEnd");
-    });
-    ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-    });
-    ArduinoOTA.onError([](ota_error_t error) {
-      Serial.printf("Error[%u]: ", error);
-      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-      else if (error == OTA_END_ERROR) Serial.println("End Failed");
-    });
-    ArduinoOTA.begin();
-
     server.on("/", handleRoot);
-
+    server.on("/id", handleId);
+    server.on("/calibracion", handleCalibracion);
     server.onNotFound(handleNotFound);
-
     server.begin();
     Serial.println("HTTP server started");
-
   }
-
   delay(1000);
-
-
-
   //  ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit = 3mV      0.1875mV (default)
   ads.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit = 2mV      0.125mV
   // ads.setGain(GAIN_TWO);        // 2x gain   +/- 2.048V  1 bit = 1mV      0.0625mV
   // ads.setGain(GAIN_FOUR);       // 4x gain   +/- 1.024V  1 bit = 0.5mV    0.03125mV
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit = 0.25mV   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit = 0.125mV  0.0078125mV
-
   Wire.begin(5, 4);
-
   ads.setSPS(ADS1115_DR_860SPS);
   ads.startContinuous_SingleEnded(0);
-
   attachInterrupt(digitalPinToInterrupt(alertPin), continuousAlert, FALLING);
 }
 
 
-void continuousAlert() {
-  continuousConversionReady = true;
-}
+
 
 void reportar(float potenciaEficaz) {
   Serial.println("about to fetch");
-  http.begin("http://192.168.4.1:3000/sensores/1234/report");
+  http.begin("http://192.168.4.1/sensores/"+dispoId+"/report");
   http.setTimeout(500);
   http.addHeader("Content-Type", "application/json");
-  int code = http.POST("{\"currentMedition\":" + String(potenciaEficaz, 1) + ",\"sensibility\":35,\"dispoId\":\"" + dispoId + "\"}");
+  int code = http.POST("{\"currentMedition\":" + String(potenciaEficaz, 1) + ",\"sensibility\":" + sensibility + ",\"dispoId\":\"" + dispoId + "\"}");
   http.writeToStream(&Serial);
   http.end();
-  if(code == HTTPC_ERROR_CONNECTION_REFUSED) 
+  if (code == HTTPC_ERROR_CONNECTION_REFUSED)
     Serial.println("Server offline :(");
   Serial.println("fetched");
 
@@ -181,8 +208,8 @@ float calcularValorCorriente() {
   for (int a = 0; a < sampleCount; a++) {
     valorEficaz += data[a] * data[a] / sampleCount;
   }
-  float valor = sqrt(valorEficaz) * 0.94;
-  return valor*220 > 1 ? valor : 0;
+  float valor = sqrt(valorEficaz);
+  return valor * 220 > (sensibility / 5) ? valor : 0;
 }
 
 float calcularValorPotencia(float corrienteEficaz) {
@@ -200,25 +227,59 @@ void actualizarDisplay(float potenciaEficaz, float corrienteEficaz) {
 }
 
 
+void handleButton(void) {
+  if (!digitalRead(buttonPin)) {
+    Serial.println("click");
+    if (leer("sensor") == 30) {
+      sensibility = 5;
+    } else {
+      sensibility = 30;
+    }
+    guardar("sensor", sensibility);
+    delay(100);
+    display.clear();
+    display.drawString(64, 10, "Sensor " + String(sensibility) + "A");
+    display.setFont(ArialMT_Plain_24);
+    display.display();
+    while (!digitalRead(buttonPin)) {}
+    delay(100);
+  }
+
+}
+
 void loop(void)
 {
-  ArduinoOTA.handle();
   server.handleClient();
+  handleButton();
 
   if (!disableMediciones && continuousConversionReady) {
-    data[i] = ((float) ads.getLastConversionResults()) * ads.voltsPerBit() * 30; //valor en corriente
+    data[i % sampleCount] = ((float) ads.getLastConversionResults()) * ads.voltsPerBit() * sensibility * calibracion / 100; // * 0.90; //valor en corriente
     i++;
     continuousConversionReady = false;
 
     if ((millis() - ant) > sampleCount) {
       float corrienteEficaz = calcularValorCorriente();
+
+      float band = 0.10;
+      if (corrienteEficaz > ((1 - band)*anterior) && corrienteEficaz < ((1 + band)*anterior)) {
+        corrienteEficaz = (anterior + corrienteEficaz) / 2;
+      }
+      anterior = corrienteEficaz;
+
       float potenciaEficaz = calcularValorPotencia(corrienteEficaz);
-       Serial.println(potenciaEficaz);
+      Serial.println(potenciaEficaz);
 
       actualizarDisplay(potenciaEficaz, corrienteEficaz);
       i = 0;
-      reportar(potenciaEficaz);
-      delay(1000);
+
+
+      if (contadorMedicion == 2) {
+        reportar(potenciaEficaz);
+      } else {
+        contadorMedicion++;
+      }
+
+      //delay(500);
       ant = millis();
     }
   }

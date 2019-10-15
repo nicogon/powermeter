@@ -54,7 +54,7 @@ module.exports = function reportsService(
     }
 
     const meditions = _.flatMap((reports.map(report=>report.meditions)))
-    const averagePower = _.sum(meditions.map(medition => medition.averagePower));
+    const averagePower = fixed(_.sum(meditions.map(medition => medition.averagePower)));
 
     const report = {...reports[0], maximumPower:0, name, meditions, meditions2: _.cloneDeep(meditions), averagePower };
     temporalMeditions = [];
@@ -75,7 +75,7 @@ module.exports = function reportsService(
       } else {
         temporalMeditions.push({ ...minorPuntualMedition });
       }
-      report.maximumPower = Math.max(report.maximumPower || 0, _.sum(temporalMeditions.map(elem => elem.value)));
+      report.maximumPower = fixed(Math.max(report.maximumPower || 0, _.sum(temporalMeditions.map(elem => elem.value))));
     } while (_.sum(report.meditions2.map(medition => medition.puntualMeditions.length)));
 
     for(meditionId in report.meditions){
@@ -148,9 +148,9 @@ return newReport;
     const currentPower = _.sum(
       tempReport.meditions.map(medicionInt => medicionInt.currentPower)
     );
-    const averagePower = _.sum(
+    const averagePower = fixed(_.sum(
       tempReport.meditions.map(medicionInt => medicionInt.averagePower)
-    );
+    ));
     tempReport = calculateMeditions(tempReport, currentPower, averagePower);
     tempReport = populateCurrent(tempReport);
     return tempReport;
