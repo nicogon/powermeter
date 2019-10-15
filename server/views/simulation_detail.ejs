@@ -60,3 +60,62 @@
     </div>
   </div>
 </div>
+
+<div class='row mt-3'>
+
+    <div class='col-md-12 mb-4'>
+        <div class="card card-small">
+            <div class="card-body pt-0 row" style="margin-top:10px">
+
+                <canvas id="canvas2" style="width:100%"></canvas>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+              
+    $(document).ready(function() {
+  
+    function calcularColores(data) {
+      return data.map((valor, index) => (index)).map((a) => randomHSL(a));
+    }
+
+
+    function randomHSL(i, transparent = false) {
+      return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
+    }
+
+
+      var ctx = document.getElementById('canvas2').getContext('2d');
+
+    porcentajes= <%-JSON.stringify(simulation.simulationItems.map(elem=>elem.totalCostConsumption))%>;
+    labels=  <%-JSON.stringify(simulation.simulationItems.map(elem=>elem.name))%>;
+
+  data = {
+    datasets: [{
+      data: porcentajes,
+      backgroundColor: calcularColores(porcentajes),
+    }],
+    labels:labels
+  };
+
+  myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+      maintainAspectRatio: true,
+        responsive: true,
+        animation: false,
+        
+      }
+});
+      
+
+});
+    
+    </script>
