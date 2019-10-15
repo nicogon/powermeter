@@ -22,9 +22,11 @@
 
     <div class="row">
       <%for (var report of reports){%>
+        
       <div class="col-lg col-md-6 col-sm-6 mb-4"> 
         <div class="stats-small stats-small--1 card card-small">
           <div class="card-body p-0 d-flex">
+
             <div class="chartjs-size-monitor"
               style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
               <div class="chartjs-size-monitor-expand"
@@ -36,15 +38,17 @@
                 <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
               </div>
             </div>
+
             <div class="d-flex flex-column m-auto">
+
               <div class="stats-small__data text-center">
+                                            
+                  <a href="/reportes/<%=report.id%>/">                  
+                    <span class="stats-small__label text-uppercase"><%=report.name%></span>
 
-                                            <!-- <a href="/reportes/<%=report.id%>/">
-                                                Detalle
-                                            </a> -->
+                <h6 class="stats-small__value count my-3"><%=report.averagePower%> W</h6>
+              </a> 
 
-                <span class="stats-small__label text-uppercase"><%=report.name%></span>
-                <h6 class="stats-small__value count my-3"><%=report.averagePower%> Kw</h6>
               </div>
               <div class="stats-small__data">
                   <% if((report.secondsDuration / 60000).toFixed(0) > 0){ %>
@@ -54,11 +58,16 @@
                   <% } %>
                   <!-- <span class="stats-small__percentage stats-small__percentage"><%=report.duracion%> Minutos</span> -->
               </div>
+
             </div>
+            
+
             <canvas height="150" class="blog-overview-stats-small-3"></canvas>
+
           </div>
         </div>
       </div>
+      
       <%}%>
 
       <div class="col-lg col-md-12 col-sm-12 mb-4">
