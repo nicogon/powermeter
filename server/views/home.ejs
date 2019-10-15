@@ -12,13 +12,13 @@
     <!-- End Page Header -->
     <!-- Small Stats Blocks -->
    
-    <!-- 
-    <div class="p-3 bg-white text-dark">
-        <h6 class="m-0">Últimos Reportes</h6>
+    
+    <div class="p-2 text-dark">
+        <h5 class="m-0">Últimos Reportes</h6>
         
     </div>
 
-  -->
+  
 
     <div class="row">
       <%for (var report of reports){%>
@@ -130,7 +130,7 @@
                                 <% }else{ %>
                                   <td><%=(simulation.durationInHours / 24)%> Día</td>
                                   <% } %>
-                                  <td><%=simulation.totalKwh%> Kw</td>
+                                  <td><%=simulation.totalKwh.toFixed(2)%> Kw</td>
                               <td>$ <%=simulation.totalCost.toFixed(2)%></td>
                             </tr>
                             <%}%>
