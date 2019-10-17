@@ -359,11 +359,9 @@
             tooltips: {
                 callbacks: {
                     label: function (tooltipItem) {
-                        return  Number(tooltipItem.yLabel) + "W";
+                        return  `${graphData[tooltipItem.datasetIndex].name}:  ${Number(tooltipItem.yLabel)} W`;
                     },
                     title: function (tooltipItem) {
-                        console.log(tooltipItem)
-
                         return msToTime(Number(tooltipItem[0].xLabel));
                     }
                 }
