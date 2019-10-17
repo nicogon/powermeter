@@ -1,3 +1,9 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable eqeqeq */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-undef */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
@@ -46,17 +52,22 @@ module.exports = function reportsService(
     return populateCurrent(report);
   }
 
-  
-  async function mergeReports(reportsIds,name){ 
-    let reports = [];
-    for(reportId of reportsIds){
-      reports.push(await  reportsRepository.getReport(reportId))
+
+  async function mergeReports(reportsIds, name) {
+    const reports = [];
+    for (reportId of reportsIds) {
+      reports.push(await reportsRepository.getReport(reportId));
     }
 
-    const meditions = _.flatMap((reports.map(report=>report.meditions)))
+    const meditions = _.flatMap((reports.map(report => report.meditions)));
+
+    // this is only to fix bad meditons on merge previous average method change.
+    for (meditionId in meditions) {
+      meditions[meditionId].averagePower = calculateAverage(meditions[meditionId]);
+    }
     const averagePower = fixed(_.sum(meditions.map(medition => medition.averagePower)));
 
-    const report = {...reports[0], maximumPower:0, name, meditions, meditions2: _.cloneDeep(meditions), averagePower };
+    const report = { ...reports[0], maximumPower: 0, name, meditions, meditions2: _.cloneDeep(meditions), averagePower };
     temporalMeditions = [];
 
     do {
@@ -78,14 +89,14 @@ module.exports = function reportsService(
       report.maximumPower = fixed(Math.max(report.maximumPower || 0, _.sum(temporalMeditions.map(elem => elem.value))));
     } while (_.sum(report.meditions2.map(medition => medition.puntualMeditions.length)));
 
-    for(meditionId in report.meditions){
-      report.meditions[meditionId].id=undefined;
+    for (meditionId in report.meditions) {
+      report.meditions[meditionId].id = undefined;
     }
-    report.id=undefined;
-   newReport =  await reportsRepository
-    .saveReport(report)
-    console.log(newReport)
-return newReport;
+    report.id = undefined;
+    newReport = await reportsRepository
+      .saveReport(report);
+    console.log(newReport);
+    return newReport;
 
 
   }
@@ -129,18 +140,30 @@ return newReport;
     return +`${Math.round(`${num}e+${e}`)}e-${e}`;
   }
 
+  function calculateAverage(medition) {
+    let accum = 0;
+    let last = 0;
+    if (!medition.puntualMeditions) return 0;
+
+    for (puntualMedition of medition.puntualMeditions) {
+      accum += puntualMedition.value * (puntualMedition.offset - last);
+      last = puntualMedition.offset;
+    }
+    return fixed(accum / last);
+  }
+
   function calculateMeditions(medition, currentPower, averagePower = null) {
     medition.maximumPower = fixed(
       Math.max(medition.maximumPower, currentPower),
       1
     );
     medition.currentPower = fixed(currentPower, 1);
-    medition.meditionCounter++;
-    medition.averagePower = averagePower || fixed(
-      (medition.averagePower * (medition.meditionCounter - 1) + currentPower)
-        / medition.meditionCounter,
-      1
-    );
+    if (!averagePower) {
+      medition.averagePower = calculateAverage(medition);
+    } else {
+      medition.averagePower = averagePower;
+    }
+
     return medition;
   }
 
@@ -165,7 +188,6 @@ return newReport;
   }
 
   function modifyMedition(medicionAMofidicar, value) {
-    medicionAMofidicar = calculateMeditions(medicionAMofidicar, value);
     const previousMedition = medicionAMofidicar.puntualMeditions.pop();
 
     const changed = previousMedition
@@ -185,6 +207,8 @@ return newReport;
       value,
       blocked: changed
     });
+
+    medicionAMofidicar = calculateMeditions(medicionAMofidicar, value);
 
     return medicionAMofidicar;
   }

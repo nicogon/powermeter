@@ -66,7 +66,7 @@ module.exports = function reportsController(sensorsService, reportsService, temp
     let report = await reportsService.getReport(reportId);
     if (req.params.reportId === 'temp' && !reportsService.tempReportInProgress()) {
       report = await reportsService.lastReport();
-      res.render('report', { report });
+      (req.query.format === 'json') ? res.json({}) : res.render('report', { report });
     } else {
       (req.query.format === 'json') ? res.json(report) : res.render('report', { report });
     }

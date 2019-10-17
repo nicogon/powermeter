@@ -24,7 +24,7 @@ function report() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      currentMedition: ((contador % 10) > 5) ? 0 : 100,
+      currentMedition: ((contador % 100) > 10) ? 0 : 100,
       sensibility: 15
     })
   }).catch(console.log);
@@ -41,4 +41,4 @@ function report() {
   */
 }
 
-setInterval(() => { report(); }, 1000);
+setInterval(() => { report(); }, 100);
