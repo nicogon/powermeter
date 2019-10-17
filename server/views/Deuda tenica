@@ -1,5 +1,7 @@
 Deuda tecnica:
 
+rehacer la funcion de calcular average para que no la haga cada vez que reporta, mucho stress para la rpi
+
 hacer que en el grafico de reportes arranquen todos a la vez
 
 que la duracion de los reportes en la home tambien sea variable
