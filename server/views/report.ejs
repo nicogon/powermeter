@@ -17,7 +17,7 @@
         </div>
 
         <% if(report.timeEnd){ %>
-        <div class="page-header py-4 mt-3" id="abortar-reporte" >
+        <div class="page-header py-4 mt-3" id="abortar-reporte">
             <a href='/reportes/?abort=true' class="btn btn-sm btn-primary" style='color:white'>Abortar reporte</a>
         </div>
         <% } %>
@@ -309,6 +309,18 @@
         return data.map((medicion) => ((100 * medicion.averagePower / maximo).toFixed(2)))
     }
 
+    function msToTime(duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        return hours + ":" + minutes + ":" + seconds;
+    }
 
 
     var config = {
@@ -342,6 +354,18 @@
                 },
                 line: {
                     tension: 0
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return  Number(tooltipItem.yLabel) + "W";
+                    },
+                    title: function (tooltipItem) {
+                        console.log(tooltipItem)
+
+                        return msToTime(Number(tooltipItem[0].xLabel));
+                    }
                 }
             },
             scales: {
