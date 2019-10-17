@@ -63,7 +63,7 @@ module.exports = function reportsService(
 
     // this is only to fix bad meditons on merge previous average method change.
     for (meditionId in meditions) {
-      meditions.maximumPower = Math.max(...(meditions[meditionId].puntualMeditions.map(e=>e.value)));
+      meditions[meditionId].maximumPower = Math.max(...(meditions[meditionId].puntualMeditions.map(e=>e.value)));
       meditions[meditionId].averagePower = calculateAverage(meditions[meditionId]);
     }
     const averagePower = fixed(_.sum(meditions.map(medition => medition.averagePower)));
