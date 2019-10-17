@@ -270,7 +270,7 @@
     }
 
     function randomHSL(i, transparent = false) {
-        return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
+        return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.8)";
     }
 
     function adaptDatasets(dataSets) {
