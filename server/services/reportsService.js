@@ -61,11 +61,6 @@ module.exports = function reportsService(
 
     const meditions = _.flatMap((reports.map(report => report.meditions)));
 
-    // this is only to fix bad meditons on merge previous average method change.
-    for (meditionId in meditions) {
-      meditions[meditionId].maximumPower = Math.max(...(meditions[meditionId].puntualMeditions.map(e=>e.value)));
-      meditions[meditionId].averagePower = calculateAverage(meditions[meditionId]);
-    }
     const averagePower = fixed(_.sum(meditions.map(medition => medition.averagePower)));
 
     const report = { ...reports[0], maximumPower: 0, name, meditions, meditions2: _.cloneDeep(meditions), averagePower };
@@ -142,15 +137,21 @@ module.exports = function reportsService(
   }
 
   function calculateAverage(medition) {
-    let accum = 0;
-    let last = 0;
     if (!medition.puntualMeditions) return 0;
 
-    for (puntualMedition of medition.puntualMeditions) {
-      accum += puntualMedition.value * (puntualMedition.offset - last);
-      last = puntualMedition.offset;
+    if (medition.puntualMeditions.length > 1) {
+
+      const oldPush = medition.lastPush;
+      medition.lastPush = medition.puntualMeditions[medition.puntualMeditions.length - 1].offset;
+
+      return fixed((medition.averagePower
+      * oldPush
+      + medition.puntualMeditions[medition.puntualMeditions.length - 1].value
+      * (medition.lastPush - oldPush))
+      / medition.lastPush, 2);
+
     }
-    return fixed(accum / last);
+    return 0;
   }
 
   function calculateMeditions(medition, currentPower, averagePower = null) {
@@ -244,7 +245,8 @@ module.exports = function reportsService(
       currentPower: 0,
       maximumPower: 0,
       averagePower: 0,
-      meditionCounter: 0
+      meditionCounter: 0,
+      lastPush: 0
     };
   }
 

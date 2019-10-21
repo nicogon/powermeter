@@ -2,11 +2,11 @@ module.exports = {
   up(queryInterface, _Sequelize) {
     return queryInterface.bulkInsert('Simulations', [
       {
-        name: 'Casa de Ivan',
-        totalCost: 4219,
-        totalKwh: 703,
-        fixedCost: 1555,
-        kwhCost: 3.7950,
+        name: 'Casa Nicolas',
+        totalCost: 1191.46,
+        totalKwh: 287.6058,
+        fixedCost: 100,
+        kwhCost: 3.795,
         durationInHours: 720
       }
     ], {});
