@@ -8,7 +8,16 @@ que la duracion de los reportes en la home tambien sea variable
 
 No anda bien en mobile
 
+
+ Cuando entras a una nueva simulacion te autollene el costo de KW con algo del pasado
+     
+
+ que desaparezca el consumo actual del reporte una vez finalizado
+
+ que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
+
 creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte. 
+
 
 
 no pushear data cada 1 segudo, en casos de largo reporte, pushear cada menos tiempo.
