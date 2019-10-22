@@ -1,7 +1,8 @@
 module.exports = function sensorsService(sensorsRepository, reportsService, sessionId, Medition) {
   return {
-    list, report, update, borrar
+    list, report, update, del
   };
+
 
   function fixed(num, e = 2) {
     return +(`${Math.round(`${num}e+${e}`)}e-${e}`);
@@ -47,7 +48,7 @@ module.exports = function sensorsService(sensorsRepository, reportsService, sess
     await reportsService.notify(dispoId, data.currentMedition).catch(console.log);
   }
 
-  async function borrar(dispoId) {
+  async function del(dispoId) {
     await sensorsRepository.del(dispoId);
   }
 

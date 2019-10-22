@@ -5,7 +5,6 @@ const sequelize = require('sequelize');
 
 const SimulationElements = require('./models').SimulationElements;
 const Medition = require('./models').Medition;
-const PuntualMedition = require('./models').PuntualMedition;
 const Report = require('./models').Report;
 const Sensor = require('./models').Sensor;
 const Simulation = require('./models').Simulation;
@@ -45,30 +44,7 @@ class Lock {
   }
 }
 
-let tempReport = {
-  name: 'casa',
-  secondsDuration: 86400000,
-  meditions:
-   [
-
-     {
-       dispoId: '2',
-       name: 'heladera',
-       puntualMeditions: [{ value: 1, offset: 2 }, { value: 2, offset: 3 }],
-       currentPower: 0,
-       maximumPower: 0,
-       averagePower: 0,
-       meditionCounter: 0
-     }
-
-   ],
-  timeStart: Date.now(),
-  timeEnd: Date.now() + 8000,
-  currentPower: 0,
-  maximumPower: 0,
-  averagePower: 0,
-  meditionCounter: 0
-};
+let tempReport = null;
 
 tempReport = null;
 
@@ -96,7 +72,6 @@ async function createContainer() {
   // Models
   container.register('SimulationElements', function meditionFn() { return SimulationElements; });
   container.register('Medition', function sensorFn() { return Medition; });
-  container.register('PuntualMedition', function sensorFn() { return PuntualMedition; });
   container.register('Report', function sensorFn() { return Report; });
   container.register('Sensor', function sensorFn() { return Sensor; });
   container.register('Simulation', function sensorFn() { return Simulation; });

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       totalCost: DataTypes.FLOAT,
+      totalKwh: DataTypes.FLOAT,
       fixedCost: DataTypes.FLOAT,
       kwhCost: DataTypes.FLOAT,
       durationInHours: DataTypes.FLOAT
@@ -22,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   // Associations
   Simulation.associate = (models) => {
     models.Simulation.hasMany(models.SimulationElements, {
-      as: 'simulationItems'
+      as: 'simulationItems',
+      onDelete: 'CASCADE'
     });
   };
 

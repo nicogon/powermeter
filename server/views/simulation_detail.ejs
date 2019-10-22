@@ -1,37 +1,121 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="card card-small">
-      <div class="card-header border-bottom">
-        <h6 class="m-0">Detalle Simulación</h6>
-      </div>
+    <div class="card card-small ncard">
 
-      <div class="card-body pt-0 row">
-        <table class="table mb-0">
-          <thead class="bg-light">
-            <tr>
-              <th scope="col" class="border-0">Nombre</th>
-              <th scope="col" class="border-0">Porcentaje</th>
-              <th scope="col" class="border-0">Consumo</th>
-              <th scope="col" class="border-0">Costo Consumo Total</th>
-              <th scope="col" class="border-0">Duración</th>
-              <th scope="col" class="border-0"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- <tfoot> -->
-            <thead class="bg-light">
+      <div class="card-body pt-0 ncard-body">
+        <div class="card-body p-0 text-center">
+          <table class="table mb-0">
+            <thead class="p-3 mb-2 bg-secondary text-white">
               <tr>
-                <td><b><%=simulation.name%></b></td>
-                <td><b>94,3%</b></td>
-                <td><b><%=simulation.kwhCost%> Kw</b></td>
-                <td><b>$<%=simulation.totalCost%></b></td>
-                <td><b><%=simulation.durationInHours / 24%> días</b></td>
+                  <th scope="col" class="border-0">#</th>
+                <th scope="col" class="border-0">Nombre</th>
+                <th scope="col" class="border-0">Porcentaje de Uso</th>
+                <th scope="col" class="border-0">Uso estimado por día</th>
+                <th scope="col" class="border-0">Consumo</th>
+                <th scope="col" class="border-0">Costo Consumo Total</th>
+             
               </tr>
-              <!-- </tfoot> -->
             </thead>
+            <tbody>
+              <%for (var simulationItem of simulation.simulationItems){%>
+              <tr>
+                  <td> <%=simulationItem.id%> </td>
+                <td> <%=simulationItem.name%> </td>
+                <td> <%=simulationItem.percentage.toFixed(2)%>%</td>
+                <td> <%=simulationItem.useInHoursMedition%> Horas </td>
+                <td> <%=simulationItem.totalConsumption.toFixed(2)%> kW </td>
+
+                <td> <span class="text-success">$<%=simulationItem.totalCostConsumption.toFixed(2)%></span> </td>
+                </td>
+              </tr>
+              <%}%>
+
+
+            <tr>
+                <td> <b>Costo fijo</b> </td>
+                <td> ------- </td>
+                <td> ------- </td>
+                <td> ------- </td>
+                <td> ------- </td>
+                <td> <span class="text-success">$<%=simulation.fixedCost.toFixed(2)%></span> </td>
+
+          </tr>
           </tbody>
-        </table>
+          <tfoot>
+
+              <thead class="p-3 mb-2 bg-success text-white">
+                <tr>
+                    <td> <b>TOTALES</b> </td>
+                    <td> ------- </td>
+                    <td> <b>100%</b> </td>
+                    <td> <b>-------</b> </td>
+                    <td> <b><%=simulation.totalKwh.toFixed(2)%> kW</b> </td>
+              <td> <b>$<%=simulation.totalCost.toFixed(2)%></b> </td>
+              </tr>
+            </tfoot>
+            
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class='row mt-3'>
+
+    <div class='col-md-12 mb-4'>
+        <div class="card card-small">
+            <div class="card-body pt-0 row" style="margin-top:10px">
+
+                <canvas id="canvas2" style="width:100%"></canvas>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+              
+    $(document).ready(function() {
+  
+    function calcularColores(data) {
+      return data.map((valor, index) => (index)).map((a) => randomHSL(a));
+    }
+
+
+    function randomHSL(i, transparent = false) {
+      return transparent ? "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,0.1)" : "hsla(" + ~~(360 * ((i / 4) % 1)) + ",70%,80%,1)";
+    }
+
+
+      var ctx = document.getElementById('canvas2').getContext('2d');
+
+    porcentajes= <%-JSON.stringify(simulation.simulationItems.map(elem=>elem.totalCostConsumption))%>;
+    labels=  <%-JSON.stringify(simulation.simulationItems.map(elem=>elem.name))%>;
+
+  data = {
+    datasets: [{
+      data: porcentajes,
+      backgroundColor: calcularColores(porcentajes),
+    }],
+    labels:labels
+  };
+
+  myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+      maintainAspectRatio: true,
+        responsive: true,
+        animation: false,
+        
+      }
+});
+      
+
+});
+    
+    </script>

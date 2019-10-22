@@ -6,8 +6,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>PowerMeter</title>
   <meta name="viewport" content="width=medition-width, initial-scale=1, shrink-to-fit=no">
-  <link href="/styles/internet/all.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="/fonts/materialIcons.css" rel="stylesheet" class="material-icons">
 
   <link rel="stylesheet" href="/styles/internet/bootstrap.min.css"
      crossorigin="anonymous">
@@ -23,7 +22,7 @@
       <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
         <div class="main-navbar">
           <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
-            <a class="navbar-brand w-100 mr-0" href="/" style="line-height: 25px;">
+            <a class="navbar-brand w-100 mr-0" style="line-height: 25px;">
               <div class="d-table m-auto">
                 <img id="main-logo" class="d-inline-block align-top mr-1" style="height: 35px;"
                   src="/images/powermeter/logo.png" alt="PowerMeter">
@@ -38,6 +37,14 @@
 
         <div class="nav-wrapper">
           <ul class="nav flex-column">
+
+              <li class="nav-item">
+                  <a class="nav-link <% if(mode=='home'){ %>active<%}%>" href="/">
+                        <i class="material-icons">home</i>
+                        <span>Página Principal</span>
+                      </a>
+                    </li>
+
             <li class="nav-item">
               <a class="nav-link <% if(mode=='reports'){ %>active<%}%>" href="/reportes/">
                     <i class="material-icons">table_chart</i>
@@ -45,13 +52,13 @@
                   </a>
                 </li>
               <li class="nav-item">
-                <a class="nav-link <% if(mode=='simulaciones'){ %>active<%}%>" href="/simulaciones/">
+                <a class="nav-link <% if(mode=='simulations'){ %>active<%}%>" href="/simulaciones/">
                   <i class="material-icons">vertical_split</i>
                   <span>Simulaciones</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link <%if(mode=='meditions'){ %>active<%}%>" href="/sensores/">
+                <a class="nav-link <%if(mode=='dispositivos'){ %>active<%}%>" href="/sensores/">
                   <i class="material-icons">view_module</i>
                   <span>Sensores</span>
                 </a>
@@ -71,49 +78,9 @@
               <i class="fas fa-search"></i>
             </div>
           </div>
-          <input class="navbar-search form-control" type="text" placeholder="Buscar algo..." aria-label="Search">
         </div>
       </form>
-      <ul class="navbar-nav border-left flex-row ">
-        <li class="nav-item border-right dropdown notifications">
-          <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="nav-link-icon__wrapper">
-              <i class="material-icons"></i>
-              <span class="badge badge-pill badge-danger">2</span>
-            </div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">
-              <div class="notification__icon-wrapper">
-                <div class="notification__icon">
-                  <i class="material-icons"></i>
-                </div>
-              </div>
-              <div class="notification__content">
-                <span class="notification__category">Reportes</span>
-                <p>Ha finalizado tu reporte</p>
-              </div>
-            </a>
-            <a class="dropdown-item" href="#">
-              <div class="notification__icon-wrapper">
-                <div class="notification__icon">
-                  <i class="material-icons"></i>
-                </div>
-              </div>
-              <div class="notification__content">
-                <span class="notification__category">Simulaciones</span>
-                <p>Ha finalizado tu simulación</p>
-              </div>
-            </a>
-          </div>
-        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false">
-            <img class="user-avatar rounded-circle mr-2" src="/images/avatars/4.jpg" alt="User Avatar"> <span
-              class="d-none d-md-inline-block">Ivan Bober</span>
-          </a>
           <div class="dropdown-menu dropdown-menu-small" style="display: none;">
             <a class="dropdown-item" href="/"><i class="material-icons">home</i> Página Principal</a>
             <a class="dropdown-item" href="/"><i class="material-icons"></i> Perfil</a>

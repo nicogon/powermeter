@@ -14,16 +14,18 @@
             </div>
 
             <form action="/reportes/" method="post">
+                <input type="hidden" name="timeStart" id="timeStart" value="10000">
+
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item p-3">
+                    <li class="list-group-item p-3" id="dispoMenu">
 
                         <div class="form-group ">
-                            <label for="feFirstName">Nombre del reporte</label>
-                            <input required type="text" class="form-control" placeholder="Nombre del reporte" name="name">
+                            <label for="feFirstName"><b>Nombre del reporte</b></label>
+                            <input required type="text" class="form-control" placeholder="Escriba aquí" name="name">
                         </div>
 
                         <div class="form-group mb-0">
-                            <label for="feInputState">Duracion del reporte</label><br>
+                            <label for="feInputState"><b>Duración del reporte</b></label><br>
                             <button type="button" val="10000" class="duration mb-2 btn btn-sm btn-primary mr-1">10s</button>
                             <button type="button" val="60000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">1min</button>
                             <button type="button" val="300000" class="duration mb-2 btn btn-sm btn-outline-primary mr-1">5min</button>
@@ -33,28 +35,32 @@
                             <button type="button" val="86400000" class="duration  mb-2 btn btn-sm btn-outline-primary mr-1">24hs</button>
                             <input type="hidden" name="duracion" id="duracion" value="10000">
                         </div>
-
                     </li>
-                    <li class="list-group-item p-3" id="dispoMenu">
-                        <label for="feInputState">Sensores</label>
 
-                        <div class="form-group">
-                            <label for="feInputState">Agregar sensores</label>
+                    <div class="form-group p-2 mt-3">
+                        <label for="feInputState"><b>Agregar sensores</b></label>
+                        <div class="row">
                             <%for (var sensor of sensors){%>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>">
-                                    <label class="custom-control-label" for=<%=sensor.id%>><%=sensor.name%></label>
+                                <div class="col-md border">
+
+                                    <li class="list-group-item p-2 border-0" id="sensorMenu-<%=sensor.id%>">
+
+
+                                        <div class="custom-control custom-toggle m-2">
+                                            <input type="checkbox" id="<%=sensor.id%>" data-name="<%=sensor.name%>" value="<%=sensor.id%>" class="custom-control-input custom-tt">
+                                            <label class="custom-control-label titulo-label" for="customToggle1"><%=sensor.name%></label>
+                                        </div>
+
+                                    </li>
                                 </div>
-                                <!-- <option value="<%=sensor.id%>"><%=sensor.name%></option> -->
                                 <%}%>
                         </div>
 
+                    </div>
 
-                    </li>
+                    
 
-
-
-                    <li class="list-group-item p-3">
+                    <li class="list-group-item border-top-0 p-3">
                         <button type="submit" class="btn btn-accent">Crear reporte</button>
                     </li>
                 </ul>
@@ -66,6 +72,18 @@
     <script>
         $(document).ready(function() {
 
+            var contadorSensores = 0;
+
+            $("form").submit(function(e) {
+                if(contadorSensores<=0){
+                    console.log(contadorSensores)
+                    alert("Seleccionar por lo menos un sensor");
+                    e.preventDefault();
+                }
+              
+            });
+
+            $("#timeStart").val(Date.now());
 
             $(".duration").click(function() {
                 $(".duration").removeClass("btn-primary");
@@ -76,7 +94,7 @@
 
             })
 
-            $("input").change(function() {
+            $('input[type="checkbox"]').change(function() {
                 var $input = $(this);
 
                 const dispoId = $input.val();
@@ -85,43 +103,27 @@
                 const isChecked = $input.is(":checked")
 
                 if (isChecked) {
+                    contadorSensores++;
 
                     const dispoElement = `
-                    <li class="list-group-item p-3" id="card-${dispoId}">
+                    <li class="list-group-item pb-3 pl-3 pr-3 pt-1 border-0" id="card-${dispoId}">
                         <div class='d-flex'>
-                            <label for="feInputState">Dispositivo</label>
-                            <a class="ml-auto" href="#" id="borrar-${dispoId}" dispo-id="${dispoId}">Borrar</a>
+                            <label for="feInputState">¿Dónde está el sensor?</label>
                         </div>
-                        <h5>${dispoName}</h5>
                         <div class="form-group ">
-                            <label for="feFirstName">Nombre de la medicion</label>
                             <input type="hidden" name="dispoId" value="${dispoId}">
-                            <input type="text" required class="form-control" placeholder="Nombre del reporte" name="nombreMedicion">
-                        </div>
-                        <div class="form-group ">
-                            <label for="feFirstName">Factor de potencia</label>
-                            <div id="slider-${dispoId}" class="slider-success my-4" style="margin: 0 20px">
-                                <input type="hidden" class="custom-slider-input">
-                            </div>
+                            <input type="text" required class="form-control" placeholder="Escriba aquí" name="nombreMedicion">
                         </div>
                     </li>`;
 
-                    $("#dispoMenu").after(dispoElement);
+                    $("#sensorMenu-" + dispoId).after(dispoElement);
 
                     $("#borrar-" + dispoId).click(() => {
                         $("#card-" + dispoId).remove();
                     });
 
-                    $('#slider-' + dispoId).customSlider({
-                        start: 100,
-                        connect: [true, false],
-                        tooltips: true,
-                        range: {
-                            'min': 0,
-                            'max': 100
-                        }
-                    });
                 } else {
+                    contadorSensores--;
                     $("#card-" + dispoId).remove();
                 }
             });

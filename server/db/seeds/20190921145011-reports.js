@@ -4,11 +4,11 @@ module.exports = {
   up(queryInterface, _Sequelize) {
     return queryInterface.bulkInsert('Reports', [
       {
-        name: 'Cocina',
-        timeStart: 123,
-        secondsDuration: 60 * 60,
-        averagePower: 2,
-        maximumPower: 3
+        name: 'Casa Nicolas',
+        timeStart: 1571107996830,
+        secondsDuration: 86400000,
+        averagePower: 695.35,
+        maximumPower: 3253.9
       }
     ], {});
   },

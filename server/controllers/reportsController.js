@@ -1,13 +1,27 @@
-module.exports = function reportsController(
-  sensorsService,
-  reportsService
-) {
+module.exports = function reportsController(sensorsService, reportsService, tempReport) {
   return {
     toList,
     createNewReport,
     reportDetails,
-    newReport
+    newReport,
+    deleteReport,
+    mergeReport
   };
+
+  async function mergeReport(req, res) {
+    const name = req.body.name;
+    const ids = req.body.mergeArray;
+
+    reportId = await reportsService.mergeReports(ids,name);
+    res.send(String(reportId));
+  }
+
+
+  async function deleteReport(req, res) {
+    const reportId = req.params.reportId;
+    await reportsService.del(reportId);
+    res.status(200).send();
+  }
 
   async function newReport(req, res) {
     // TODO
@@ -16,6 +30,8 @@ module.exports = function reportsController(
     // eslint-disable-next-line radix
     const secondsDuration = parseInt(req.body.duracion);
     const meditions = [];
+
+    const timeStart = req.body.timeStart;
 
     if (typeof req.body.nombreMedicion === 'string') {
       meditions.push({
@@ -38,21 +54,21 @@ module.exports = function reportsController(
     const reportId = await reportsService.nuevo({
       name,
       secondsDuration,
-      meditions
+      meditions,
+      timeStart
     });
 
     res.redirect(`/reportes/${reportId}/`);
   }
 
   async function reportDetails(req, res) {
-    // TODO
     const reportId = req.params.reportId;
-    const report = await reportsService.getReport(reportId);
-
-    if (req.query.format === 'json') {
-      res.json(report);
+    let report = await reportsService.getReport(reportId);
+    if (req.params.reportId === 'temp' && !reportsService.tempReportInProgress()) {
+      report = await reportsService.lastReport();
+      (req.query.format === 'json') ? res.json({}) : res.render('report', { report });
     } else {
-      res.render('report', { report });
+      (req.query.format === 'json') ? res.json(report) : res.render('report', { report });
     }
   }
 
@@ -65,6 +81,11 @@ module.exports = function reportsController(
     const meditions = req.body.medition((medition) => {});
 */
 
+    if (reportsService.isTemp()) {
+      res.redirect('/reportes/temp');
+      return;
+    }
+
     const sensors = (await sensorsService.list()).filter(
       sensor => sensor.isOnline
     );
@@ -74,14 +95,35 @@ module.exports = function reportsController(
 
   async function toList(req, res) {
     let reports = await reportsService.list();
-    reports = reports.map(report => ({ ...report, date: calculateDate(report) }));
+    if (req.query.abort === 'true') {
+      reportsService.eraseTemp();
+    }
+    reports = reports.map(report => ({
+      ...report,
+      date: calculateDate(report),
+      duration:calculateDuration(report)
+    }));
     //  console.log(reports)
     res.render('reports', { reports });
   }
 
   function calculateDate(report) {
     const f = new Date(report.timeStart - 0);
-    return f.toLocaleString('es-ES');
-  //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
+    return f.toLocaleString('es-ES',{timeZone: "America/Argentina/Buenos_Aires"});
+    //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
+  }
+  function calculateDuration(report) {
+    const durationInSeconds = (report.secondsDuration);
+   // console.log(durationInSeconds)
+    if(durationInSeconds==10000) return '10 segundos';
+    if(durationInSeconds==60000) return '1 minuto';
+    if(durationInSeconds==300000) return '5 minutos';
+    if(durationInSeconds==1800000) return '30 minutos';
+    if(durationInSeconds==3600000) return '1 hora';
+    if(durationInSeconds==14400000) return '4 horas';
+    if(durationInSeconds==86400000) return '24 horas';
+   return "sin definir"
+
+    //  return f.getHours() + ":" + f.getMinutes() + "  " + f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()
   }
 };

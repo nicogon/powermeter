@@ -15,7 +15,10 @@ module.exports = function routes(sensorsController, reportsController, homeContr
     .post('/reportes', reportsController.newReport)
     .get('/reportes', reportsController.toList)
     .get('/reportes/new', reportsController.createNewReport)
+    .post('/reportes/merge', reportsController.mergeReport)
     .get('/reportes/:reportId', reportsController.reportDetails)
+    .delete('/reportes/:reportId', reportsController.deleteReport)
+
   // TODO: Borrar? editar?
 
   // Simulaciones
@@ -23,6 +26,5 @@ module.exports = function routes(sensorsController, reportsController, homeContr
     .get('/simulaciones/new', simulationsController.createNewSimulation)
     .post('/simulaciones/', simulationsController.newSimulation)
     .get('/simulaciones/:simulationId', simulationsController.simulationDetails)
-    .get('/simulaciones/:simulationId/deleteConfirmation', simulationsController.deleteConfirmation)
-    .get('/simulaciones/:simulationId/destroy', simulationsController.destroy);
+    .delete('/simulaciones/:simulationId', simulationsController.deleteSimulation);
 };

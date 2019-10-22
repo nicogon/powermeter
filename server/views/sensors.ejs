@@ -1,50 +1,21 @@
 <%- include("header",{mode:'dispositivos'}) %>
 
-<div class="main-content-container container-fluid">
-
-    
-    <style>
-        .hidden {
-            width: 40%;
-            display: none;
-            margin-bottom: 5px!important;
-        }
-    </style>
-
-    <script>
-        $(document).ready(function() {
-            console.log("ready!");
-            $('.showEdit').click(function() {
-                const id = $(this).attr('data-id');
-                $("#" + id + "-titulo").hide();
-                $("#" + id + "-form").css('display', 'flex');
-            });
-            $('.guardar').click(function() {
-                const id = $(this).attr('data-id');
-                const name = $("#" + id + '-input').val();
-                $("#" + id + "-titulo").show();
-                $("#" + id + "-titulo").html(name);
-                $("#" + id + "-form").hide();
+    <div class="main-content-container container-fluid">
 
 
-                console.log(name)
+        <style>
+            .hidden {
+                padding-right: 100px;
+                display: none;
+                margin-bottom: 5px!important;
+            }
+        </style>
+
+        <script>
+            function deleteSensor(sensorId) {
+                $('#delete-modal-' + sensorId).modal('toggle');
                 $.ajax({
-                    url: '/sensors/' + id + '/',
-                    type: 'PUT',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({
-                        name
-                    }),
-                    success: function(response) {
-                        console.log("EDIT OK:" + id)
-                    }
-                });
-            });
-            $('.borrar').click(function() {
-                const id = $(this).attr('data-id');
-                console.log(id)
-                $.ajax({
-                    url: '/sensores/' + id + '/',
+                    url: '/sensores/' + sensorId + '/',
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     type: 'DELETE',
@@ -52,86 +23,137 @@
                         console.log("DELETE OK:" + id)
                     }
                 });
-            });
-
-
-            function updateData() {
-                $.getJSON("/sensores/?format=json", function(data) {
-                    data.forEach(item => { 
-                        $("#power-"+item.id).html(item.currentMedition+"W")
-                        $("#current-"+item.id).html(item.currentCurrent+"A")
-
-                        console.log(item)
-                    })
-                });
+                $('#sensor-card-' + sensorId).hide();
             }
 
-            setInterval(function() {
-                updateData()
-            }, 2000);
+
+            $(document).ready(function() {
+                console.log("ready!");
+                $('.showEdit').click(function() {
+                    const id = $(this).attr('data-id');
+                    $("#" + id + "-titulo").hide();
+                    $("#" + id + "-form").css('display', 'flex');
+                });
+                $('.guardar').click(function() {
+                    const id = $(this).attr('data-id');
+                    const name = $("#" + id + '-input').val();
+                    $("#" + id + "-titulo").show();
+                    $("#" + id + "-titulo").html(name);
+                    $("#" + id + "-form").hide();
+
+
+                    $.ajax({
+                        url: '/sensores/' + id + '/',
+                        type: 'PUT',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            name
+                        }),
+                        success: function(response) {
+                            console.log("EDIT OK:" + id)
+                        }
+                    });
+                });
+
+
+                function updateData() {
+                    $.getJSON("/sensores/?format=json", function(data) {
+                        data.forEach(item => {
+                            $("#power-" + item.id).html(item.currentMedition + "W")
+                            $("#current-" + item.id).html(item.currentCurrent + "A")
+                        })
+                    });
+                }
+
+                setInterval(function() {
+                    updateData()
+                }, 2000);
 
 
 
-        });
+            });
 
-        var myChart = [];
-    </script>
+        </script>
 
 
- <div class="row">
+        <div class="row">
 
-    <%for (var sensor of sensors){%>
- 
-        <div class ="col-md-6 mt-4">
-        <div class="card card-small ">
-            <div class="card-body pt-0 row" style='margin-top:10px'>
-                <div class="col-lg-3">
-                    <div class="stats-small stats-small--1">
-                        <div class="card-body p-0 d-flex" style='transform: translate3d(0,0,0); height:135px;'>
-                            <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
-                                <div class="stats-small__data text-center">
-                                    <span class="stats-small__label text-uppercase">CONSUMO</span>
-                                    <h6 id='power-<%-sensor.id%>' class="stats-small__value count my-3"><%=sensor.currentMedition%>W</h6>
+            <%for (var sensor of sensors){%>
+
+                <div class="col-md-6 mt-4" id="sensor-card-<%=sensor.id%>">
+                    <div class="card card-small ">
+                        <div class="card-body pt-0 row" style='margin-top:10px'>
+                            <div class="col-lg-3">
+                                <div class="stats-small stats-small--1">
+                                    <div class="card-body p-0 d-flex" style='transform: translate3d(0,0,0); height:135px;'>
+                                        <div class="d-flex flex-column m-auto" style='transform: translate3d(0,0,0);'>
+                                            <div class="stats-small__data text-center">
+                                                <span class="stats-small__label text-uppercase">CONSUMO</span>
+                                                <h6 id='power-<%-sensor.id%>' class="stats-small__value count my-3">
+                                                    <%=sensor.currentMedition%>W</h6>
+                                            </div>
+
+                                            <div id='current-<%-sensor.id%>' style='color: #17c671;text-align: center'>
+                                                <%=(sensor.currentCurrent)%>A
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete-modal-<%=sensor.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Borrar sensor</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Seguro quieres borrar el sensor?<br>
+                                              <b> <%=sensor.name%></b> 
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" onClick="deleteSensor(<%=sensor.id%>)" class="btn btn-primary">Borrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div id='current-<%-sensor.id%>' style='color: #17c671;text-align: center'>
-                                    <%=(sensor.currentCurrent)%>A
+
+                                <div style="position:absolute;right:15px;top:3px">
+
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-white" data-toggle="modal" data-target="#delete-modal-<%=sensor.id%>" data-id="<%=sensor.id%>"><i class="material-icons">delete</i> </button>
+                                        <button type="button" class="btn btn-white showEdit" data-id="<%=sensor.id%>"><i class="material-icons">edit</i></button>
+                                    </div>
+
                                 </div>
+                                <h4 id="<%=sensor.id%>-titulo">
+                                    <%=sensor.name%>
+                                </h4>
+                                <div class="input-group mb-3 hidden" id="<%=sensor.id%>-form">
+                                    <input type="text" class="form-control" id="<%=sensor.id%>-input" placeholder="Ingrese nombre del dispositivo">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-white guardar" data-id="<%=sensor.id%>" type="button">Guardar</button>
+                                    </div>
+                                </div>
+                                <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=sensor.isOnline? 'success' : 'danger'%>"><%=sensor.isOnline? 'Online' : 'Offline'%></strong></span>
+                                <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger"><%=sensor.sensibility%>A</strong> </span>
+                                <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=sensor.id%></span>
+                                <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=sensor.isOnline?  Math.round((Date.now() -sensor.lastPush)/60000) + 'min': ''%></strong></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-9">
-                    <div style="position:absolute;right:15px;top:3px">
 
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-white borrar" data-id="<%=sensor.id%>"><i class="material-icons">delete</i> </button>
-                            <button type="button" class="btn btn-white showEdit" data-id="<%=sensor.id%>"><i class="material-icons">edit</i></button>
-                        </div>
-
-                    </div>
-                    <h4 id="<%=sensor.id%>-titulo">
-                        <%=sensor.name%>
-                    </h4>
-                    <div class="input-group mb-3 hidden" id="<%=sensor.id%>-form">
-                        <input type="text" class="form-control" id="<%=sensor.id%>-input" placeholder="Ingrese nombre del dispositivo">
-                        <div class="input-group-append">
-                            <button class="btn btn-white guardar" data-id="<%=sensor.id%>" type="button">Guardar</button>
-                        </div>
-                    </div>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=sensor.isOnline? 'success' : 'danger'%>"><%=sensor.isOnline? 'Online' : 'Offline'%></strong></span>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger"><%=sensor.sensibility%>A</strong> </span>
-                    <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=sensor.id%></span>
-                    <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=sensor.isOnline?  Math.round((Date.now() -sensor.lastPush)/60000) + 'min': ''%></strong></span>
                 </div>
-            </div>
+                <%}%>
+
         </div>
 
-</div>
-        <%}%>
-
+        <br>
     </div>
-
-<br>
-</div>
-            <% include footer.ejs %>
+    <% include footer.ejs %>

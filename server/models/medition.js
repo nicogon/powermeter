@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
         autoIncrement: true
       },
+      puntualMeditions: DataTypes.JSONB,
       name: DataTypes.STRING,
       averagePower: DataTypes.FLOAT,
       maximumPower: DataTypes.FLOAT
@@ -16,12 +17,6 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   // Associations
-  Medition.associate = (models) => {
-    models.Medition.hasMany(models.PuntualMedition, {
-      onDelete: 'CASCADE',
-      as: 'puntualMeditions'
-    });
-  };
 
   // Instance methods
   Medition.prototype.isOnline = () => true; // lastPush in (Date.now-5.segs..Date.now)

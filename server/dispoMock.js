@@ -24,11 +24,12 @@ function report() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      currentMedition: (contador % 5) + 10,
+      currentMedition: ((contador % 100) > 10) ? 0 : 100,
       sensibility: 15
     })
   }).catch(console.log);
 
+  /*
   fetch(reportUrl(3), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -37,6 +38,7 @@ function report() {
       sensibility: 20
     })
   }).catch(console.log);
+  */
 }
 
-setInterval(() => { report(); }, 5000);
+setInterval(() => { report(); }, 100);
