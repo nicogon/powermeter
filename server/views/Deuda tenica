@@ -1,48 +1,15 @@
 Deuda tecnica:
 
-rehacer la funcion de calcular average para que no la haga cada vez que reporta, mucho stress para la rpi
-
 hacer que en el grafico de reportes arranquen todos a la vez
 
-que la duracion de los reportes en la home tambien sea variable
-
-No anda bien en mobile
+REVISAR MOBILE
 
 
- Cuando entras a una nueva simulacion te autollene el costo de KW con algo del pasado
-     
-
- que desaparezca el consumo actual del reporte una vez finalizado
-
- que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
-
-creando nuevo reporte, si no tengo dispositivos que no me permita crear reporte. 
-
-
-
-no pushear data cada 1 segudo, en casos de largo reporte, pushear cada menos tiempo.
  
 UPTIME NO FUNCA
 
-Que pasa si se desconecta un dispositivo.
+Que pasa si se desconecta un dispositivo?
 
 TODO/WONT DO
 que por mas que no haya un notify si pasa el tiempo del reporte, que lo cierre
 
-TODO
-que cuando no hay sensores en nuevo reporte aparezca aunquesea una notificacion y que no deje crear un nuevo reporte
-
-CREO QUE ESTA, VERIFICAR
-si entro a un reporte y hay un temporal ejecutando, se  actualiza el reporte con ldata del temporal.
-Agregar Iva y aportes patronales como un item en la simulacion que se puede elegir.
-
-TODO:
-merjorar la variacion del sensor, tira muchos valores. hacer un valor mas integrado
-
-TODO: 
-Ver si se puede hacer un sort en las cabeceras de las tablas
-
-TODO: 
-Agregar mas descripción a la hora de elegir un reporte en la simulación (por ejemplo la fecha)
-
-Identificar a los sensores de manera mas copada (con una cinta de color o algo asi, para que sea mas visual la presentacion)
