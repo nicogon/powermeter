@@ -144,7 +144,6 @@
                                 <span class="d-flex mb-2"><i class="material-icons mr-1">wifi</i><strong class="mr-1">Estado:</strong> <strong class="text-<%=sensor.isOnline? 'success' : 'danger'%>"><%=sensor.isOnline? 'Online' : 'Offline'%></strong></span>
                                 <span class="d-flex mb-2"><i class="material-icons mr-1">settings_input_svideo</i><strong class="mr-1">Sensor:</strong> <strong class="text-danger"><%=sensor.sensibility%>A</strong> </span>
                                 <span class="d-flex mb-2"><i class="material-icons mr-1">fingerprint</i><strong class="mr-1">DispoId:</strong><%=sensor.id%></span>
-                                <span class="d-flex"><i class="material-icons mr-1">access_time</i><strong class="mr-1">Uptime:</strong> <strong class="text-warning"><%=sensor.isOnline?  Math.round((Date.now() -sensor.lastPush)/60000) + 'min': ''%></strong></span>
                             </div>
                         </div>
                     </div>
