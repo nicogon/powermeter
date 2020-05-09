@@ -1,4 +1,4 @@
-exports.compactedRefrigerator40Mins = JSON.stringify([
+exports.heladeraCuarentaCompactada = JSON.stringify([
   { offset: 1250, value: 158.1 },
   { offset: 208344, value: 159.3 },
   { offset: 240399, value: 0 },
