@@ -1,4 +1,4 @@
-exports.caloventorDiaria = JSON.stringify([
+exports.valueOffset = [
   { value: 0, offset: 0 },
   { value: 0, offset: 28431240 },
   { value: 510.4, offset: 28432803 },
@@ -23,4 +23,6 @@ exports.caloventorDiaria = JSON.stringify([
   { value: 423, offset: 30361349 },
   { value: 0, offset: 30362899 },
   { value: 0, offset: 86418436 }
-]);
+];
+
+exports.caloventorDiaria = JSON.stringify(exports.valueOffset);

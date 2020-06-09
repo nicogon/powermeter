@@ -1,4 +1,4 @@
-exports.estufaDiaria = JSON.stringify([
+exports.valueOffset = [
   { value: 866.1, offset: 1305, blocked: true },
   { value: 863.9, offset: 116540, blocked: false },
   { value: 229.1, offset: 118096, blocked: true },
@@ -320,4 +320,6 @@ exports.estufaDiaria = JSON.stringify([
   { value: 0, offset: 86084227, blocked: false },
   { value: 939.7, offset: 86085790, blocked: true },
   { value: 880, offset: 86399570, blocked: false }
-]);
+];
+
+exports.estufaDiaria = JSON.stringify(exports.valueOffset);

@@ -1,4 +1,4 @@
-exports.hornitoDiaria = JSON.stringify([
+exports.valueOffset = [
   { value: 0, offset: 0 },
   { value: 0, offset: 71947882 },
   { value: 1442.8, offset: 71949438 },
@@ -249,4 +249,6 @@ exports.hornitoDiaria = JSON.stringify([
   { value: 1487.8, offset: 73316885 },
   { value: 0, offset: 73318436 },
   { value: 0, offset: 86418436 }
-]);
+];
+
+exports.hornitoDiaria = JSON.stringify(exports.valueOffset);

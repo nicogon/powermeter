@@ -1,4 +1,4 @@
-exports.heladeraDiaria = JSON.stringify([
+exports.valueOffset = [
   { value: 0, offset: 2471, blocked: true },
   { value: 0, offset: 861450, blocked: false },
   { value: 793, offset: 863012, blocked: true },
@@ -225,4 +225,6 @@ exports.heladeraDiaria = JSON.stringify([
   { value: 154.7, offset: 86229433, blocked: true },
   { value: 0, offset: 86231005, blocked: true },
   { value: 0, offset: 86399024, blocked: false }
-]);
+];
+
+exports.heladeraDiaria = JSON.stringify(exports.valueOffset);

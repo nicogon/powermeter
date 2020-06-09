@@ -1,4 +1,4 @@
-exports.heladeraCuarentaCompactada = JSON.stringify([
+exports.valueOffset = [
   { offset: 1250, value: 158.1 },
   { offset: 208344, value: 159.3 },
   { offset: 240399, value: 0 },
@@ -25,4 +25,6 @@ exports.heladeraCuarentaCompactada = JSON.stringify([
   { offset: 13270431, value: 2.5 },
   { offset: 13271701, value: 0 },
   { offset: 14399130, value: 0 }
-]);
+];
+
+exports.heladeraCuarentaCompactada = JSON.stringify(exports.valueOffset);

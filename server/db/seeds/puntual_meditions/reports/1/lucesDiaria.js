@@ -1,4 +1,4 @@
-exports.lucesDiaria = JSON.stringify([
+exports.valueOffset = [
   { value: 0, offset: 322, blocked: true },
   { value: 0, offset: 26608475, blocked: false },
   { value: 32.7, offset: 26610029, blocked: true },
@@ -109,4 +109,6 @@ exports.lucesDiaria = JSON.stringify([
   { value: 66.7, offset: 85249361, blocked: false },
   { value: 58.3, offset: 85250937, blocked: true },
   { value: 67.6, offset: 86399318, blocked: false }
-]);
+];
+
+exports.lucesDiaria = JSON.stringify(exports.valueOffset);
