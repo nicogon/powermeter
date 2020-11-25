@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - powermeter:/var/lib/postgresql/data
+
+  powermeter:
+    build: .
+    ports:
+      - "3000:3000"
+    command: npm start
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    volumes:
+      - .:/home/node/app
+      - /home/app/node_modules
+    env_file: .env.production
+
+volumes:
+  powermeter:
