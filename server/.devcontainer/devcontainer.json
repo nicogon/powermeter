@@ -19,20 +19,11 @@
 		}]
 	},
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-    "CoenraadS.bracket-pair-colorizer",
-    "mikestead.dotenv",
-    "oderwat.indent-rainbow",
-    "PKief.material-icon-theme",
-    "azemoh.one-monokai",
-    "humao.rest-client",
-    "formulahendry.terminal",
-    "funkyremi.vscode-google-translate"
-	],
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [3000, 5432]
+
+  // Add the IDs of extensions you want installed when the container is created.
+	// "extensions": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
   // "postCreateCommand": "npm start"
