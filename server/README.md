@@ -4,10 +4,15 @@ PowerMeter
 # Table of contents
 - [PowerMeter](#powermeter)
 - [Table of contents](#table-of-contents)
-- [Software Requirements](#software-requirements)
-- [Database Setup](#database-setup)
-- [Server setup](#server-setup)
-- [Usage](#usage)
+- [Sobre nosotros](#sobre-nosotros)
+  - [Autores](#autores)
+- [Docker environment](#docker-environment)
+  - [Software Requirements](#software-requirements)
+- [Local environment](#local-environment)
+  - [Software Requirements](#software-requirements-1)
+  - [Database Setup](#database-setup)
+  - [Server setup](#server-setup)
+  - [Usage](#usage)
 - [Project structure](#project-structure)
   - [Config](#config)
   - [Controller](#controller)
@@ -23,11 +28,50 @@ PowerMeter
   - [Comentar mocks](#comentar-mocks)
 - [Sequalize migrations](#sequalize-migrations)
   - [Usage](#usage-1)
-- [Sobre nosotros](#sobre-nosotros)
-  - [Autores](#autores)
 
+---
 
-# Software Requirements
+# Sobre nosotros
+UTN FRBA - 2019 - Grupo 206 - PowerMeter Server
+
+## Autores
+* Bober Ivan,
+* Gonzalez Nicolas,
+* Vazquez Nogueiras Hector,
+* Voboril Lucas
+
+---
+
+# Docker environment
+
+## Software Requirements
+
+* Download and install [docker](https://docs.docker.com/get-docker/)
+* Install [VScode IDE](https://code.visualstudio.com/)
+* Install [VSCode Remote Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers#:~:text=The%20Remote%20%2D%20Containers%20extension%20lets,operating%20system%20you%20deploy%20to.)
+
+Run in console
+
+```sh
+  docker-compose rm -fv postgres
+  docker-compose up
+```
+
+Run in VScode the following command (CTRL + SHIFT + P)
+
+> Remote Container: Rebuild and Reopen in Container
+
+Inside remote container, exec Powermeter with a new console
+
+```sh
+  npm start
+```
+
+---
+
+# Local environment
+
+## Software Requirements
 
 * [Postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04)
   * Postgres queda corriendo como un servicio en segundo plano, no es necesario ejecutarlo de forma manual
@@ -37,7 +81,9 @@ PowerMeter
     * [NPM](https://www.npmjs.com/)
       * Un tutorial para amigarse y aprender NPM [How to NPM](https://github.com/workshopper/how-to-npm)
 
-# Database Setup
+
+
+## Database Setup
 
 Run in terminal:
 
@@ -51,13 +97,13 @@ $ psql -h localhost -d powermerter -U powermeter -p 5432
 
 [More info in Stackoverflow post](https://stackoverflow.com/questions/2172569/how-do-i-login-and-authenticate-to-postgresql-after-a-fresh-install)
 
-# Server setup
+## Server setup
 
 ```bash
 $ npm install
 ```
 
-# Usage
+## Usage
 
 Para ejecutar el server
 ```bash
@@ -68,6 +114,8 @@ Para correr el linter
 ```bash
 $ npm run lint
 ```
+
+---
 
 # Project structure
 
@@ -148,11 +196,3 @@ $ npx sequelize-cli model:generate --name User --attributes firstName:string,las
 $ npx sequelize-cli db:migrate
 ```
 
-# Sobre nosotros
-UTN FRBA - 2019 - Grupo 206 - PowerMeter Server
-
-## Autores
-* Bober Ivan,
-* Gonzalez Nicolas,
-* Vazquez Nogueiras Hector,
-* Voboril Lucas
