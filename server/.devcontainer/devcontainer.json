@@ -21,47 +21,21 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-    "Gruntfuggly.activitusbar",
-    "CoenraadS.bracket-pair-colorizer",
-    "Shan.code-settings-sync",
-    "mikestead.dotenv",
-    "mhutchie.git-graph",
-    "donjayamanne.githistory",
-    "eamodio.gitlens",
-    "oderwat.indent-rainbow",
-    "yzhang.markdown-all-in-one",
-    "shd101wyy.markdown-preview-enhanced",
-    "PKief.material-icon-theme",
-    "azemoh.one-monokai",
-    "humao.rest-client",
-    "formulahendry.terminal",
-    "funkyremi.vscode-google-translate",
-    "johnpapa.vscode-peacock"
+    // "CoenraadS.bracket-pair-colorizer",
+    // "mikestead.dotenv",
+    // "oderwat.indent-rainbow",
+    // "PKief.material-icon-theme",
+    // "azemoh.one-monokai",
+    // "humao.rest-client",
+    // "formulahendry.terminal",
+    // "funkyremi.vscode-google-translate"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000, 5432]
+	"forwardPorts": [3000, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": ""
-      /*
-      nvm install 8.9.4
-      sudo -u postgres psql -p 5432 -h 127.0.0.1
-
-      DO
-      $do$
-      BEGIN
-      IF NOT EXISTS ( SELECT FROM pg_catalog.pg_roles WHERE  rolname = 'powermeter')
-      THEN CREATE ROLE powermeter LOGIN CREATEDB PASSWORD 'powermeter';
-      END IF;
-      END
-      $do$;
-
-      npm run sequelize db:create
-      npm run migrations
-      psql -h localhost -p 5432 -U powermeter -d powermeter -1 -f /home/node/app/db/backups/202011041335-powermeter.dump
-      npm start
-      */
+  "postCreateCommand": "npm run migrations && npm run seeds"
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "powermeter"
