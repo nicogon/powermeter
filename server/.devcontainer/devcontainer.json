@@ -2,7 +2,14 @@
 	"name": "Powermeter - Docker",
 	"dockerComposeFile": "../docker-compose.yml",
 	"service": "powermeter",
-	"workspaceFolder": "/home/node/app",
+  "workspaceFolder": "/home/node/app",
+  "initializeCommand": [
+    "docker-compose", "rm", "-fv", "postgres"
+  ],
+
+  "postStartCommand": [
+    "pm2", "--name", "powermeter", "start", "npm", "--", "start"
+  ],
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {

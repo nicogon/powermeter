@@ -11,8 +11,6 @@ services:
   powermeter:
     command: sleep infinity
     env_file: .env.production
-    volumes:
-        - .:/home/node/app
     depends_on:
       - postgres
     links:
@@ -23,4 +21,3 @@ services:
 
 volumes:
   postgres:
-  powermeter:

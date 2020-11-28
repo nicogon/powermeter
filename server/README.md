@@ -8,11 +8,12 @@ PowerMeter
   - [Autores](#autores)
 - [Docker environment](#docker-environment)
   - [Software Requirements](#software-requirements)
+  - [Usage](#usage)
 - [Local environment](#local-environment)
   - [Software Requirements](#software-requirements-1)
   - [Database Setup](#database-setup)
   - [Server setup](#server-setup)
-  - [Usage](#usage)
+  - [Usage](#usage-1)
 - [Project structure](#project-structure)
   - [Config](#config)
   - [Controller](#controller)
@@ -27,7 +28,7 @@ PowerMeter
 - [Recordatorios](#recordatorios)
   - [Comentar mocks](#comentar-mocks)
 - [Sequalize migrations](#sequalize-migrations)
-  - [Usage](#usage-1)
+  - [Usage](#usage-2)
 
 ---
 
@@ -47,25 +48,14 @@ UTN FRBA - 2019 - Grupo 206 - PowerMeter Server
 ## Software Requirements
 
 * Download and install [docker](https://docs.docker.com/get-docker/)
-* Install [VScode IDE](https://code.visualstudio.com/)
-* Install [VSCode Remote Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers#:~:text=The%20Remote%20%2D%20Containers%20extension%20lets,operating%20system%20you%20deploy%20to.)
+* Download and install [VScode IDE](https://code.visualstudio.com/)
+* Download and install [VSCode Remote Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers#:~:text=The%20Remote%20%2D%20Containers%20extension%20lets,operating%20system%20you%20deploy%20to.)
 
-Run in console
-
-```sh
-  docker-compose rm -fv postgres
-  docker-compose up
-```
+## Usage
 
 Run in VScode the following command (CTRL + SHIFT + P)
 
 > Remote Container: Rebuild and Reopen in Container
-
-Inside remote container, exec Powermeter with a new console
-
-```sh
-  npm start
-```
 
 ---
 
